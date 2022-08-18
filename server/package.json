@@ -3,25 +3,19 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-
- 
   "scripts": {
     "start": "nodemon index.js",
-    "dev" :"nodemon indev.js"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "Can Le",
-  
   "dependencies": {
     "dotenv": "^16.0.1",
     "express": "^4.17.1",
     "moment": "^2.29.4",
     "mongodb": "^4.8.1",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.19",
     "uuid": "^8.3.2"
   }
-  
-
-
-
 }
