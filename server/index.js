@@ -3,7 +3,11 @@
 const express = require("express");
 const morgan = require("morgan");
 const { createAccount, addPicture } = require("./addAccount&Picture");
-const { editPicture } = require("./updateProfileHandlers");
+const {
+  editPicture,
+  editUserName,
+  editName,
+} = require("./updateProfileHandlers");
 const PORT = 8000;
 
 express()
@@ -31,6 +35,8 @@ express()
   .post(`/api/add-user`, createAccount)
   .post(`/api/add-user-picture`, addPicture)
   .patch("/api/update-picture", editPicture)
+  .patch("/api/update-userName", editUserName)
+  .patch("/api/update-name", editName)
   .get("*", (req, res) => {
     res.status(404).json({
       status: 404,
