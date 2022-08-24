@@ -2,7 +2,7 @@
 
 const express = require("express");
 const morgan = require("morgan");
-const { createAccount, addPicture } = require("./lawyerHandler");
+const { createAccount, addPicture } = require("./addAccount&Picture");
 const PORT = 8000;
 
 express()
