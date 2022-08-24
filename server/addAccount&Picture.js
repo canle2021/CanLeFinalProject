@@ -209,8 +209,15 @@ const addPicture = async (req, res) => {
       .collection("usersPictures")
       .insertOne(newPicture);
     console.log("inserImage", inserImage);
+    // update status in  user document to lawer beause only the lawyers need portrait picture
+    const updateStatus = await db.collection("users").updateOne(
+      {
+        _id: body._id,
+      },
+      { $set: { status: "lawyer" } }
+    );
 
-    if (inserImage.insertedId !== "") {
+    if (inserImage.insertedId !== "" && updateStatus.modifiedCount > 0) {
       //  this is to make sure the <users> collection was updated successfully
 
       return res.status(200).json({
