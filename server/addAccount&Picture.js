@@ -176,14 +176,14 @@ const addPicture = async (req, res) => {
   // supposed the posting method wil have a req.body with this format:
   //{
   //   "_id": "df69a7d3-4c2e-45de-8cb1-ecc91872819f", take from user to FE when login and push back to this end point
-  //   "image": "base 64",
+  //   "picture": "base 64",
   // }
   // remember to copy all this to F.E
 
   const newPicture = {
     ...body,
   };
-  if (!body._id || !body.image) {
+  if (!body._id || !body.picture) {
     return res.status(400).json({
       status: 400,
       data: {},
@@ -194,45 +194,55 @@ const addPicture = async (req, res) => {
   // validate same picture
 
   try {
-    const findImage = await db
-      .collection("usersPictures")
-      .findOne({ image: body.image });
+    await client.connect();
+    const findUserId = await db.collection("users").findOne({ _id: body._id });
 
-    if (findImage) {
+    if (!findUserId) {
       return res.status(400).json({
         status: 400,
-        message: ` Sorry, the image with use's id :${body._id} is existing, you can not add this image to your account`,
+        message: ` Sorry, the user with use's id :${body._id} does not exist, you can not add this picture to your account`,
       });
     }
 
-    const inserImage = await db
+    const findPicture = await db
+      .collection("usersPictures")
+      .findOne({ picture: body.picture });
+
+    if (findPicture) {
+      return res.status(400).json({
+        status: 400,
+        message: ` Sorry, the picture with use's id :${body._id} is existing, you can not add this picture to your account`,
+      });
+    }
+    // add new picture to usersPictures collection
+    const inserPicture = await db
       .collection("usersPictures")
       .insertOne(newPicture);
-    console.log("inserImage", inserImage);
+    console.log("inserPicture", inserPicture);
     // update status in  user document to lawer beause only the lawyers need portrait picture
     const updateStatus = await db.collection("users").updateOne(
       {
         _id: body._id,
       },
-      { $set: { status: "lawyer" } }
+      { $set: { status: "lawyer", pictureId: body._id } }
     );
-
-    if (inserImage.insertedId !== "" && updateStatus.modifiedCount > 0) {
+    console.log("updateStatus", updateStatus);
+    if (inserPicture.insertedId !== "" && updateStatus.modifiedCount > 0) {
       //  this is to make sure the <users> collection was updated successfully
 
       return res.status(200).json({
         status: 200,
         data: newPicture._id,
-        message: ` The image with id: ${newPicture._id} was successfully added`,
+        message: ` The picture with id: ${newPicture._id} was successfully added`,
       });
     } else {
       return res.status(500).json({
         status: 500,
-        message: ` Sorry, image with id: ${newPicture._id} was NOT successfully added for some reason`,
+        message: ` Sorry, picture with id: ${newPicture._id} was NOT successfully added for some reason`,
       });
     }
   } catch (err) {
-    console.log("Insert image endpoint", err);
+    console.log("Insert picture endpoint", err);
     //
   }
   client.close();
