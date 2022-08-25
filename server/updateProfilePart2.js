@@ -68,7 +68,7 @@ const editEmail = async (req, res) => {
     if (findTheSameEmail) {
       return res.status(400).json({
         status: 400,
-        message: ` Sorry, the new email is the same with your current email`,
+        message: ` Sorry, the new email is the same with the existing email`,
       });
     }
 
@@ -146,7 +146,7 @@ const editPhone = async (req, res) => {
     if (findUserPhone) {
       return res.status(400).json({
         status: 400,
-        message: ` Sorry, the new phone number is the same with your current phone number`,
+        message: ` Sorry, the new phone number is the same with exsting  phone number`,
       });
     }
 
@@ -240,17 +240,32 @@ const editAddress = async (req, res) => {
     };
 
     // validate same address
-    if (
-      findUserId.streetNumber.toLowerCase() ===
-        body.streetNumber.toLowerCase() &&
-      findUserId.city.toLowerCase() === body.city.toLowerCase() &&
-      findUserId.province.toLowerCase() === body.province.toLowerCase() &&
-      findUserId.postalCode.toLowerCase() === body.postalCode.toLowerCase() &&
-      findUserId.country.toLowerCase() === body.country.toLowerCase()
-    ) {
+
+    // this function return an array of users which have streetNumber included body.streetNumber text
+    const findSameAddressArray = await db
+      .collection("users")
+      .find({
+        streetNumber: { $regex: body.streetNumber, $options: "i" },
+        city: { $regex: body.city, $options: "i" },
+        province: { $regex: body.province, $options: "i" },
+        postalCode: { $regex: body.postalCode, $options: "i" },
+        country: { $regex: body.country, $options: "i" },
+      })
+      .toArray();
+    //  this function will test there is at least 1 user is having the same adsress with the address of body
+    const findTheSameAddress = findSameAddressArray.find(
+      (user) =>
+        user.streetNumber.toLowerCase() === body.streetNumber.toLowerCase() &&
+        user.city.toLowerCase() === body.city.toLowerCase() &&
+        user.province.toLowerCase() === body.province.toLowerCase() &&
+        user.postalCode.toLowerCase() === body.postalCode.toLowerCase() &&
+        user.country.toLowerCase() === body.country.toLowerCase()
+    );
+
+    if (findTheSameAddress) {
       return res.status(400).json({
         status: 400,
-        message: ` Sorry, the new new is the same with your current name`,
+        message: ` Sorry, the new addres is the same with existing address in our data`,
       });
     }
 
