@@ -8,7 +8,7 @@ const {
   editUserName,
   editName,
 } = require("./updateProfileHandlers");
-const { editEmail, editPhone } = require("./updateProfilePart2");
+const { editEmail, editPhone, editAddress } = require("./updateProfilePart2");
 const PORT = 8000;
 
 express()
@@ -40,6 +40,7 @@ express()
   .patch("/api/update-name", editName)
   .patch("/api/update-email", editEmail)
   .patch("/api/update-phone-number", editPhone)
+  .patch("/api/update-address", editAddress)
   .get("*", (req, res) => {
     res.status(404).json({
       status: 404,

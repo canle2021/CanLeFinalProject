@@ -214,17 +214,11 @@ const editName = async (req, res) => {
       oldFirstName: findUserId.firstName,
       oldLastName: findUserId.lastName,
     };
-
-    const findName = await db
-      .collection("users")
-      .find({
-        firstName: { $regex: body.firstName, $options: "i" },
-        lastName: { $regex: body.lastName, $options: "i" },
-      })
-      .toArray();
-    // validate same userName
-    console.log("findUserName", findName);
-    if (findName.length > 0) {
+    // validate current firstName lastName
+    if (
+      findUserId.lastName.toLowerCase() === body.lastName.toLowerCase() &&
+      findUserId.firstName.toLowerCase() === body.firstName.toLowerCase()
+    ) {
       return res.status(400).json({
         status: 400,
         message: ` Sorry, the new name is the same with your current name`,
@@ -250,7 +244,7 @@ const editName = async (req, res) => {
     } else {
       return res.status(500).json({
         status: 500,
-        message: ` Sorry, the ame of user's id: ${body._id} was NOT successfully updated for some reason`,
+        message: ` Sorry, the name of user's id: ${body._id} was NOT successfully updated for some reason`,
       });
     }
   } catch (err) {
