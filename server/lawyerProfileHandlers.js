@@ -49,17 +49,14 @@ const editQuote = async (req, res) => {
         ? "This is the first quote, not change yet"
         : findUserId.quote,
     };
-
-    const findUserQuote = await db
-      .collection("users")
-      .find({ quote: { $regex: body.quote, $options: "i" } })
-      .toArray();
     // validate same quote
-    if (findUserQuote.length > 0) {
-      return res.status(400).json({
-        status: 400,
-        message: ` Sorry, the new Quote is the same with your current Quote`,
-      });
+    if (findUserId.quote !== undefined) {
+      if (findUserId.quote.toLowerCase() === body.quote.toLowerCase()) {
+        return res.status(400).json({
+          status: 400,
+          message: ` Sorry, the new Quote is the same with your current Quote`,
+        });
+      }
     }
 
     const updateQuote = await db.collection("users").updateOne(
