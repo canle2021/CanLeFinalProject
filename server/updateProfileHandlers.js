@@ -133,16 +133,21 @@ const editUserName = async (req, res) => {
       oldUserName: findUserId.userName,
     };
 
-    const findUserName = await db
+    // validate same UserName in users collection
+    // this function return an array of users which have UserName included body.userName text
+    const findUserNamesArray = await db
       .collection("users")
       .find({ userName: { $regex: body.userName, $options: "i" } })
       .toArray();
-    // validate same userName
-    console.log("findUserName", findUserName);
-    if (findUserName.length > 0) {
+    //  this function will test there is at least 1 user is having the same userName with the body.userName.
+    const findTheSameUserName = findUserNamesArray.find(
+      (user) => user.userName.toLowerCase() === body.userName.toLowerCase()
+    );
+
+    if (findTheSameUserName) {
       return res.status(400).json({
         status: 400,
-        message: ` Sorry, the new userName is the same with your current userName`,
+        message: ` Sorry, the new userName is the same with existing userName`,
       });
     }
 
