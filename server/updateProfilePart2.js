@@ -241,7 +241,7 @@ const editAddress = async (req, res) => {
 
     // validate same address
 
-    // this function return an array of users which have streetNumber included body.streetNumber text
+    // this function return an array of users which have streetNumber, ... included body.streetNumber,... text
     const findSameAddressArray = await db
       .collection("users")
       .find({
