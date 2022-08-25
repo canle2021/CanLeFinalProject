@@ -55,13 +55,17 @@ const editEmail = async (req, res) => {
       userId: findUserId._id,
       oldEmail: findUserId.email,
     };
-
-    const findUserEmail = await db
+    // validate same email in users collection
+    // this function return an array of users which have email included body.email text
+    const findSameEmailsArray = await db
       .collection("users")
       .find({ email: { $regex: body.email, $options: "i" } })
       .toArray();
-    // validate same email
-    if (findUserEmail.length > 0) {
+    //  this function will test there is at least 1 user is having the same email with the body.email.
+    const findTheSameEmail = findSameEmailsArray.find(
+      (user) => user.email.toLowerCase() === body.email.toLowerCase()
+    );
+    if (findTheSameEmail) {
       return res.status(400).json({
         status: 400,
         message: ` Sorry, the new email is the same with your current email`,
