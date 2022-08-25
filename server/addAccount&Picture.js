@@ -82,57 +82,74 @@ const createAccount = async (req, res) => {
     await client.connect();
     // ========= continue from here/
 
-    // const idToNumber = Number.parseInt(body._id);
-    // const quantityToNumber = Number.parseInt(body.qty);
-    // transform string in req.body to number because the DB has number type
-
-    //check with case insensitive
-    const findUserName = await db
+    // validate same UserName in users collection
+    // this function return an array of users which have UserName included body.userName text
+    const findUserNamesArray = await db
       .collection("users")
       .find({ userName: { $regex: body.userName, $options: "i" } })
       .toArray();
+    //  this function will test there is at least 1 user is having the same userName with the body.userName.
+    const findTheSameUserName = findUserNamesArray.find(
+      (user) => user.userName.toLowerCase() === body.userName.toLowerCase()
+    );
 
-    if (findUserName.length > 0) {
+    if (findTheSameUserName) {
       return res.status(400).json({
         status: 400,
-        message: ` Sorry, the user name :${body.userName} is existing, you can not create the new account with this user name`,
+        message: ` Sorry, this new userName is existing, you can not use this new username`,
       });
     }
 
-    const findFirstName = await db
+    // validate same name in the same address
+    const findTheSameNamesArray = await db
       .collection("users")
-      .find({ firstName: { $regex: body.firstName, $options: "i" } })
-      .toArray();
-    const findLastName = await db
-      .collection("users")
-      .find({ lastName: { $regex: body.lastName, $options: "i" } })
-      .toArray();
-    const findPotalCode = await db
-      .collection("users")
-      .find({ postalCode: { $regex: body.postalCode, $options: "i" } })
+      .find({
+        firstName: { $regex: body.firstName, $options: "i" },
+        lastName: { $regex: body.lastName, $options: "i" },
+        streetNumber: { $regex: body.streetNumber, $options: "i" },
+        city: { $regex: body.city, $options: "i" },
+        province: { $regex: body.province, $options: "i" },
+        postalCode: { $regex: body.postalCode, $options: "i" },
+        country: { $regex: body.country, $options: "i" },
+      })
       .toArray();
 
-    if (
-      findFirstName.length > 0 &&
-      findLastName.length > 0 &&
-      findPotalCode.length > 0
-    ) {
+    //  this function will test there is at least 1 user has the same name in the same adsress
+    const findTheSameName = findTheSameNamesArray.find(
+      (user) =>
+        user.firstName.toLowerCase() === body.firstName.toLowerCase() &&
+        user.lastName.toLowerCase() === body.lastName.toLowerCase() &&
+        user.streetNumber.toLowerCase() === body.streetNumber.toLowerCase() &&
+        user.city.toLowerCase() === body.city.toLowerCase() &&
+        user.province.toLowerCase() === body.province.toLowerCase() &&
+        user.postalCode.toLowerCase() === body.postalCode.toLowerCase() &&
+        user.country.toLowerCase() === body.country.toLowerCase()
+    );
+
+    if (findTheSameName) {
       return res.status(400).json({
         status: 400,
         message: ` Sorry, this user is already exist, you can not create the new account with this information`,
       });
     }
 
-    const findEmail = await db
+    // validate same email in users collection
+    // this function return an array of users which have email included body.email text
+    const findSameEmailsArray = await db
       .collection("users")
       .find({ email: { $regex: body.email, $options: "i" } })
       .toArray();
-    if (findEmail.length > 0) {
+    //  this function will test there is at least 1 user is having the same email with the body.email.
+    const findTheSameEmail = findSameEmailsArray.find(
+      (user) => user.email.toLowerCase() === body.email.toLowerCase()
+    );
+    if (findTheSameEmail) {
       return res.status(400).json({
         status: 400,
-        message: ` Sorry, the email address :${body.email} is existing, you can not create the new account with this email address`,
+        message: ` Sorry, the new email is the same with the existing email, you can not create the new account with this information`,
       });
     }
+
     const findPhoneNumber = await db
       .collection("users")
       .findOne({ phone: body.phone });
