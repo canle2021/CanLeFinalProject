@@ -49,14 +49,23 @@ const editQuote = async (req, res) => {
         ? "This is the first quote, not change yet"
         : findUserId.quote,
     };
-    // validate same quote
-    if (findUserId.quote !== undefined) {
-      if (findUserId.quote.toLowerCase() === body.quote.toLowerCase()) {
-        return res.status(400).json({
-          status: 400,
-          message: ` Sorry, the new Quote is the same with your current Quote`,
-        });
-      }
+    // validate unique quote,
+    // this function return an array of users which have quote included body.quote text
+    const findSameQuotesArray = await db
+      .collection("users")
+      .find({ quote: { $regex: body.quote, $options: "i" } })
+      .toArray();
+
+    //  this function will test there is at least 1 user is having the same quote with the body.quote.
+    const findTheSameQuote = findSameQuotesArray.find(
+      (user) => user.quote.toLowerCase() === body.quote.toLowerCase()
+    );
+
+    if (findTheSameQuote) {
+      return res.status(400).json({
+        status: 400,
+        message: ` Sorry, the new Quote is the same with existing Quote`,
+      });
     }
 
     const updateQuote = await db.collection("users").updateOne(
