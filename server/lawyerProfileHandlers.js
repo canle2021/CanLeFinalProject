@@ -259,7 +259,7 @@ const editCredentials = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log("Update Practice Areas", err);
+    console.log("Update Credentials", err);
     //
   }
   client.close();

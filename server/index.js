@@ -2,6 +2,7 @@
 
 const express = require("express");
 const morgan = require("morgan");
+const { getAllUsers } = require("./getHandlers");
 const { createAccount, addPicture } = require("./addAccount&Picture");
 const {
   editPicture,
@@ -14,6 +15,7 @@ const {
   editPracticeAreas,
   editCredentials,
 } = require("./lawyerProfileHandlers");
+const { editEducation } = require("./lawyerHandlersPart2");
 const PORT = 8000;
 
 express()
@@ -38,6 +40,7 @@ express()
   // RESTFUL endpoints
 
   // RESTFUL endpoints
+  .get(`/api/get-all-users`, getAllUsers)
   .post(`/api/add-user`, createAccount)
   .post(`/api/add-user-picture`, addPicture)
   .patch("/api/update-picture", editPicture)
@@ -49,6 +52,7 @@ express()
   .patch("/api/update-quote", editQuote)
   .patch("/api/update-practice-areas", editPracticeAreas)
   .patch("/api/update-credentials", editCredentials)
+  .patch("/api/update-education", editEducation)
   .get("*", (req, res) => {
     res.status(404).json({
       status: 404,
