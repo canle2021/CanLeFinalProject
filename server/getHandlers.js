@@ -12,7 +12,7 @@ const client = new MongoClient(MONGO_URI, options);
 const dbName = "FinalProject";
 const db = client.db(dbName);
 /**********************************************************/
-/*  edit Education
+/*  get All users
   /**********************************************************/
 
 const getAllUsers = async (req, res) => {
@@ -40,14 +40,35 @@ const getAllUsers = async (req, res) => {
 };
 
 /**********************************************************/
-/*  edit Experience
+/*  get specific User
   /**********************************************************/
-/**********************************************************/
-/*  edit Additional language 
-  /**********************************************************/
-/**********************************************************/
-/*  edit Description
-  /**********************************************************/
+
+const getSpecificUser = async (req, res) => {
+  const { _id } = req.params;
+  try {
+    await client.connect();
+    const findSpecificUser = await db.collection("users").findOne({ _id });
+
+    if (!findSpecificUser) {
+      return res.status(400).json({
+        status: 400,
+        message: ` Sorry, we can not find all the user's information with id : ${_id}`,
+      });
+    } else {
+      return res.status(200).json({
+        status: 200,
+        data: findSpecificUser,
+        message: ` We successfully find users information with id: ${_id}`,
+      });
+    }
+  } catch (err) {
+    console.log("get Specific User ", err);
+    //
+  }
+  client.close();
+};
+
 module.exports = {
   getAllUsers,
+  getSpecificUser,
 };

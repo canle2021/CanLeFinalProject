@@ -221,7 +221,7 @@ const editCredentials = async (req, res) => {
         ? "This is the first Credentials, not change yet"
         : findUserId.credentials,
     };
-    // practice areas can be similar between many lawyers
+
     if (findUserId.credentials !== undefined) {
       if (
         findUserId.credentials.toLowerCase() === body.credentials.toLowerCase()

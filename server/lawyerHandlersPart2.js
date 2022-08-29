@@ -48,7 +48,7 @@ const editEducation = async (req, res) => {
         ? "This is the first Education, not change yet"
         : findUserId.education,
     };
-    // practice areas can be similar between many lawyers
+
     if (findUserId.education !== undefined) {
       if (findUserId.education.toLowerCase() === body.education.toLowerCase()) {
         return res.status(400).json({
@@ -127,7 +127,7 @@ const editExperience = async (req, res) => {
         ? "This is the first Experience, not change yet"
         : findUserId.experience,
     };
-    // practice areas can be similar between many lawyers
+
     if (findUserId.experience !== undefined) {
       if (
         findUserId.experience.toLowerCase() === body.experience.toLowerCase()
@@ -249,9 +249,6 @@ const editLanguages = async (req, res) => {
   client.close();
 };
 
-/**********************************************************/
-/*  edit Description
-  /**********************************************************/
 module.exports = {
   editEducation,
   editExperience,

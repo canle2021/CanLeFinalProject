@@ -2,7 +2,7 @@
 
 const express = require("express");
 const morgan = require("morgan");
-const { getAllUsers } = require("./getHandlers");
+const { getAllUsers, getSpecificUser } = require("./getHandlers");
 const { createAccount, addPicture } = require("./addAccount&Picture");
 const {
   editPicture,
@@ -45,6 +45,7 @@ express()
 
   // RESTFUL endpoints
   .get(`/api/get-all-users`, getAllUsers)
+  .get(`/api/get-specific-user/:_id`, getSpecificUser)
   .post(`/api/add-user`, createAccount)
   .post(`/api/add-user-picture`, addPicture)
   .patch("/api/update-picture", editPicture)
