@@ -15,7 +15,11 @@ const {
   editPracticeAreas,
   editCredentials,
 } = require("./lawyerProfileHandlers");
-const { editEducation, editExperience } = require("./lawyerHandlersPart2");
+const {
+  editEducation,
+  editExperience,
+  editLanguages,
+} = require("./lawyerHandlersPart2");
 const PORT = 8000;
 
 express()
@@ -54,6 +58,7 @@ express()
   .patch("/api/update-credentials", editCredentials)
   .patch("/api/update-education", editEducation)
   .patch("/api/update-experience", editExperience)
+  .patch("/api/update-languages", editLanguages)
   .get("*", (req, res) => {
     res.status(404).json({
       status: 404,
