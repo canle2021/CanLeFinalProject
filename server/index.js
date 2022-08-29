@@ -20,6 +20,7 @@ const {
   editExperience,
   editLanguages,
 } = require("./lawyerHandlersPart2");
+const { addMessage } = require("./messageHandlers");
 const PORT = 8000;
 
 express()
@@ -60,6 +61,8 @@ express()
   .patch("/api/update-education", editEducation)
   .patch("/api/update-experience", editExperience)
   .patch("/api/update-languages", editLanguages)
+  .post(`/api/add-message`, addMessage)
+
   .get("*", (req, res) => {
     res.status(404).json({
       status: 404,
