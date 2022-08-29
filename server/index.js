@@ -9,7 +9,11 @@ const {
   editName,
 } = require("./updateProfileHandlers");
 const { editEmail, editPhone, editAddress } = require("./updateProfilePart2");
-const { editQuote, editPracticeAreas } = require("./lawyerProfileHandlers");
+const {
+  editQuote,
+  editPracticeAreas,
+  editCredentials,
+} = require("./lawyerProfileHandlers");
 const PORT = 8000;
 
 express()
@@ -44,6 +48,7 @@ express()
   .patch("/api/update-address", editAddress)
   .patch("/api/update-quote", editQuote)
   .patch("/api/update-practice-areas", editPracticeAreas)
+  .patch("/api/update-credentials", editCredentials)
   .get("*", (req, res) => {
     res.status(404).json({
       status: 404,
