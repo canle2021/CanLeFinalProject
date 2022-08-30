@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 const { MongoClient } = require("mongodb");
+const { application } = require("express");
 require("dotenv").config();
 const { MONGO_URI } = process.env;
 
@@ -20,7 +21,7 @@ const getAllUsers = async (req, res) => {
     await client.connect();
     const findUsers = await db.collection("users").find().toArray();
 
-    if (findUsers.length < 0) {
+    if (findUsers.length < 1) {
       return res.status(400).json({
         status: 400,
         message: ` Sorry, we can not find all the users information`,
@@ -85,7 +86,7 @@ const getLawyers = async (req, res) => {
       .find()
       .toArray();
 
-    if (findLawyers.length < 0 || findLawyersPictures.length < 0) {
+    if (findLawyers.length < 1 || findLawyersPictures.length < 1) {
       return res.status(400).json({
         status: 400,
         message: ` Sorry, we can not find all the Lawyers information`,
@@ -116,7 +117,7 @@ const getAppointments = async (req, res) => {
       .find()
       .toArray();
 
-    if (findAppointments.length < 0) {
+    if (findAppointments.length < 1) {
       return res.status(400).json({
         status: 400,
         message: ` Sorry, we can not find all the Appointments information`,
@@ -164,10 +165,43 @@ const getSpecificAppointments = async (req, res) => {
   }
   client.close();
 };
+/**********************************************************/
+/*  get  Appointments By Receiver
+  /**********************************************************/
+
+const getAppointmentsByReceiver = async (req, res) => {
+  const { receiverId } = req.params;
+
+  try {
+    await client.connect();
+    const findAppointments = await db
+      .collection("appointments")
+      .find({ receiverId })
+      .toArray();
+
+    if (findAppointments.length < 1) {
+      return res.status(400).json({
+        status: 400,
+        message: ` Sorry, we can not find all the Appointments with receiver's id: ${receiverId} information`,
+      });
+    } else {
+      return res.status(200).json({
+        status: 200,
+        data: findAppointments,
+        message: ` We successfully find the Appointment with id: ${receiverId}`,
+      });
+    }
+  } catch (err) {
+    console.log("get Appointments by receiver id ", err);
+    //
+  }
+  client.close();
+};
 module.exports = {
   getAllUsers,
   getLawyers,
   getSpecificUser,
   getAppointments,
   getSpecificAppointments,
+  getAppointmentsByReceiver,
 };
