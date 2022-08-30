@@ -21,8 +21,9 @@ const addAppointment = async (req, res) => {
   // with the time, duration, we should have chose list in F.E
   // supposed the posting method wil have a req.body with this format:
   //{_id
-  // "senderId": from the logged in user
-  // "receiverId": from the current viewed page of lawyer profile
+  // "senderId": "from the logged in user"
+  // "receiverId": "from the current viewed page of lawyer profile"
+  // "caseId": "case ID wil be created by the lawyer"
   //   "message": "this is the test message",
   //   "date": "10-10-2022"
   //   "time": "10:30am"

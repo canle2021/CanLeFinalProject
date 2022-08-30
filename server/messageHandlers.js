@@ -22,6 +22,7 @@ const addMessage = async (req, res) => {
   //{
   // "senderId": "from the logged in user"
   // "receiverId": "from the current viewed page of lawyer profile"
+  //   "subject": "this is the test message",
   //   "message": "this is the test message",
   // }
   // remember to copy all this to F.E
