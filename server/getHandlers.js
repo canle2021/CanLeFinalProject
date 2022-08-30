@@ -104,8 +104,39 @@ const getLawyers = async (req, res) => {
   }
   client.close();
 };
+/**********************************************************/
+/*  get All Appointments
+  /**********************************************************/
+
+const getAppointments = async (req, res) => {
+  try {
+    await client.connect();
+    const findAppointments = await db
+      .collection("appointments")
+      .find()
+      .toArray();
+
+    if (findAppointments.length < 0) {
+      return res.status(400).json({
+        status: 400,
+        message: ` Sorry, we can not find all the Appointments information`,
+      });
+    } else {
+      return res.status(200).json({
+        status: 200,
+        data: findAppointments,
+        message: ` We successfully find all the Appointments`,
+      });
+    }
+  } catch (err) {
+    console.log("get all Lawyers ", err);
+    //
+  }
+  client.close();
+};
 module.exports = {
   getAllUsers,
   getLawyers,
   getSpecificUser,
+  getAppointments,
 };

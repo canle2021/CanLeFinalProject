@@ -26,9 +26,6 @@ const addMessage = async (req, res) => {
   // }
   // remember to copy all this to F.E
 
-  const newMessage = {
-    ...body,
-  };
   if (!body.senderId || !body.receiverId || !body.message) {
     return res.status(400).json({
       status: 400,
@@ -58,7 +55,7 @@ const addMessage = async (req, res) => {
         message: "Sorry. sender's Id or reciever's Id was not found ",
       });
     }
-    // add new message to usersPictures collection
+
     const inserMessage = await db.collection("messages").insertOne(body);
 
     if (inserMessage.insertedId !== "") {

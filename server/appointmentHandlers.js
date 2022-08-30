@@ -24,7 +24,8 @@ const addAppointment = async (req, res) => {
   // "senderId": from the logged in user
   // "receiverId": from the current viewed page of lawyer profile
   //   "message": "this is the test message",
-  //   "time": "10am-12-12-2022",
+  //   "date": "10-10-2022"
+  //   "time": "10:30am"
   //   "duration": "60 mins",
   //   "hourRate": "$100",
   //   "location": "location",
@@ -39,6 +40,7 @@ const addAppointment = async (req, res) => {
     !body.senderId ||
     !body.receiverId ||
     !body.message ||
+    !body.date ||
     !body.time ||
     !body.duration ||
     !body.hourRate ||
