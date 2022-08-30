@@ -26,6 +26,7 @@ const {
   editEducation,
   editExperience,
   editLanguages,
+  editHourRate,
 } = require("./lawyerHandlersPart2");
 const { addMessage } = require("./messageHandlers");
 const {
@@ -79,6 +80,7 @@ express()
   .patch("/api/update-education", editEducation)
   .patch("/api/update-experience", editExperience)
   .patch("/api/update-languages", editLanguages)
+  .patch("/api/update-hour-rate", editHourRate)
   .post(`/api/add-message`, addMessage)
   .post(`/api/add-appointment`, addAppointment)
   .delete(`/api/delete-appointment/:_id`, deleteSpecificAppointments)

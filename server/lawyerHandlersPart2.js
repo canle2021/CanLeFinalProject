@@ -248,9 +248,88 @@ const editLanguages = async (req, res) => {
   }
   client.close();
 };
+/**********************************************************/
+/*  edit hour rate
+  /**********************************************************/
+const editHourRate = async (req, res) => {
+  const body = req.body;
+
+  // supposed the posting method wil have a req.body with this format:
+  //{
+  //   "_id": "df69a7d3-4c2e-45de-8cb1-ecc91872819f", take from user document to FE when login and push back to this end point
+  //   "hourRate ": "$100"
+  // }
+  // remember to copy all this to F.E
+
+  if (!body._id || !body.hourRate) {
+    return res.status(400).json({
+      status: 400,
+      data: {},
+      message: "Sorry. Please provide all the required information ",
+    });
+  }
+
+  try {
+    await client.connect();
+    const findUserId = await db.collection("users").findOne({ _id: body._id });
+
+    if (!findUserId) {
+      return res.status(400).json({
+        status: 400,
+        message: ` Sorry, the user with use's id :${body._id} does not exist`,
+      });
+    }
+    const oldHourRate = {
+      userId: findUserId._id,
+      oldHourRate: !findUserId.hourRate
+        ? "This is the first Hour Rate, not change yet"
+        : findUserId.hourRate,
+    };
+    // Languages can be similar between many lawyers
+    if (findUserId.hourRate !== undefined) {
+      if (findUserId.hourRate.toLowerCase() === body.hourRate.toLowerCase()) {
+        return res.status(400).json({
+          status: 400,
+          message: ` Sorry, the new HourRate is the same with your existing HourRate`,
+        });
+      }
+    }
+
+    const updateHourRate = await db.collection("users").updateOne(
+      {
+        _id: body._id,
+      },
+      { $set: { hourRate: body.hourRate } }
+    );
+    if (updateHourRate.modifiedCount > 0) {
+      //  this is to make sure the <users> collection was updated successfully
+
+      const hourRateChanged = await db
+        .collection("HourRateChanged")
+        .insertOne(oldHourRate);
+      // this is for tracking what has been changed.
+
+      return res.status(200).json({
+        status: 200,
+        data: body._id,
+        message: ` The HourRate of user's id: ${body._id} was successfully updated`,
+      });
+    } else {
+      return res.status(500).json({
+        status: 500,
+        message: ` Sorry, the HourRate of user's id: ${body._id} was NOT successfully updated for some reason`,
+      });
+    }
+  } catch (err) {
+    console.log("Update HourRate ", err);
+    //
+  }
+  client.close();
+};
 
 module.exports = {
   editEducation,
   editExperience,
   editLanguages,
+  editHourRate,
 };
