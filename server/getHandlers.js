@@ -20,7 +20,7 @@ const getAllUsers = async (req, res) => {
     await client.connect();
     const findUsers = await db.collection("users").find().toArray();
 
-    if (findUsers.length < 1) {
+    if (findUsers.length < 0) {
       return res.status(400).json({
         status: 400,
         message: ` Sorry, we can not find all the users information`,
@@ -67,8 +67,43 @@ const getSpecificUser = async (req, res) => {
   }
   client.close();
 };
+/**********************************************************/
+/*  get All Lawyers
+  /**********************************************************/
 
+const getLawyers = async (req, res) => {
+  try {
+    await client.connect();
+    const findLawyers = await db
+      .collection("users")
+      .find({ status: "lawyer" })
+      .toArray();
+    const findLawyersPictures = await db
+      .collection("usersPictures")
+      .find()
+      .toArray();
+
+    if (findLawyers.length < 0 || findLawyersPictures.length < 0) {
+      return res.status(400).json({
+        status: 400,
+        message: ` Sorry, we can not find all the Lawyers information`,
+      });
+    } else {
+      return res.status(200).json({
+        status: 200,
+        lawyersInfomation: findLawyers,
+        lawyerspicture: findLawyersPictures,
+        message: ` We successfully find all the Lawyers`,
+      });
+    }
+  } catch (err) {
+    console.log("get all Lawyers ", err);
+    //
+  }
+  client.close();
+};
 module.exports = {
   getAllUsers,
+  getLawyers,
   getSpecificUser,
 };
