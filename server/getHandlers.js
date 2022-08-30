@@ -149,13 +149,13 @@ const getSpecificAppointments = async (req, res) => {
     if (!findAppointment) {
       return res.status(400).json({
         status: 400,
-        message: ` Sorry, we can not find all the Appointment with id: ${_id} information`,
+        message: ` Sorry, we can not find the Appointment with id: ${_id} information`,
       });
     } else {
       return res.status(200).json({
         status: 200,
         data: findAppointment,
-        message: ` We successfully find all the Appointment with id: ${_id}`,
+        message: ` We successfully find the Appointment with id: ${_id}`,
       });
     }
   } catch (err) {

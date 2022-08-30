@@ -84,7 +84,10 @@ const addAppointment = async (req, res) => {
 
       return res.status(200).json({
         status: 200,
-        data: body,
+        data: {
+          ...body,
+          _id: newAppointment._id,
+        },
         message: ` The Appointment with id: ${newAppointment._id}was successfully added`,
       });
     } else {
@@ -103,6 +106,41 @@ const addAppointment = async (req, res) => {
 /**********************************************************/
 /*   delete appointment
 /**********************************************************/
+const deleteSpecificAppointments = async (req, res) => {
+  const { _id } = req.params;
+  try {
+    await client.connect();
+    const findAppointment = await db
+      .collection("appointments")
+      .findOne({ _id });
+    if (!findAppointment) {
+      return res.status(400).json({
+        status: 400,
+        message: ` Sorry, we can not find the Appointment with id: ${_id} information`,
+      });
+    } else {
+      const deleteAppointment = await db
+        .collection("appointments")
+        .deleteOne({ _id });
+      console.log("delete", deleteAppointment);
+      if (deleteAppointment.deletedCount > 0) {
+        const trackDeletedAppointment = await db
+          .collection("deletedAppointments")
+          .insertOne(findAppointment);
+        return res.status(200).json({
+          status: 200,
+          message: ` We successfully deleted the Appointment with id: ${_id}`,
+        });
+      }
+    }
+  } catch (err) {
+    console.log("get delete Appointment ", err);
+    //
+  }
+  client.close();
+};
+
 module.exports = {
   addAppointment,
+  deleteSpecificAppointments,
 };

@@ -27,7 +27,10 @@ const {
   editLanguages,
 } = require("./lawyerHandlersPart2");
 const { addMessage } = require("./messageHandlers");
-const { addAppointment } = require("./appointmentHandlers");
+const {
+  addAppointment,
+  deleteSpecificAppointments,
+} = require("./appointmentHandlers");
 const PORT = 8000;
 
 express()
@@ -73,6 +76,7 @@ express()
   .patch("/api/update-languages", editLanguages)
   .post(`/api/add-message`, addMessage)
   .post(`/api/add-appointment`, addAppointment)
+  .delete(`/api/delete-appointment/:_id`, deleteSpecificAppointments)
 
   .get("*", (req, res) => {
     res.status(404).json({
