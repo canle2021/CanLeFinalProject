@@ -129,7 +129,37 @@ const getAppointments = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log("get all Lawyers ", err);
+    console.log("get all Appointments ", err);
+    //
+  }
+  client.close();
+};
+/**********************************************************/
+/*  get specific Appointments
+  /**********************************************************/
+
+const getSpecificAppointments = async (req, res) => {
+  const { _id } = req.params;
+  try {
+    await client.connect();
+    const findAppointment = await db
+      .collection("appointments")
+      .findOne({ _id });
+
+    if (!findAppointment) {
+      return res.status(400).json({
+        status: 400,
+        message: ` Sorry, we can not find all the Appointment with id: ${_id} information`,
+      });
+    } else {
+      return res.status(200).json({
+        status: 200,
+        data: findAppointment,
+        message: ` We successfully find all the Appointment with id: ${_id}`,
+      });
+    }
+  } catch (err) {
+    console.log("get single Appointment ", err);
     //
   }
   client.close();
@@ -139,4 +169,5 @@ module.exports = {
   getLawyers,
   getSpecificUser,
   getAppointments,
+  getSpecificAppointments,
 };

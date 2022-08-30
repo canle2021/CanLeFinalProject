@@ -7,6 +7,7 @@ const {
   getSpecificUser,
   getLawyers,
   getAppointments,
+  getSpecificAppointments,
 } = require("./getHandlers");
 const { createAccount, addPicture } = require("./addAccount&Picture");
 const {
@@ -55,6 +56,7 @@ express()
   .get(`/api/get-specific-user/:_id`, getSpecificUser)
   .get(`/api/get-lawyers`, getLawyers)
   .get(`/api/get-appointments`, getAppointments)
+  .get(`/api/get-specific-appointment/:_id`, getSpecificAppointments)
   .post(`/api/add-user`, createAccount)
   .post(`/api/add-user-picture`, addPicture)
   .patch("/api/update-picture", editPicture)
