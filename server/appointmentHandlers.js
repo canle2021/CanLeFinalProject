@@ -13,23 +13,37 @@ const client = new MongoClient(MONGO_URI, options);
 const dbName = "FinalProject";
 const db = client.db(dbName);
 /**********************************************************/
-/*   post : Message
+/*   create Appointment
 /**********************************************************/
-const addMessage = async (req, res) => {
-  const body = req.body;
 
+const addAppointment = async (req, res) => {
+  const body = req.body;
+  // with the time, duration, we should have chose list in F.E
   // supposed the posting method wil have a req.body with this format:
-  //{
-  // "senderId": "from the logged in user"
-  // "receiverId": "from the current viewed page of lawyer profile"
+  //{_id
+  // "senderId": from the logged in user
+  // "receiverId": from the current viewed page of lawyer profile
   //   "message": "this is the test message",
+  //   "time": "10am-12-12-2022",
+  //   "duration": "60 mins",
+  //   "hourRate": "$100",
+  //   "location": "location",
   // }
   // remember to copy all this to F.E
 
-  const newMessage = {
+  const newAppointment = {
+    _id: uuidv4(),
     ...body,
   };
-  if (!body.senderId || !body.receiverId || !body.message) {
+  if (
+    !body.senderId ||
+    !body.receiverId ||
+    !body.message ||
+    !body.time ||
+    !body.duration ||
+    !body.hourRate ||
+    !body.location
+  ) {
     return res.status(400).json({
       status: 400,
       message: "Sorry. Please provide all the required information ",
@@ -44,7 +58,7 @@ const addMessage = async (req, res) => {
 
   try {
     await client.connect();
-
+    // need to check the availability of the lawyer's schedule like what we did with slingAir project?
     const findSenderId = await db
       .collection("users")
       .findOne({ _id: body.senderId });
@@ -58,29 +72,35 @@ const addMessage = async (req, res) => {
         message: "Sorry. sender's Id or reciever's Id was not found ",
       });
     }
-    // add new message to usersPictures collection
-    const inserMessage = await db.collection("messages").insertOne(body);
 
-    if (inserMessage.insertedId !== "") {
-      //  this is to make sure the <messages> collection was updated successfully
+    const insertAppointment = await db
+      .collection("appointments")
+      .insertOne(newAppointment);
+
+    if (insertAppointment.insertedId !== "") {
+      //  this is to make sure the <appointments> collection was updated successfully
 
       return res.status(200).json({
         status: 200,
         data: body,
-        message: ` The messages was successfully added`,
+        message: ` The Appointment with id: ${newAppointment._id}was successfully added`,
       });
     } else {
       return res.status(500).json({
         status: 500,
-        message: ` Sorry, messages was NOT successfully added for some reason`,
+        message: ` Sorry, Appointment was NOT successfully added for some reason`,
       });
     }
   } catch (err) {
-    console.log("Insert messages endpoint", err);
+    console.log("Insert Appointment endpoint", err);
     //
   }
   client.close();
 };
+
+/**********************************************************/
+/*   delete appointment
+/**********************************************************/
 module.exports = {
-  addMessage,
+  addAppointment,
 };
