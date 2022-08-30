@@ -4,6 +4,7 @@ import Header from "./Header";
 import HomePage from "./HomePage";
 import Footer from "./Footer";
 import LoginPage from "./LogInPage";
+import SignUpPage from "./SignUp";
 import SpecificLawyer from "./SpecificLawyer";
 import ClientProfile from "./ClientProfile";
 import LawyerProfile from "./LawyerProfile";
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route exact path="/lawyer/:id" element={<SpecificLawyer />} />
           <Route exact path="/logIn" element={<LoginPage />} />
+          <Route exact path="/signUp" element={<SignUpPage />} />
           <Route path="/ClientProfile/:id" element={<ClientProfile />} />
           <Route path="/LawyerProfile/:id" element={<LawyerProfile />} />
           <Route
