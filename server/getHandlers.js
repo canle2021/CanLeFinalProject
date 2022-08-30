@@ -48,6 +48,7 @@ const getSpecificUser = async (req, res) => {
   try {
     await client.connect();
     const findSpecificUser = await db.collection("users").findOne({ _id });
+    const findPictures = await db.collection("usersPictures").findOne({ _id });
 
     if (!findSpecificUser) {
       return res.status(400).json({
@@ -57,7 +58,8 @@ const getSpecificUser = async (req, res) => {
     } else {
       return res.status(200).json({
         status: 200,
-        data: findSpecificUser,
+        userData: findSpecificUser,
+        userPicture: findPictures,
         message: ` We successfully find users information with id: ${_id}`,
       });
     }
