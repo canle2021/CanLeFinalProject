@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 
 const HomePage = () => {
@@ -17,29 +18,27 @@ const HomePage = () => {
         console.log("err", err);
       });
   }, []);
-
-  console.log("allLawyersInformation", allLawyersInformation);
-  console.log("allLawyersPicture", allLawyersPicture);
-
   return (
     <HomePageDiv>
       <h1>HOME PAGE</h1>
       {allLawyersPicture.map((picture, index) => {
         return (
-          <LawyerpictureDiv key={index}>
-            <Picture src={picture.picture}></Picture>
-            <Name>
-              {allLawyersInformation.map((eachLawyer, index) => {
-                if (eachLawyer._id === picture._id) {
-                  return (
-                    <span key={index}>
-                      {eachLawyer.firstName} {eachLawyer.lastName}, Lawyer
-                    </span>
-                  );
-                }
-              })}
-            </Name>
-          </LawyerpictureDiv>
+          <Link to={`/lawyer/${picture._id}`} key={index}>
+            <LawyerpictureDiv>
+              <Picture src={picture.picture}></Picture>
+              <Name>
+                {allLawyersInformation.map((eachLawyer, index) => {
+                  if (eachLawyer._id === picture._id) {
+                    return (
+                      <span key={index}>
+                        {eachLawyer.firstName} {eachLawyer.lastName}, Lawyer
+                      </span>
+                    );
+                  }
+                })}
+              </Name>
+            </LawyerpictureDiv>
+          </Link>
         );
       })}
     </HomePageDiv>
