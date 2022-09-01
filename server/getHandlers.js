@@ -197,6 +197,40 @@ const getAppointmentsByReceiver = async (req, res) => {
   }
   client.close();
 };
+
+/**********************************************************/
+/*  get specific User BY EMAIL
+  /**********************************************************/
+
+const getSpecificUserByEmail = async (req, res) => {
+  const { email } = req.params;
+  console.log("email", { email });
+  try {
+    await client.connect();
+    const findSpecificUser = await db.collection("users").findOne({ email });
+
+    if (!findSpecificUser) {
+      return res.status(400).json({
+        status: 400,
+        message: ` Sorry, we can not find all the user's information with email : ${email}`,
+      });
+    } else {
+      const findPictures = await db
+        .collection("usersPictures")
+        .findOne({ _id: findSpecificUser._id });
+      return res.status(200).json({
+        status: 200,
+        userData: findSpecificUser,
+        userPicture: findPictures,
+        message: ` We successfully find users information with email: ${email}`,
+      });
+    }
+  } catch (err) {
+    console.log("get Specific User ", err);
+    //
+  }
+  client.close();
+};
 module.exports = {
   getAllUsers,
   getLawyers,
@@ -204,4 +238,5 @@ module.exports = {
   getAppointments,
   getSpecificAppointments,
   getAppointmentsByReceiver,
+  getSpecificUserByEmail,
 };

@@ -9,6 +9,7 @@ const {
   getAppointments,
   getSpecificAppointments,
   getAppointmentsByReceiver,
+  getSpecificUserByEmail,
 } = require("./getHandlers");
 const { createAccount, addPicture } = require("./addAccount&Picture");
 const {
@@ -59,6 +60,7 @@ express()
   // RESTFUL endpoints
   .get(`/api/get-all-users`, getAllUsers)
   .get(`/api/get-specific-user/:_id`, getSpecificUser)
+  .get(`/api/get-specific-user-by-email/:email`, getSpecificUserByEmail)
   .get(`/api/get-lawyers`, getLawyers)
   .get(`/api/get-appointments`, getAppointments)
   .get(`/api/get-specific-appointment/:_id`, getSpecificAppointments)
