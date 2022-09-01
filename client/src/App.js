@@ -21,8 +21,8 @@ function App() {
           <Route exact path="/lawyer/:_id" element={<SpecificLawyer />} />
           <Route exact path="/logIn" element={<LoginPage />} />
           <Route exact path="/signUp" element={<SignUpPage />} />
-          <Route path="/ClientProfile/:id" element={<ClientProfile />} />
-          <Route path="/LawyerProfile/:id" element={<LawyerProfile />} />
+          <Route path="/ClientProfile" element={<ClientProfile />} />
+          <Route path="/LawyerProfile" element={<LawyerProfile />} />
           <Route
             path="/LawyerWorkingPage/:id"
             element={<LawyerWorkingPage />}

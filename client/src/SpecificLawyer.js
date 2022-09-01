@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-
+import { UserContext } from "./UserContext";
 const SpecificLawyer = () => {
   const { _id } = useParams();
 
-  const [specificLawyer, setSpecificLawyer] = useState([]);
-  const [specificLawyerPicture, setSpecificLawyerPicture] = useState([]);
+  const {
+    specificLawyer,
+    setSpecificLawyer,
+    specificLawyerPicture,
+    setSpecificLawyerPicture,
+  } = useContext(UserContext);
 
   useEffect(() => {
     fetch(`/api/get-specific-user/${_id}`)
