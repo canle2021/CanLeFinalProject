@@ -23,7 +23,7 @@ const getAllUsers = async (req, res) => {
 
     if (findUsers.length < 1) {
       return res.status(400).json({
-        status: 400,
+        status: 404,
         message: ` Sorry, we can not find all the users information`,
       });
     } else {
@@ -53,7 +53,7 @@ const getSpecificUser = async (req, res) => {
 
     if (!findSpecificUser) {
       return res.status(400).json({
-        status: 400,
+        status: 404,
         message: ` Sorry, we can not find all the user's information with id : ${_id}`,
       });
     } else {
@@ -88,7 +88,7 @@ const getLawyers = async (req, res) => {
 
     if (findLawyers.length < 1 || findLawyersPictures.length < 1) {
       return res.status(400).json({
-        status: 400,
+        status: 404,
         message: ` Sorry, we can not find all the Lawyers information`,
       });
     } else {
@@ -119,7 +119,7 @@ const getAppointments = async (req, res) => {
 
     if (findAppointments.length < 1) {
       return res.status(400).json({
-        status: 400,
+        status: 404,
         message: ` Sorry, we can not find all the Appointments information`,
       });
     } else {
@@ -149,7 +149,7 @@ const getSpecificAppointments = async (req, res) => {
 
     if (!findAppointment) {
       return res.status(400).json({
-        status: 400,
+        status: 404,
         message: ` Sorry, we can not find the Appointment with id: ${_id} information`,
       });
     } else {
@@ -181,7 +181,7 @@ const getAppointmentsByReceiver = async (req, res) => {
 
     if (findAppointments.length < 1) {
       return res.status(400).json({
-        status: 400,
+        status: 404,
         message: ` Sorry, we can not find all the Appointments with receiver's id: ${receiverId} information`,
       });
     } else {
@@ -211,7 +211,7 @@ const getSpecificUserByEmail = async (req, res) => {
 
     if (!findSpecificUser) {
       return res.status(400).json({
-        status: 400,
+        status: 404,
         message: ` Sorry, we can not find all the user's information with email : ${email}`,
       });
     } else {
