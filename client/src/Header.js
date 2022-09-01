@@ -5,6 +5,7 @@ import { UserContext } from "./UserContext";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Header = () => {
+  const navigate = useNavigate();
   const {
     userProfile,
     setUserProfile,
@@ -12,6 +13,8 @@ const Header = () => {
     setEmailToFetchUser,
     sucessfullyVerification,
     setSucessfullyVerification,
+    userInDatabase,
+    setUserInDatabase,
   } = useContext(UserContext);
 
   const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
@@ -23,12 +26,21 @@ const Header = () => {
     if (sucessfullyVerification && emailToFetchUser) {
       fetch(`/api/get-specific-user-by-email/${emailToFetchUser}`)
         .then((res) => {
-          console.log("work until here");
+          console.log("res.json", res);
           return res.json();
         })
         .then((data) => {
-          setUserProfile(data.userData || []);
+          if (data.status === 200) {
+            setUserProfile(data.userData || []);
+            setUserInDatabase(true);
+            console.log("date", data);
+          } else {
+            return navigate("/signUp");
+          }
         })
+        // a post method here to check if the email registered is existing
+        // show the alert if the email is already use
+
         .catch((err) => {
           console.log("err", err);
         });
@@ -39,6 +51,11 @@ const Header = () => {
     // reset() // an action on the context to set the staet back to initial state
     setEmailToFetchUser("");
     setSucessfullyVerification(false);
+  };
+  const signUserUp = async () => {
+    // await for signUp page done job, then sign up the password and user
+    // loginWithRedirect();
+    navigate("/signUp");
   };
   console.log("userProfile", userProfile);
   return (
@@ -62,7 +79,10 @@ const Header = () => {
           </Link>
         </div>
       ) : (
-        <button onClick={() => loginWithRedirect()}>Login</button>
+        <div>
+          <button onClick={() => loginWithRedirect()}>Login</button>
+          <button onClick={() => signUserUp()}>Sign Up</button>
+        </div>
       )}
     </HeaderDiv>
   );

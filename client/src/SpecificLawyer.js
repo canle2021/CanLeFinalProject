@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 const SpecificLawyer = () => {
+  // if already created password but not in the database yet, redirect to signup page if the client click on book appointment/send message to the lawyer
+
   const { _id } = useParams();
 
   const {

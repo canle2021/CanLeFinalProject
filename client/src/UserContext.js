@@ -8,6 +8,7 @@ export const UserProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState([]);
   const [emailToFetchUser, setEmailToFetchUser] = useState("");
   const [sucessfullyVerification, setSucessfullyVerification] = useState(false);
+  const [userInDatabase, setUserInDatabase] = useState(false);
   return (
     <UserContext.Provider
       value={{
@@ -21,6 +22,8 @@ export const UserProvider = ({ children }) => {
         setEmailToFetchUser,
         sucessfullyVerification,
         setSucessfullyVerification,
+        userInDatabase,
+        setUserInDatabase,
       }}
     >
       {children}

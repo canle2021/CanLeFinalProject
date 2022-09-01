@@ -7,13 +7,23 @@ const ClientProfile = () => {
   // use auth0 with parameter is the email and put that email to fetch link
   // isAuthoticated move to context to use in login/logOut button in header
   const navigate = useNavigate();
-  const { userProfile, sucessfullyVerification } = useContext(UserContext);
+  const {
+    userProfile,
+    sucessfullyVerification,
+    userInDatabase,
+    setUserInDatabase,
+  } = useContext(UserContext);
 
   console.log("userProfile", userProfile);
 
   useEffect(() => {
     if (!sucessfullyVerification) {
       navigate("/");
+    }
+
+    // check already in database? not redirect to sign up page
+    if (!userInDatabase) {
+      navigate("/signUp");
     }
   }, [sucessfullyVerification]);
 

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Header from "./Header";
 import HomePage from "./HomePage";
 import Footer from "./Footer";
-import LoginPage from "./LogInPage";
+
 import SignUpPage from "./SignUp";
 import SpecificLawyer from "./SpecificLawyer";
 import ClientProfile from "./ClientProfile";
@@ -19,10 +19,10 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route exact path="/lawyer/:_id" element={<SpecificLawyer />} />
-          <Route exact path="/logIn" element={<LoginPage />} />
+
           <Route exact path="/signUp" element={<SignUpPage />} />
-          <Route path="/ClientProfile" element={<ClientProfile />} />
-          <Route path="/LawyerProfile" element={<LawyerProfile />} />
+          <Route path="/clientProfile" element={<ClientProfile />} />
+          <Route path="/lawyerProfile" element={<LawyerProfile />} />
           <Route
             path="/LawyerWorkingPage/:id"
             element={<LawyerWorkingPage />}

@@ -4,12 +4,21 @@ import styled from "styled-components";
 import { UserContext } from "./UserContext";
 const LawyerProfile = () => {
   const navigate = useNavigate();
-  const { userProfile, sucessfullyVerification } = useContext(UserContext);
+  const {
+    userProfile,
+    sucessfullyVerification,
+    userInDatabase,
+    setUserInDatabase,
+  } = useContext(UserContext);
 
   console.log("userProfile", userProfile);
   useEffect(() => {
     if (!sucessfullyVerification) {
       navigate("/");
+    }
+    // check already in database? not redirect to sign up page
+    if (!userInDatabase) {
+      navigate("/signUp");
     }
   }, [sucessfullyVerification]);
   return (
