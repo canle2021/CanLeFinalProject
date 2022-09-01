@@ -1,38 +1,22 @@
 import React, { useContext, useEffect, useParams } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 const LawyerProfile = () => {
-  const {
-    userProfile,
-    setUserProfile,
-    emailToFetchUser,
-    setEmailToFetchUser,
-    sucessfullyVerification,
-    setSucessfullyVerification,
-  } = useContext(UserContext);
-  useEffect(() => {
-    if (sucessfullyVerification && emailToFetchUser) {
-      fetch(`/api/get-specific-user-by-email/${emailToFetchUser}`)
-        .then((res) => {
-          console.log("work until here");
-          return res.json();
-        })
-        .then((data) => {
-          setUserProfile(data.userData || []);
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
-    }
-  }, [sucessfullyVerification, emailToFetchUser]);
-  console.log("email", emailToFetchUser);
-  console.log("sucessfullyVerification", sucessfullyVerification);
+  const navigate = useNavigate();
+  const { userProfile, sucessfullyVerification } = useContext(UserContext);
 
   console.log("userProfile", userProfile);
+  useEffect(() => {
+    if (!sucessfullyVerification) {
+      navigate("/");
+    }
+  }, [sucessfullyVerification]);
   return (
     <LawyerProfileDiv>
       <h1>this is the Lawyer page</h1>
       <InformationDiv>
+        <p>Picture Id: {userProfile.pictureId}</p>
         <p>Username: {userProfile.userName}</p>
         <p>FirstName: {userProfile.firstName}</p>
         <p>LastName: {userProfile.lastName}</p>

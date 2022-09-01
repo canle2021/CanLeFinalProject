@@ -14,30 +14,33 @@ const Header = () => {
     setSucessfullyVerification,
   } = useContext(UserContext);
 
-  const {
-    loginWithRedirect,
-    user,
-    isAuthenticated,
-    // getAccessTokenWithPopup,
-    logout,
-  } = useAuth0();
-
-  console.log("isAuthenticated", isAuthenticated);
-  // console.log("getAccessTokenWithPopup", getAccessTokenWithPopup);
-  console.log("user", user);
+  const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
   setSucessfullyVerification(isAuthenticated);
   useEffect(() => {
     if (user?.email) {
-      console.log("user.email", user.email);
       setEmailToFetchUser(user.email);
     }
-  }, [user]);
-
-  console.log("email", emailToFetchUser);
+    if (sucessfullyVerification && emailToFetchUser) {
+      fetch(`/api/get-specific-user-by-email/${emailToFetchUser}`)
+        .then((res) => {
+          console.log("work until here");
+          return res.json();
+        })
+        .then((data) => {
+          setUserProfile(data.userData || []);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
+    }
+  }, [user, sucessfullyVerification, emailToFetchUser]);
   const logUserOut = async () => {
     await logout();
     // reset() // an action on the context to set the staet back to initial state
+    setEmailToFetchUser("");
+    setSucessfullyVerification(false);
   };
+  console.log("userProfile", userProfile);
   return (
     <HeaderDiv>
       <Link to="/">
@@ -52,7 +55,7 @@ const Header = () => {
             to={
               userProfile.status === "client"
                 ? "/ClientProfile"
-                : "LawyerProfile"
+                : "/LawyerProfile"
             }
           >
             <button>Profile</button>

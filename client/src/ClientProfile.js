@@ -1,37 +1,22 @@
 import React, { useContext, useEffect, useParams } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 
 const ClientProfile = () => {
   // use auth0 with parameter is the email and put that email to fetch link
   // isAuthoticated move to context to use in login/logOut button in header
-  const {
-    userProfile,
-    setUserProfile,
-    emailToFetchUser,
-    setEmailToFetchUser,
-    sucessfullyVerification,
-    setSucessfullyVerification,
-  } = useContext(UserContext);
-  useEffect(() => {
-    if (sucessfullyVerification && emailToFetchUser) {
-      fetch(`/api/get-specific-user-by-email/${emailToFetchUser}`)
-        .then((res) => {
-          console.log("work until here");
-          return res.json();
-        })
-        .then((data) => {
-          setUserProfile(data.userData || []);
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
-    }
-  }, [sucessfullyVerification, emailToFetchUser]);
-  console.log("email", emailToFetchUser);
-  console.log("sucessfullyVerification", sucessfullyVerification);
+  const navigate = useNavigate();
+  const { userProfile, sucessfullyVerification } = useContext(UserContext);
 
   console.log("userProfile", userProfile);
+
+  useEffect(() => {
+    if (!sucessfullyVerification) {
+      navigate("/");
+    }
+  }, [sucessfullyVerification]);
+
   return (
     <ClientProfileDiv>
       <h1>this is the client profile page</h1>
