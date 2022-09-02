@@ -21,7 +21,7 @@ const SignUpPage = () => {
   let disabled = true;
   const handleChange = (event) => {
     const name = event.target.name;
-    const value = event.target.value;
+    const value = event.target.value.trim();
     setValues((values) => ({ ...values, [name]: value }));
     // values is just a temperary variable which is holding an object contents inputs
   };
@@ -44,7 +44,7 @@ const SignUpPage = () => {
       console.log("converToJson", converToJson);
       if (converToJson.status === 200) {
         alert(
-          "Thank you for your provided information. If you did not sign up for email address and password, please click Login button (on the top this page), then <Don't have an account? Sign up> to register your password and the email address you just provied us."
+          "THANK YOU! You finished adding all the user's information. IF YOU DID NOT SIGN UP FOR EMAIL AND PASSWORD, please click Login button (on the top this page), then <Don't have an account? Sign up> to register your password and the email address you just provided us."
         );
       } else {
         alert(converToJson.message);
@@ -102,6 +102,7 @@ const SignUpPage = () => {
             placeholder="Email (required)"
             type="email"
             name="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             required
             onChange={handleChange}
           />
@@ -113,7 +114,7 @@ const SignUpPage = () => {
             required
             onChange={handleChange}
           />
-          <small>Phone Number Format: 123-456-7890</small>
+          <small>* Phone Number Format: 123-456-7890</small>
           <HeadLine2>Address: </HeadLine2>
           <Input
             placeholder="House Number And Street Name (required)"
@@ -136,16 +137,7 @@ const SignUpPage = () => {
             required
             onChange={handleChange}
           />
-          <Input
-            placeholder="Postal code (required), Format: T4L 0C2"
-            type="text"
-            name="postalCode"
-            minlength="6"
-            maxlength="7"
-            size="10"
-            required
-            onChange={handleChange}
-          />
+
           <Input
             placeholder="Country (required)"
             type="text"
@@ -153,6 +145,18 @@ const SignUpPage = () => {
             onChange={handleChange}
             required
           />
+          <Input
+            placeholder="Postal code (required)"
+            type="text"
+            name="postalCode"
+            pattern="[A-Z]{1}[0-9]{1}[A-Z]{1} [0-9]{1}[A-Z]{1}[0-9]{1}"
+            minlength="6"
+            maxlength="7"
+            size="10"
+            required
+            onChange={handleChange}
+          />
+          <small>* Postal Code Format: T4L 0C2</small>
 
           <SubmitButton
             type="submit"
