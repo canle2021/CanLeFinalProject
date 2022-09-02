@@ -15,6 +15,8 @@ const Header = () => {
     setSucessfullyVerification,
     userInDatabase,
     setUserInDatabase,
+    allMessagesReveived,
+    setAllMessagesReveived,
   } = useContext(UserContext);
 
   const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
@@ -46,6 +48,7 @@ const Header = () => {
         });
     }
   }, [user, sucessfullyVerification, emailToFetchUser]);
+
   const logUserOut = async () => {
     await logout();
     // reset() // an action on the context to set the staet back to initial state
@@ -58,6 +61,7 @@ const Header = () => {
     navigate("/signUp");
   };
   console.log("userProfile", userProfile);
+  console.log("all messages", allMessagesReveived);
   return (
     <HeaderDiv>
       <Link to="/">

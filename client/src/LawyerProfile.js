@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useParams } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
+import MessagesView from "./MeesagesView";
 const LawyerProfile = () => {
   const navigate = useNavigate();
   const {
@@ -37,6 +38,7 @@ const LawyerProfile = () => {
         <p>Postal Code: {userProfile.postalCode}</p>
         <p>Country: {userProfile.country}</p>
       </InformationDiv>
+      <MessagesView />
     </LawyerProfileDiv>
   );
 };

@@ -9,6 +9,8 @@ export const UserProvider = ({ children }) => {
   const [emailToFetchUser, setEmailToFetchUser] = useState("");
   const [sucessfullyVerification, setSucessfullyVerification] = useState(false);
   const [userInDatabase, setUserInDatabase] = useState(false);
+  const [allMessagesReveived, setAllMessagesReveived] = useState([]);
+
   return (
     <UserContext.Provider
       value={{
@@ -24,6 +26,8 @@ export const UserProvider = ({ children }) => {
         setSucessfullyVerification,
         userInDatabase,
         setUserInDatabase,
+        allMessagesReveived,
+        setAllMessagesReveived,
       }}
     >
       {children}

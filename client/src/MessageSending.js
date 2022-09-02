@@ -83,6 +83,20 @@ const MessageSending = ({}) => {
             required
             onChange={handleChange}
           />
+          <Input
+            placeholder="First Name (required)"
+            type="text"
+            name="firstName"
+            required
+            onChange={handleChange}
+          />
+          <Input
+            placeholder="Last Name (required)"
+            type="text"
+            name="lastName"
+            required
+            onChange={handleChange}
+          />
           <Message
             placeholder="Message (required)"
             type="text"
@@ -160,6 +174,14 @@ const Message = styled.textarea`
   border-radius: 5px;
 `;
 const Subject = styled.input`
+  width: 390px;
+  height: 40px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+`;
+const Input = styled.input`
   width: 390px;
   height: 40px;
   margin-bottom: 10px;
