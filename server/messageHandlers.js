@@ -24,10 +24,18 @@ const addMessage = async (req, res) => {
   // "receiverId": "from the current viewed page of lawyer profile"
   //   "subject": "this is the test message",
   //   "message": "this is the test message",
+  //   "firstName": "this is the test message",
+  //   "lastName": "this is the test message",
   // }
   // remember to copy all this to F.E
 
-  if (!body.senderId || !body.receiverId || !body.message) {
+  if (
+    !body.senderId ||
+    !body.receiverId ||
+    !body.message ||
+    !body.firstName ||
+    !body.lastName
+  ) {
     return res.status(400).json({
       status: 400,
       message: "Sorry. Please provide all the required information ",
