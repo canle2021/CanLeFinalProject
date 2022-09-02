@@ -29,7 +29,7 @@ const {
   editLanguages,
   editHourRate,
 } = require("./lawyerHandlersPart2");
-const { addMessage } = require("./messageHandlers");
+const { addMessage, getAllMessagesByReceiverId } = require("./messageHandlers");
 const {
   addAppointment,
   deleteSpecificAppointments,
@@ -68,6 +68,11 @@ express()
     `/api/get-appointments-by-receiverId/:receiverId`,
     getAppointmentsByReceiver
   )
+  .get(
+    `/api/get-all-messages-by-receiverId/:receiverId`,
+    getAllMessagesByReceiverId
+  )
+
   .post(`/api/add-user`, createAccount)
   .post(`/api/add-user-picture`, addPicture)
   .patch("/api/update-picture", editPicture)
@@ -90,7 +95,7 @@ express()
   .get("*", (req, res) => {
     res.status(404).json({
       status: 404,
-      message: "This is obviously not what you are looking for.",
+      message: "We dont have any endpoint like what you put in.",
     });
   })
   .listen(PORT, () => console.info(`LISTENING ON PORT ${PORT}`));
