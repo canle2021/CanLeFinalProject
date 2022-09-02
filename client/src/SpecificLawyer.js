@@ -2,12 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
+import MessageSending from "./MessageSending";
 const SpecificLawyer = () => {
   // if already created password but not in the database yet, redirect to signup page if the client click on book appointment/send message to the lawyer
 
   const { _id } = useParams();
 
   const {
+    userProfile,
+    sucessfullyVerification,
     specificLawyer,
     setSpecificLawyer,
     specificLawyerPicture,
@@ -28,9 +31,10 @@ const SpecificLawyer = () => {
       });
   }, []);
 
-  console.log("specificLawyer", specificLawyer);
-  console.log("specificLawyerPicture", specificLawyerPicture);
+  // console.log("specificLawyer", specificLawyer);
+  // console.log("specificLawyerPicture", specificLawyerPicture);
   return (
+    // should have a send a message component for only the logged in user
     <SpecificLawyerDiv>
       <LawyerpictureDiv>
         <Picture src={specificLawyerPicture.picture}></Picture>
@@ -38,6 +42,9 @@ const SpecificLawyer = () => {
           {specificLawyer.firstName} {specificLawyer.lastName}, Lawyer
         </Name>
       </LawyerpictureDiv>
+      {sucessfullyVerification && userProfile._id ? (
+        <MessageSending specificLawyer={specificLawyer} />
+      ) : null}
     </SpecificLawyerDiv>
   );
 };

@@ -3,11 +3,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 import { AiOutlineForm } from "react-icons/ai";
-import { useAuth0 } from "@auth0/auth0-react";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
+
   const {
     userProfile,
     sucessfullyVerification,
