@@ -29,7 +29,11 @@ const {
   editLanguages,
   editHourRate,
 } = require("./lawyerHandlersPart2");
-const { addMessage, getAllMessagesByReceiverId } = require("./messageHandlers");
+const {
+  addMessage,
+  getAllMessagesByReceiverId,
+  getAllMessagesBySenderId,
+} = require("./messageHandlers");
 const {
   addAppointment,
   deleteSpecificAppointments,
@@ -72,6 +76,7 @@ express()
     `/api/get-all-messages-by-receiverId/:receiverId`,
     getAllMessagesByReceiverId
   )
+  .get(`/api/get-all-messages-by-senderId/:senderId`, getAllMessagesBySenderId)
 
   .post(`/api/add-user`, createAccount)
   .post(`/api/add-user-picture`, addPicture)

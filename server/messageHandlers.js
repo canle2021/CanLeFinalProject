@@ -119,7 +119,40 @@ const getAllMessagesByReceiverId = async (req, res) => {
   }
   client.close();
 };
+/**********************************************************/
+/*  get all messages BY senderId
+  /**********************************************************/
+
+const getAllMessagesBySenderId = async (req, res) => {
+  const { senderId } = req.params;
+
+  try {
+    await client.connect();
+    const findAllMessages = await db
+      .collection("messages")
+      .find({ senderId })
+      .toArray();
+
+    if (findAllMessages.length < 1) {
+      return res.status(400).json({
+        status: 404,
+        message: ` Sorry, we can not find all message with the sender Id : ${senderId}`,
+      });
+    } else {
+      return res.status(200).json({
+        status: 200,
+        data: findAllMessages,
+        message: ` We successfully all message with the sender Id : ${senderId}`,
+      });
+    }
+  } catch (err) {
+    console.log("get All Messages By senderId ", err);
+    //
+  }
+  client.close();
+};
 module.exports = {
   addMessage,
   getAllMessagesByReceiverId,
+  getAllMessagesBySenderId,
 };
