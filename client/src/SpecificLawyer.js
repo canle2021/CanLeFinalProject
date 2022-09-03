@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
-import MessageSending from "./MessageSending";
+import MessageToLawyer from "./MessageToLawyer";
 const SpecificLawyer = () => {
   // if already created password but not in the database yet, redirect to signup page if the client click on book appointment/send message to the lawyer
 
@@ -31,8 +31,6 @@ const SpecificLawyer = () => {
       });
   }, []);
 
-  // console.log("specificLawyer", specificLawyer);
-  // console.log("specificLawyerPicture", specificLawyerPicture);
   return (
     // should have a send a message component for only the logged in user
     <SpecificLawyerDiv>
@@ -42,8 +40,14 @@ const SpecificLawyer = () => {
           {specificLawyer.firstName} {specificLawyer.lastName}, Lawyer
         </Name>
       </LawyerpictureDiv>
-      {sucessfullyVerification && userProfile._id ? <MessageSending /> : null}
+
+      {sucessfullyVerification &&
+      userProfile._id &&
+      userProfile.status === "client" ? (
+        <MessageToLawyer />
+      ) : null}
     </SpecificLawyerDiv>
+    // Lawyer can not message to lawyer
   );
 };
 const Name = styled.p``;

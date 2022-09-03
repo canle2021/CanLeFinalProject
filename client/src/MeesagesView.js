@@ -43,11 +43,15 @@ const MessagesView = () => {
         return (
           <Message key={index}>
             <h1>
-              Message(s) from {message.firstName} {""} {message.lastName}
+              Message(s) from{" "}
+              <Link to={`/profile-viewed-from-lawyer/${message.senderId}`}>
+                {message.firstName} {""} {message.lastName}
+              </Link>
             </h1>
-            <Link to={`/profile-viewed-from-lawyer/${message.senderId}`}>
-              <p>Sender ID {message._id}</p>
-            </Link>
+            {userProfile.status !== "client" ? (
+              <p>Sender ID: {message.senderId}</p>
+            ) : null}
+
             <p>Subject: {message.subject}</p>
             <p>Content: {message.message}</p>
           </Message>

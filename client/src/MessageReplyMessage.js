@@ -4,15 +4,15 @@ import styled from "styled-components";
 import { UserContext } from "./UserContext";
 import { AiOutlineForm } from "react-icons/ai";
 
-const MessageSending = ({}) => {
+const MessageReplyMessage = ({}) => {
   const {
     userProfile,
     sucessfullyVerification,
     userInDatabase,
     specificLawyer,
     setUserInDatabase,
-    clientViewFromLawyer,
-    setClientViewFromLawyer,
+    viewMessageSenderProfile,
+    setViewMessageSenderProfile,
   } = useContext(UserContext);
   // remember to delete all the white space begining and at the end of each input
   // show the alert if the email is already use
@@ -31,12 +31,9 @@ const MessageSending = ({}) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     let objectToBePosted = {
-      receiverId:
-        userProfile.status === "client"
-          ? specificLawyer._id
-          : clientViewFromLawyer._id,
-      // change this to adapt with reply message for not reply message and fisrt reply message
+      receiverId: viewMessageSenderProfile._id,
       ...values,
+      //  this is for both when a client click on a specific lawyer page or click on message to see who sent that message
     };
     try {
       const posting = await fetch(`/api/add-message`, {
@@ -51,11 +48,9 @@ const MessageSending = ({}) => {
       console.log("converToJson", converToJson);
       if (converToJson.status === 200) {
         alert(
-          `THANK YOU! You successfully sent a message to${
-            userProfile.status === "client"
-              ? `${specificLawyer.firstName} ${specificLawyer.lastName}`
-              : `${clientViewFromLawyer.firstName} ${clientViewFromLawyer.lastName}`
-          }`
+          `THANK YOU! You successfully sent a message to
+              : ${viewMessageSenderProfile.firstName} ${viewMessageSenderProfile.lastName}
+              `
         );
       } else {
         alert(converToJson.message);
@@ -77,11 +72,8 @@ const MessageSending = ({}) => {
         <Form onSubmit={handleSubmit}>
           <SignUpTitle>
             <AiOutlineForm style={{ marginRight: "10px", fontSize: "30px" }} />
-            Message to{" "}
-            {/* {userProfile.status === "client"
-              ? `${specificLawyer.firstName} ${specificLawyer.lastName}`
-              : `${clientViewFromLawyer.firstName} ${clientViewFromLawyer.lastName}`} */}
-            {clientViewFromLawyer.firstName} {clientViewFromLawyer.lastName}
+            Message to {viewMessageSenderProfile.firstName} {""}
+            {viewMessageSenderProfile.lastName}
           </SignUpTitle>
 
           <HeadLine>Message:</HeadLine>
@@ -100,7 +92,7 @@ const MessageSending = ({}) => {
             onChange={handleChange}
           />
           <Input
-            placeholder="ender's Last Name (required)"
+            placeholder="Sender's Last Name (required)"
             type="text"
             name="lastName"
             required
@@ -205,4 +197,4 @@ const FormDiv = styled.div`
 `;
 const SignUpPageDiv = styled.div``;
 
-export default MessageSending;
+export default MessageReplyMessage;

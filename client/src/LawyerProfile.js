@@ -24,7 +24,9 @@ const LawyerProfile = () => {
   }, [sucessfullyVerification]);
   return (
     <LawyerProfileDiv>
-      <h1>this is the Lawyer page</h1>
+      <h1>
+        Lawyer {userProfile.firstName} {userProfile.lastName} page
+      </h1>
       <InformationDiv>
         <p>Picture Id: {userProfile.pictureId}</p>
         <p>Username: {userProfile.userName}</p>

@@ -10,7 +10,7 @@ import ClientProfile from "./ClientProfile";
 import LawyerProfile from "./LawyerProfile";
 import LawyerWorkingPage from "./LawyerWrokingPage";
 import AppointmentConfirmed from "./AppointemtnConfirmed";
-import ProfileViewedFromLawyer from "./ProfileViewedFromLawyer";
+import MessageSenderProfile from "./MessageSenderProfile";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
           <Route path="/lawyerProfile" element={<LawyerProfile />} />
           <Route
             path="/profile-viewed-from-lawyer/:_id"
-            element={<ProfileViewedFromLawyer />}
+            element={<MessageSenderProfile />}
           />
           <Route
             path="/LawyerWorkingPage/:id"

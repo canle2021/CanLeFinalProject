@@ -27,7 +27,9 @@ const ClientProfile = () => {
 
   return (
     <ClientProfileDiv>
-      <h1>this is the client profile page</h1>
+      <h1>
+        Client {userProfile.firstName} {userProfile.lastName} profile
+      </h1>
       <InformationDiv>
         <p>Username: {userProfile.userName}</p>
         <p>FirstName: {userProfile.firstName}</p>
