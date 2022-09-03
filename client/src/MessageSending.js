@@ -11,6 +11,8 @@ const MessageSending = ({}) => {
     userInDatabase,
     specificLawyer,
     setUserInDatabase,
+    clientViewFromLawyer,
+    setClientViewFromLawyer,
   } = useContext(UserContext);
   // remember to delete all the white space begining and at the end of each input
   // show the alert if the email is already use
@@ -29,7 +31,11 @@ const MessageSending = ({}) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     let objectToBePosted = {
-      receiverId: specificLawyer._id,
+      receiverId:
+        userProfile.status === "client"
+          ? specificLawyer._id
+          : clientViewFromLawyer._id,
+      // change this to adapt with reply message for not reply message and fisrt reply message
       ...values,
     };
     try {
@@ -45,9 +51,11 @@ const MessageSending = ({}) => {
       console.log("converToJson", converToJson);
       if (converToJson.status === 200) {
         alert(
-          `THANK YOU! You successfully sent a message to the Lawyer ${
-            specificLawyer && specificLawyer.firstName
-          } ${specificLawyer && specificLawyer.lastName}`
+          `THANK YOU! You successfully sent a message to${
+            userProfile.status === "client"
+              ? `${specificLawyer.firstName} ${specificLawyer.lastName}`
+              : `${clientViewFromLawyer.firstName} ${clientViewFromLawyer.lastName}`
+          }`
         );
       } else {
         alert(converToJson.message);
@@ -69,10 +77,11 @@ const MessageSending = ({}) => {
         <Form onSubmit={handleSubmit}>
           <SignUpTitle>
             <AiOutlineForm style={{ marginRight: "10px", fontSize: "30px" }} />
-            Message to the lawyer {specificLawyer &&
-              specificLawyer.firstName}{" "}
-            {""}
-            {specificLawyer && specificLawyer.lastName}
+            Message to{" "}
+            {/* {userProfile.status === "client"
+              ? `${specificLawyer.firstName} ${specificLawyer.lastName}`
+              : `${clientViewFromLawyer.firstName} ${clientViewFromLawyer.lastName}`} */}
+            {clientViewFromLawyer.firstName} {clientViewFromLawyer.lastName}
           </SignUpTitle>
 
           <HeadLine>Message:</HeadLine>
@@ -84,14 +93,14 @@ const MessageSending = ({}) => {
             onChange={handleChange}
           />
           <Input
-            placeholder="First Name (required)"
+            placeholder="Sender's First Name (required)"
             type="text"
             name="firstName"
             required
             onChange={handleChange}
           />
           <Input
-            placeholder="Last Name (required)"
+            placeholder="ender's Last Name (required)"
             type="text"
             name="lastName"
             required

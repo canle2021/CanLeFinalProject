@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useParams } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 const MessagesView = () => {
@@ -45,7 +45,9 @@ const MessagesView = () => {
             <h1>
               Message(s) from {message.firstName} {""} {message.lastName}
             </h1>
-            <p>Sender ID {message._id}</p>
+            <Link to={`/profile-viewed-from-lawyer/${message.senderId}`}>
+              <p>Sender ID {message._id}</p>
+            </Link>
             <p>Subject: {message.subject}</p>
             <p>Content: {message.message}</p>
           </Message>

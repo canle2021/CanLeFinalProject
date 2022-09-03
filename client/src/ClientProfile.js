@@ -2,10 +2,8 @@ import React, { useContext, useEffect, useParams } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
-
+import MessagesView from "./MeesagesView";
 const ClientProfile = () => {
-  // use auth0 with parameter is the email and put that email to fetch link
-  // isAuthoticated move to context to use in login/logOut button in header
   const navigate = useNavigate();
   const {
     userProfile,
@@ -42,6 +40,7 @@ const ClientProfile = () => {
         <p>Postal Code: {userProfile.postalCode}</p>
         <p>Country: {userProfile.country}</p>
       </InformationDiv>
+      <MessagesView />
     </ClientProfileDiv>
   );
 };

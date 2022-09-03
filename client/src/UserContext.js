@@ -10,6 +10,7 @@ export const UserProvider = ({ children }) => {
   const [sucessfullyVerification, setSucessfullyVerification] = useState(false);
   const [userInDatabase, setUserInDatabase] = useState(false);
   const [allMessagesReveived, setAllMessagesReveived] = useState([]);
+  const [clientViewFromLawyer, setClientViewFromLawyer] = useState([]);
 
   return (
     <UserContext.Provider
@@ -28,6 +29,8 @@ export const UserProvider = ({ children }) => {
         setUserInDatabase,
         allMessagesReveived,
         setAllMessagesReveived,
+        clientViewFromLawyer,
+        setClientViewFromLawyer,
       }}
     >
       {children}

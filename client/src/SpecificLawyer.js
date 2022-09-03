@@ -42,9 +42,7 @@ const SpecificLawyer = () => {
           {specificLawyer.firstName} {specificLawyer.lastName}, Lawyer
         </Name>
       </LawyerpictureDiv>
-      {sucessfullyVerification && userProfile._id ? (
-        <MessageSending specificLawyer={specificLawyer} />
-      ) : null}
+      {sucessfullyVerification && userProfile._id ? <MessageSending /> : null}
     </SpecificLawyerDiv>
   );
 };
