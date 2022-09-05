@@ -34,7 +34,7 @@ const MessageToLawyer = ({}) => {
     let objectToBePosted = {
       receiverId: specificLawyer._id,
       ...values,
-      time: Date(Date.now()),
+      time: Date.now(),
       //  this is for both when a client click on a specific lawyer page or click on message to see who sent that message
     };
     try {
