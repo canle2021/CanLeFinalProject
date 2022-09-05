@@ -44,7 +44,7 @@ const MessagesView = () => {
           <Message key={index}>
             <h1>
               Message(s) from{" "}
-              <Link to={`/profile-viewed-from-lawyer/${message.senderId}`}>
+              <Link to={`/message-sender-profile/${message.senderId}`}>
                 {message.firstName} {""} {message.lastName}
               </Link>
             </h1>
@@ -54,6 +54,7 @@ const MessagesView = () => {
 
             <p>Subject: {message.subject}</p>
             <p>Content: {message.message}</p>
+            <p>Time: {message.time ? message.time.toString() : ""}</p>
           </Message>
         );
       })}

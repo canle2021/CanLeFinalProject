@@ -25,7 +25,7 @@ function App() {
           <Route path="/clientProfile" element={<ClientProfile />} />
           <Route path="/lawyerProfile" element={<LawyerProfile />} />
           <Route
-            path="/profile-viewed-from-lawyer/:_id"
+            path="/message-sender-profile/:_id"
             element={<MessageSenderProfile />}
           />
           <Route

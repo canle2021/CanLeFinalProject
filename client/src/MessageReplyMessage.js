@@ -19,6 +19,7 @@ const MessageReplyMessage = ({}) => {
   console.log("specificLawyer", specificLawyer);
   const [values, setValues] = useState({
     senderId: userProfile._id,
+    isRead: false,
   });
 
   const handleChange = (event) => {
@@ -33,6 +34,7 @@ const MessageReplyMessage = ({}) => {
     let objectToBePosted = {
       receiverId: viewMessageSenderProfile._id,
       ...values,
+      time: Date(Date.now()),
       //  this is for both when a client click on a specific lawyer page or click on message to see who sent that message
     };
     try {
