@@ -99,6 +99,7 @@ const getAllMessagesByReceiverId = async (req, res) => {
     const findAllMessages = await db
       .collection("messages")
       .find({ receiverId })
+      .sort({ time: -1 })
       .toArray();
 
     if (findAllMessages.length < 1) {
@@ -131,6 +132,7 @@ const getAllMessagesBySenderId = async (req, res) => {
     const findAllMessages = await db
       .collection("messages")
       .find({ senderId })
+      .sort({ time: -1 })
       .toArray();
 
     if (findAllMessages.length < 1) {
