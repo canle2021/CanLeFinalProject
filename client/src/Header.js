@@ -17,6 +17,8 @@ const Header = () => {
     setUserInDatabase,
     allMessagesReveived,
     setAllMessagesReveived,
+    listOfNewSenders,
+    setListOfNewSenders,
   } = useContext(UserContext);
   let userId = [];
   const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
@@ -52,7 +54,7 @@ const Header = () => {
       );
       // wait for fetching of user profile then fetch all the messages received by logged in user.
       Promise.all(userId).then((data) => {
-        console.log("data", data);
+        // Fetch new messages here to show notification new messages right after sign in successfully because this notification is in Header
         fetch(`/api/get-all-messages-by-receiverId/${data}`)
           .then((res) => {
             console.log("res.json", res);
@@ -62,6 +64,33 @@ const Header = () => {
             if (data.status === 200) {
               setAllMessagesReveived(data.data);
               console.log("AllMessagesReveived", data);
+              const filterNewSender = data.data.filter(
+                (message) => message.isRead === false
+              );
+              console.log("filterNewSender", filterNewSender);
+              let senderIdsRepeated = [];
+              filterNewSender.forEach((element) => {
+                senderIdsRepeated.push({
+                  senderId: element.senderId,
+                  receiverId: element.receiverId,
+                  firstName: element.firstName,
+                  lastName: element.lastName,
+                });
+              });
+              const intermediateArray = [];
+              const senderIdsArray = senderIdsRepeated.filter(
+                (element, index) => {
+                  const isDuplicate = intermediateArray.includes(
+                    element.senderId
+                  );
+                  if (!isDuplicate) {
+                    intermediateArray.push(element.senderId);
+                    return true;
+                  }
+                  return false;
+                }
+              );
+              setListOfNewSenders(senderIdsArray);
             } else {
             }
           })
@@ -107,9 +136,11 @@ const Header = () => {
           >
             <button>Profile</button>
           </Link>
-          <Link to={`new-message-senderIds-list`}>
-            <NewMessagesAlert />
-          </Link>
+          {listOfNewSenders && listOfNewSenders.length > 0 ? (
+            <Link to={`new-message-senderIds-list`}>
+              <NewMessagesAlert />
+            </Link>
+          ) : null}
         </div>
       ) : (
         <div>

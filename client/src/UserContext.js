@@ -12,7 +12,7 @@ export const UserProvider = ({ children }) => {
   const [allMessagesReveived, setAllMessagesReveived] = useState([]);
   const [viewMessageSenderProfile, setViewMessageSenderProfile] = useState([]);
   const [viewMessageSenderPicture, setViewMessageSenderPicture] = useState([]);
-
+  const [listOfNewSenders, setListOfNewSenders] = useState();
   return (
     <UserContext.Provider
       value={{
@@ -34,6 +34,8 @@ export const UserProvider = ({ children }) => {
         setViewMessageSenderProfile,
         viewMessageSenderPicture,
         setViewMessageSenderPicture,
+        listOfNewSenders,
+        setListOfNewSenders,
       }}
     >
       {children}

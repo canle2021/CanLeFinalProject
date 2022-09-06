@@ -35,6 +35,25 @@ const MessageSenderProfile = () => {
       .catch((err) => {
         console.log("err", err);
       });
+
+    // fetch("/api/update-all-messages-by-senderId-receiverId-to-read", {
+    //   method: "PATCH",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     senderId: _id,
+    //     receiverId: userProfile._id,
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     if (json.status === 200)
+    //     alert(json.message);
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
   }, []);
 
   useEffect(() => {

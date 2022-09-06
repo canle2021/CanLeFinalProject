@@ -16,7 +16,9 @@ const NewMessagesAlert = () => {
   console.log("allMessagesReveived", allMessagesReveived);
   return (
     <NewMessagesAlertDiv>
-      {findnewMessage ? <button>You have new message(s)</button> : null}
+      {findnewMessage ? (
+        <button>You still have new message(s)? Click here to check!</button>
+      ) : null}
       <InformationDiv></InformationDiv>
     </NewMessagesAlertDiv>
   );
