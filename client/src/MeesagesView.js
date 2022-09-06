@@ -14,29 +14,7 @@ const MessagesView = () => {
   } = useContext(UserContext);
 
   console.log("userProfile", userProfile);
-  useEffect(() => {
-    if (sucessfullyVerification && emailToFetchUser) {
-      console.log("work to get the message", userProfile._id);
-      fetch(`/api/get-all-messages-by-receiverId/${userProfile._id}`)
-        .then((res) => {
-          console.log("res.json", res);
-          return res.json();
-        })
-        .then((data) => {
-          if (data.status === 200) {
-            setAllMessagesReveived(data.data);
-            console.log("AllMessagesReveived", data);
-          } else {
-          }
-        })
-        // a post method here to check if the email registered is existing
-        // show the alert if the email is already use
 
-        .catch((err) => {
-          console.log("err", err);
-        });
-    }
-  }, [sucessfullyVerification]);
   return (
     <MessagesViewDiv>
       {allMessagesReveived.map((message, index) => {

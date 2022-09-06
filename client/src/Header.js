@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import NewMessagesAlert from "./NewMessagesAlert";
 const Header = () => {
   const navigate = useNavigate();
   const {
@@ -18,7 +18,7 @@ const Header = () => {
     allMessagesReveived,
     setAllMessagesReveived,
   } = useContext(UserContext);
-
+  let userId = [];
   const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
   setSucessfullyVerification(isAuthenticated);
   useEffect(() => {
@@ -26,26 +26,52 @@ const Header = () => {
       setEmailToFetchUser(user.email);
     }
     if (sucessfullyVerification && emailToFetchUser) {
-      fetch(`/api/get-specific-user-by-email/${emailToFetchUser}`)
-        .then((res) => {
-          console.log("res.json", res);
-          return res.json();
-        })
-        .then((data) => {
-          if (data.status === 200) {
-            setUserProfile(data.userData || []);
-            setUserInDatabase(true);
-            console.log("date", data);
-          } else {
-            return navigate("/signUp");
-          }
-        })
-        // a post method here to check if the email registered is existing
-        // show the alert if the email is already use
+      userId.push(
+        fetch(`/api/get-specific-user-by-email/${emailToFetchUser}`)
+          .then((res) => {
+            console.log("res.json", res);
+            return res.json();
+          })
+          .then((data) => {
+            if (data.status === 200) {
+              setUserProfile(data.userData || []);
+              setUserInDatabase(true);
+              console.log("date", data);
+              console.log("data.userData._id", data.userData._id);
+              return data.userData._id;
+            } else {
+              return navigate("/signUp");
+            }
+          })
+          // a post method here to check if the email registered is existing
+          // show the alert if the email is already use
 
-        .catch((err) => {
-          console.log("err", err);
-        });
+          .catch((err) => {
+            console.log("err", err);
+          })
+      );
+      // wait for fetching of user profile then fetch all the messages received by logged in user.
+      Promise.all(userId).then((data) => {
+        console.log("data", data);
+        fetch(`/api/get-all-messages-by-receiverId/${data}`)
+          .then((res) => {
+            console.log("res.json", res);
+            return res.json();
+          })
+          .then((data) => {
+            if (data.status === 200) {
+              setAllMessagesReveived(data.data);
+              console.log("AllMessagesReveived", data);
+            } else {
+            }
+          })
+          // a post method here to check if the email registered is existing
+          // show the alert if the email is already use
+
+          .catch((err) => {
+            console.log("err", err);
+          });
+      });
     }
   }, [user, sucessfullyVerification, emailToFetchUser]);
 
@@ -81,6 +107,7 @@ const Header = () => {
           >
             <button>Profile</button>
           </Link>
+          <NewMessagesAlert />
         </div>
       ) : (
         <div>
