@@ -204,7 +204,7 @@ const changeMessageToRead = async (req, res) => {
     } else {
       return res.status(500).json({
         status: 500,
-        message: ` Sorry! The messges sender Id : ${body.senderId}, and receiverId: ${body.receiverId}} was NOT successfully updated to read becuase of some reason or all these messages were read.`,
+        message: ` Sorry! The messges sender Id : ${body.senderId}, and receiverId: ${body.receiverId}} was NOT successfully updated to read because of some reason or all these messages were read.`,
       });
     }
   } catch (err) {

@@ -79,7 +79,7 @@ express()
   )
   .get(`/api/get-all-messages-by-senderId/:senderId`, getAllMessagesBySenderId)
   .patch(
-    `/api/update-all-messages-by-senderId-receiverId-to-read/`,
+    `/api/update-all-messages-by-senderId-receiverId-to-read`,
     changeMessageToRead
   )
 
