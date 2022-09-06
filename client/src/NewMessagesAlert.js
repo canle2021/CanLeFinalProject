@@ -13,7 +13,7 @@ const NewMessagesAlert = () => {
   const findnewMessage = allMessagesReveived.find(
     (message) => message.isRead === false
   );
-  console.log("newMessage", allMessagesReveived);
+  console.log("allMessagesReveived", allMessagesReveived);
   return (
     <NewMessagesAlertDiv>
       {findnewMessage ? <button>You have new message(s)</button> : null}

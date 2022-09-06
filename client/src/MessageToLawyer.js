@@ -19,6 +19,8 @@ const MessageToLawyer = ({}) => {
   console.log("specificLawyer", specificLawyer);
   const [values, setValues] = useState({
     senderId: userProfile._id,
+    firstName: userProfile.firstName,
+    lastName: userProfile.lastName,
     isRead: false,
   });
 
@@ -82,20 +84,6 @@ const MessageToLawyer = ({}) => {
             placeholder="Subject or Matter (required)"
             type="text"
             name="subject"
-            required
-            onChange={handleChange}
-          />
-          <Input
-            placeholder="Sender's First Name (required)"
-            type="text"
-            name="firstName"
-            required
-            onChange={handleChange}
-          />
-          <Input
-            placeholder="Sender's Last Name (required)"
-            type="text"
-            name="lastName"
             required
             onChange={handleChange}
           />

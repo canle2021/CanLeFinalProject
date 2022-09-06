@@ -107,7 +107,9 @@ const Header = () => {
           >
             <button>Profile</button>
           </Link>
-          <NewMessagesAlert />
+          <Link to={`new-message-senderIds-list`}>
+            <NewMessagesAlert />
+          </Link>
         </div>
       ) : (
         <div>
