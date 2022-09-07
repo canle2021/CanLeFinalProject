@@ -34,6 +34,7 @@ const {
   getAllMessagesByReceiverId,
   getAllMessagesBySenderId,
   changeMessageToRead,
+  getConversation,
 } = require("./messageHandlers");
 const {
   addAppointment,
@@ -78,6 +79,7 @@ express()
     getAllMessagesByReceiverId
   )
   .get(`/api/get-all-messages-by-senderId/:senderId`, getAllMessagesBySenderId)
+  .get(`/api/get-conversation/:receiverId/:senderId`, getConversation)
   .patch(
     `/api/update-all-messages-by-senderId-receiverId-to-read`,
     changeMessageToRead

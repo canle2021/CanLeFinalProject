@@ -3,7 +3,9 @@ const { v4: uuidv4 } = require("uuid");
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const { MONGO_URI } = process.env;
-
+const moment = require("moment");
+const _ = require("lodash");
+const { orderBy } = require("lodash");
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -199,7 +201,7 @@ const changeMessageToRead = async (req, res) => {
       return res.status(200).json({
         status: 200,
         data: body._id,
-        message: ` The messges sender Id : ${body.senderId}, and receiverId: ${body.receiverId}} was successfully updated to read`,
+        message: ` The messges senderId : ${body.senderId}, and receiverId: ${body.receiverId} was successfully updated to read`,
       });
     } else {
       return res.status(500).json({
@@ -213,10 +215,61 @@ const changeMessageToRead = async (req, res) => {
   }
   client.close();
 };
+/**********************************************************/
+/*  get Conversation
+  /**********************************************************/
 
+const getConversation = async (req, res) => {
+  const { senderId } = req.params;
+  const { receiverId } = req.params;
+
+  try {
+    await client.connect();
+    const findAllMessagesSent = await db
+      .collection("messages")
+      .find({ receiverId: receiverId, senderId: senderId })
+      .sort({ time: -1 })
+      .toArray();
+    const findAllMessagesReceived = await db
+      .collection("messages")
+      .find({ receiverId: senderId, senderId: receiverId })
+      .sort({ time: -1 })
+      .toArray();
+
+    if (findAllMessagesSent.length < 1 && findAllMessagesReceived.length < 1) {
+      return res.status(400).json({
+        status: 404,
+        message: ` Sorry, we can not find all conversations between : ${senderId} and receiverId: ${receiverId} `,
+      });
+    } else {
+      const conversation = [].concat(
+        findAllMessagesSent,
+        findAllMessagesReceived
+      );
+      const sortedMessages = orderBy(
+        conversation,
+        (message) => moment(message.time),
+        "desc"
+      );
+
+      return res.status(200).json({
+        status: 200,
+        messagesSent: findAllMessagesSent,
+        messagesReceived: findAllMessagesReceived,
+        conversationArray: sortedMessages,
+        message: ` We successfully all conversations between : ${senderId} and receiverId: ${receiverId}`,
+      });
+    }
+  } catch (err) {
+    console.log("get All Messages By senderId ", err);
+    //
+  }
+  client.close();
+};
 module.exports = {
   addMessage,
   getAllMessagesByReceiverId,
   getAllMessagesBySenderId,
   changeMessageToRead,
+  getConversation,
 };
