@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import MessageReplyMessage from "./MessageReplyMessage";
 import ConversationView from "./ConversationView";
+import AppointmentCreate from "./appointmentCreate";
 const MessageSenderProfile = () => {
   const navigate = useNavigate();
   const {
@@ -70,6 +71,7 @@ const MessageSenderProfile = () => {
         <p>Postal Code: {viewMessageSenderProfile.postalCode}</p>
         <p>Country: {viewMessageSenderProfile.country}</p>
       </InformationDiv>
+      <AppointmentCreate />
       <MessageReplyMessage />
       <ConversationView senderId={_id} />
     </ClientProfileDiv>
