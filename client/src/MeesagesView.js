@@ -32,7 +32,7 @@ const MessagesView = () => {
 
             <p>Subject: {message.subject}</p>
             <p>Content: {message.message}</p>
-            <p>Time: {message.time ? Date(message.time).toString() : ""}</p>
+            <p>Time: {message.timeToString}</p>
           </Message>
         );
       })}

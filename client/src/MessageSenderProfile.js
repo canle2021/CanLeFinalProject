@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import MessageReplyMessage from "./MessageReplyMessage";
+import ConversationView from "./ConversationView";
 const MessageSenderProfile = () => {
   const navigate = useNavigate();
   const {
@@ -35,25 +36,6 @@ const MessageSenderProfile = () => {
       .catch((err) => {
         console.log("err", err);
       });
-
-    // fetch("/api/update-all-messages-by-senderId-receiverId-to-read", {
-    //   method: "PATCH",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     senderId: _id,
-    //     receiverId: userProfile._id,
-    //   }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     if (json.status === 200)
-    //     alert(json.message);
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
   }, []);
 
   useEffect(() => {
@@ -89,6 +71,7 @@ const MessageSenderProfile = () => {
         <p>Country: {viewMessageSenderProfile.country}</p>
       </InformationDiv>
       <MessageReplyMessage />
+      <ConversationView senderId={_id} />
     </ClientProfileDiv>
   );
 };
