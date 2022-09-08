@@ -81,6 +81,7 @@ const Header = () => {
                   receiverId: element.receiverId,
                   firstName: element.firstName,
                   lastName: element.lastName,
+                  message: element.message,
                 });
               });
               const intermediateArray = [];

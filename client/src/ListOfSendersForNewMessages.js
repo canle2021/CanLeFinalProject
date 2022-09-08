@@ -44,6 +44,7 @@ const ListOfSendersForNewMessages = () => {
               receiverId: element.receiverId,
               firstName: element.firstName,
               lastName: element.lastName,
+              message: element.message,
             });
           });
           const intermediateArray = [];
@@ -110,22 +111,26 @@ const ListOfSendersForNewMessages = () => {
                 });
               };
               return (
+                // the appointment confirmed also be announced here too (after client click appointment confirm button)
                 <EachSenderDiv key={index}>
                   <LinktoSenderProfile
-                    to={`/message-sender-profile/${sender.senderId}`}
+                    to={
+                      sender.senderId === "6d612474-7ff5-45b9-a29a-f107ec348118"
+                        ? `/message-sender-profile/${sender.firstName}`
+                        : `/message-sender-profile/${sender.senderId}`
+                    }
                     onClick={updateMessageToRead}
                   >
-                    {sender.firstName} {sender.lastName}
+                    {sender.senderId ===
+                    "6d612474-7ff5-45b9-a29a-f107ec348118" ? (
+                      <span>
+                        System Appointment Confirmed: {sender.message}
+                      </span>
+                    ) : (
+                      `${sender.firstName} 
+                    ${sender.lastName}`
+                    )}
                   </LinktoSenderProfile>
-                  {sender.senderId === "System Appointment Confirmed" ? (
-                    <LinktoSenderProfile>
-                      {/* to={`/message-sender-profile/${sender.senderId}` */}
-                      {/* // onClick={updateMessageToRead} */}
-                      {/* // > */}
-                      System Appointment Confirmed from:
-                      {sender.firstName} {sender.lastName}
-                    </LinktoSenderProfile>
-                  ) : null}
                 </EachSenderDiv>
               );
             })}
@@ -143,7 +148,9 @@ const LawyerpictureDiv = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const EachSenderDiv = styled.div``;
+const EachSenderDiv = styled.div`
+  margin: 24px 24px 24px 24px;
+`;
 const NewMessagesDiv = styled.div``;
 const ListOfSendersForNewMessagesDiv = styled.div`
   height: 100vh;
