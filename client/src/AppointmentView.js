@@ -75,6 +75,13 @@ const AppointmentView = ({ senderId }) => {
 
           return (
             <Message key={index}>
+              {!appointment.isConfirmed ? (
+                <ConfirmButton onClick={updateAppointmentToConfirmed}>
+                  Confirm
+                </ConfirmButton>
+              ) : (
+                <PastAppointment>Appointment in the past</PastAppointment>
+              )}
               <SubjectP>Appointment ID: {appointment._id}</SubjectP>
               <SubjectP>Subject: {appointment.subject}</SubjectP>
               <SenderP>Lawyer: {appointment.lawyer}</SenderP>
@@ -86,15 +93,13 @@ const AppointmentView = ({ senderId }) => {
               <p>Duration: {appointment.duration} minutes</p>
               <p>Date: {appointment.date}</p>
               <p>Booked at: {appointment.timeOfCreateingAppointmentToString}</p>
-              <ConfirmButton onClick={updateAppointmentToConfirmed}>
-                Confirm
-              </ConfirmButton>
             </Message>
           );
         })}
     </MessagesViewDiv>
   );
 };
+const PastAppointment = styled.h2``;
 const ConfirmButton = styled.button``;
 const SenderP = styled.p`
   font-weight: bold;
