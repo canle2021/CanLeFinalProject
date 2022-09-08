@@ -12,6 +12,7 @@ import LawyerWorkingPage from "./LawyerWrokingPage";
 import AppointmentConfirmed from "./AppointemtnConfirmed";
 import MessageSenderProfile from "./MessageSenderProfile";
 import ListOfSendersForNewMessages from "./ListOfSendersForNewMessages";
+import ListOfSendersForNewAppointment from "./ListOfSendersForNewAppointment";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
@@ -32,6 +33,10 @@ function App() {
           <Route
             path="/new-message-senderIds-list"
             element={<ListOfSendersForNewMessages />}
+          />
+          <Route
+            path="/new-appointments-senderIds-list"
+            element={<ListOfSendersForNewAppointment />}
           />
           <Route
             path="/LawyerWorkingPage/:id"

@@ -7,6 +7,7 @@ import { UserContext } from "./UserContext";
 import MessageReplyMessage from "./MessageReplyMessage";
 import ConversationView from "./ConversationView";
 import AppointmentCreate from "./appointmentCreate";
+import AppointmentView from "./AppointmentView";
 const MessageSenderProfile = () => {
   const navigate = useNavigate();
   const {
@@ -71,6 +72,7 @@ const MessageSenderProfile = () => {
         <p>Postal Code: {viewMessageSenderProfile.postalCode}</p>
         <p>Country: {viewMessageSenderProfile.country}</p>
       </InformationDiv>
+      <AppointmentView senderId={_id} />
       <AppointmentCreate />
       <MessageReplyMessage />
       <ConversationView senderId={_id} />

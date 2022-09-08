@@ -21,7 +21,7 @@ const AppointmentCreate = ({}) => {
     senderId: userProfile._id,
     lawyer: `${userProfile.firstName} ${userProfile.lastName}`,
     lawyerEmail: userProfile.email,
-    confrimed: false,
+    isConfirmed: false,
   });
 
   const handleChange = (event) => {
@@ -42,29 +42,29 @@ const AppointmentCreate = ({}) => {
       timeOfCreateingAppointmentToString: Date(Date.now()).toString(),
       //  this is for both when a client click on a specific lawyer page or click on message to see who sent that message
     };
-    // try {
-    //   const posting = await fetch(`/api/add-message`, {
-    //     method: "POST",
-    //     body: JSON.stringify(objectToBePosted),
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json",
-    //     },
-    //   });
-    //   const converToJson = await posting.json();
-    //   console.log("converToJson", converToJson);
-    //   if (converToJson.status === 200) {
-    //     alert(
-    //       `THANK YOU! You successfully sent a message to
-    //           : ${viewMessageSenderProfile.firstName} ${viewMessageSenderProfile.lastName}
-    //           `
-    //     );
-    //   } else {
-    //     alert(converToJson.message);
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const posting = await fetch(`/api/add-appointment`, {
+        method: "POST",
+        body: JSON.stringify(objectToBePosted),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const converToJson = await posting.json();
+      console.log("converToJson", converToJson);
+      if (converToJson.status === 200) {
+        alert(
+          `THANK YOU! You successfully sent an appointment to
+              : ${viewMessageSenderProfile.firstName} ${viewMessageSenderProfile.lastName}
+              `
+        );
+      } else {
+        alert(converToJson.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
 
     console.log("objectToBePosted", objectToBePosted);
   };
@@ -72,16 +72,16 @@ const AppointmentCreate = ({}) => {
   console.log("values", values);
 
   return (
-    <SignUpPageDiv>
+    <AppointmentCreateDiv>
       {/* conditional rendering those lines cause we have 2 possible cases of sign up */}
 
       <FormDiv>
         <Form onSubmit={handleSubmit}>
-          <SignUpTitle>
+          <AppointmentCreateTitle>
             <AiOutlineForm style={{ marginRight: "10px", fontSize: "30px" }} />
             Create an appointment with {viewMessageSenderProfile.firstName} {""}
             {viewMessageSenderProfile.lastName}
-          </SignUpTitle>
+          </AppointmentCreateTitle>
 
           <HeadLine>Information:</HeadLine>
           <Subject
@@ -152,7 +152,7 @@ const AppointmentCreate = ({}) => {
           ></SubmitButton>
         </Form>
       </FormDiv>
-    </SignUpPageDiv>
+    </AppointmentCreateDiv>
   );
 };
 
@@ -191,7 +191,7 @@ const SubmitButton = styled.input`
   }
 `;
 
-const SignUpTitle = styled.h3`
+const AppointmentCreateTitle = styled.h3`
   font-size: 35px;
   color: black;
   font-family: "IBM Plex Sans", sans-serif;
@@ -234,6 +234,6 @@ const FormDiv = styled.div`
   border: solid 2px var(--color-alabama-crimson);
   height: fit-content;
 `;
-const SignUpPageDiv = styled.div``;
+const AppointmentCreateDiv = styled.div``;
 
 export default AppointmentCreate;

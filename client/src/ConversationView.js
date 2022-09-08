@@ -10,6 +10,7 @@ const ConversationView = ({ senderId }) => {
     userInDatabase,
     setUserInDatabase,
     allMessagesReveived,
+    viewMessageSenderProfile,
     setAllMessagesReveived,
     conversation,
     setConversation,
@@ -32,7 +33,10 @@ const ConversationView = ({ senderId }) => {
 
   return (
     <MessagesViewDiv>
-      <h1>Conversation:</h1>
+      <h1>
+        Conversation with {viewMessageSenderProfile.firstName}{" "}
+        {viewMessageSenderProfile.lastName}:
+      </h1>
       {conversation &&
         conversation.map((message, index) => {
           return (

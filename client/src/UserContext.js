@@ -14,6 +14,14 @@ export const UserProvider = ({ children }) => {
   const [viewMessageSenderPicture, setViewMessageSenderPicture] = useState([]);
   const [listOfNewSenders, setListOfNewSenders] = useState();
   const [conversation, setConversation] = useState();
+  const [allAppointmentsReveived, SetAllAppointmentsReveived] = useState([]);
+  const [
+    allAppointmentsReveiveIdSenderId,
+    SetAllAppointmentsReveiveIdSenderId,
+  ] = useState([]);
+  const [listOfNewAppointmentSenders, setListOfNewAppointmentSenders] =
+    useState();
+
   return (
     <UserContext.Provider
       value={{
@@ -39,6 +47,12 @@ export const UserProvider = ({ children }) => {
         setListOfNewSenders,
         conversation,
         setConversation,
+        allAppointmentsReveived,
+        SetAllAppointmentsReveived,
+        listOfNewAppointmentSenders,
+        setListOfNewAppointmentSenders,
+        allAppointmentsReveiveIdSenderId,
+        SetAllAppointmentsReveiveIdSenderId,
       }}
     >
       {children}

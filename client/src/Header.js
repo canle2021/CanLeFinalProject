@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { UserContext } from "./UserContext";
 import { useAuth0 } from "@auth0/auth0-react";
 import NewMessagesAlert from "./NewMessagesAlert";
+import NewAppointmentAlert from "./NewAppointmentAlert";
 const Header = () => {
   const navigate = useNavigate();
   const {
@@ -19,6 +20,10 @@ const Header = () => {
     setAllMessagesReveived,
     listOfNewSenders,
     setListOfNewSenders,
+    allAppointmentsReveived,
+    SetAllAppointmentsReveived,
+    listOfNewAppointmentSenders,
+    setListOfNewAppointmentSenders,
   } = useContext(UserContext);
   let userId = [];
   const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
@@ -53,6 +58,7 @@ const Header = () => {
           })
       );
       // wait for fetching of user profile then fetch all the messages received by logged in user.
+
       Promise.all(userId).then((data) => {
         // Fetch new messages here to show notification new messages right after sign in successfully because this notification is in Header
         fetch(`/api/get-all-messages-by-receiverId/${data}`)
@@ -101,8 +107,61 @@ const Header = () => {
             console.log("err", err);
           });
       });
+
+      // fetch new appointment
+
+      Promise.all(userId).then(async (data) => {
+        try {
+          const fetchAppoitment = await fetch(
+            `/api/get-appointments-by-receiverId/${data}`
+          );
+          console.log("res.json appointment ", data);
+          console.log("fetchAppoitment ", fetchAppoitment);
+
+          const toJson = await fetchAppoitment.json();
+          console.log("fetchAppoitment ", toJson.data);
+
+          await SetAllAppointmentsReveived(toJson.data);
+
+          const filterNewSender = await toJson.data.filter(
+            (apointment) => apointment.isConfirmed === false
+          );
+          console.log("filterNewSender", filterNewSender);
+          let senderIdsRepeated = [];
+          await filterNewSender.forEach((element) => {
+            senderIdsRepeated.push({
+              senderId: element.senderId,
+              receiverId: element.receiverId,
+              lawyer: element.lawyer,
+              client: element.client,
+              date: element.date,
+            });
+          });
+          const intermediateArray = [];
+          const senderIdsArray = senderIdsRepeated.filter((element, index) => {
+            const isDuplicate = intermediateArray.includes(element.senderId);
+            if (!isDuplicate) {
+              intermediateArray.push(element.senderId);
+              return true;
+            }
+            return false;
+          });
+          console.log("apointment sender", senderIdsArray);
+          setListOfNewAppointmentSenders(senderIdsArray);
+          console.log(
+            "listOfNewAppointmentSenders",
+            listOfNewAppointmentSenders.length
+          );
+        } catch (err) {
+          console.log("err", err);
+        }
+      });
+      // a post method here to check if the email registered is existing
+      // show the alert if the email is already use
     }
   }, [user, sucessfullyVerification, emailToFetchUser]);
+
+  // Fetch new messages here to show notification new messages right after sign in successfully because this notification is in Header
 
   const logUserOut = async () => {
     await logout();
@@ -139,6 +198,12 @@ const Header = () => {
           {listOfNewSenders && listOfNewSenders.length > 0 ? (
             <Link to={`new-message-senderIds-list`}>
               <NewMessagesAlert />
+            </Link>
+          ) : null}
+          {listOfNewAppointmentSenders &&
+          listOfNewAppointmentSenders.length > 0 ? (
+            <Link to={`new-appointments-senderIds-list`}>
+              <NewAppointmentAlert />
             </Link>
           ) : null}
         </div>
