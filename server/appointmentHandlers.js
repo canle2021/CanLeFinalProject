@@ -156,7 +156,7 @@ const getAllAppointmentsReceiverId = async (req, res) => {
     const findAllAppointments = await db
       .collection("appointments")
       .find({ receiverId })
-      .sort({ time: -1 })
+      .sort({ timeOfCreateingAppointment: -1 })
       .toArray();
 
     if (findAllAppointments.length < 1) {
@@ -190,7 +190,7 @@ const getAllAppointmentsReceiverIdAndSenderId = async (req, res) => {
     const findAllAppointments = await db
       .collection("appointments")
       .find({ receiverId: receiverId, senderId: senderId })
-      .sort({ time: -1 })
+      .sort({ timeOfCreateingAppointment: -1 })
       .toArray();
 
     if (findAllAppointments.length < 1) {
