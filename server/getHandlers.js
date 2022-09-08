@@ -135,36 +135,6 @@ const getAppointments = async (req, res) => {
   }
   client.close();
 };
-/**********************************************************/
-/*  get specific Appointments
-  /**********************************************************/
-
-const getSpecificAppointments = async (req, res) => {
-  const { _id } = req.params;
-  try {
-    await client.connect();
-    const findAppointment = await db
-      .collection("appointments")
-      .findOne({ _id });
-
-    if (!findAppointment) {
-      return res.status(400).json({
-        status: 404,
-        message: ` Sorry, we can not find the Appointment with id: ${_id} information`,
-      });
-    } else {
-      return res.status(200).json({
-        status: 200,
-        data: findAppointment,
-        message: ` We successfully find the Appointment with id: ${_id}`,
-      });
-    }
-  } catch (err) {
-    console.log("get single Appointment ", err);
-    //
-  }
-  client.close();
-};
 
 /**********************************************************/
 /*  get specific User BY EMAIL
@@ -204,7 +174,6 @@ module.exports = {
   getLawyers,
   getSpecificUser,
   getAppointments,
-  getSpecificAppointments,
 
   getSpecificUserByEmail,
 };

@@ -7,7 +7,6 @@ const {
   getSpecificUser,
   getLawyers,
   getAppointments,
-  getSpecificAppointments,
   getSpecificUserByEmail,
 } = require("./getHandlers");
 const { createAccount, addPicture } = require("./addAccount&Picture");
@@ -41,6 +40,7 @@ const {
   getAllAppointmentsReceiverId,
   getAllAppointmentsReceiverIdAndSenderId,
   changeAppointmentsToConfirmed,
+  getAppointmentById,
 } = require("./appointmentHandlers");
 const PORT = 8000;
 
@@ -71,7 +71,7 @@ express()
   .get(`/api/get-specific-user-by-email/:email`, getSpecificUserByEmail)
   .get(`/api/get-lawyers`, getLawyers)
   .get(`/api/get-appointments`, getAppointments)
-  .get(`/api/get-specific-appointment/:_id`, getSpecificAppointments)
+  .get(`/api/get-appointment/:_id`, getAppointmentById)
   .get(
     `/api/get-appointments-by-receiverId/:receiverId`,
     getAllAppointmentsReceiverId

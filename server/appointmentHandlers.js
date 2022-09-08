@@ -215,6 +215,7 @@ const getAllAppointmentsReceiverIdAndSenderId = async (req, res) => {
 /*  Change isConfrimed from false to true after click on 
 /**********************************************************/
 const changeAppointmentsToConfirmed = async (req, res) => {
+  // suppose we have the body : "_id":"fbd2c927-15b4-41db-820a-62d9e819b4fd"
   const { _id } = req.body;
   console.log({ _id });
   try {
@@ -241,7 +242,7 @@ const changeAppointmentsToConfirmed = async (req, res) => {
     if (updateAppointmentsToConfirmed.modifiedCount > 0) {
       return res.status(200).json({
         status: 200,
-        data: {},
+        data: _id,
         message: ` The Appointment with the Id : ${_id} was successfully updated to confirmed`,
       });
     } else {
@@ -256,10 +257,40 @@ const changeAppointmentsToConfirmed = async (req, res) => {
   }
   client.close();
 };
+/**********************************************************/
+/*  get appointment by _id
+/**********************************************************/
+const getAppointmentById = async (req, res) => {
+  const { _id } = req.params;
+  console.log({ _id });
+  try {
+    await client.connect();
+    const findAppointment = await db
+      .collection("appointments")
+      .findOne({ _id });
+    if (!findAppointment) {
+      return res.status(400).json({
+        status: 404,
+        message: ` Sorry, we could not find an Appointment with the Id : ${_id}`,
+      });
+    } else {
+      return res.status(200).json({
+        status: 200,
+        data: findAppointment,
+        message: ` The Appointment with the Id : ${_id} was successfully found`,
+      });
+    }
+  } catch (err) {
+    console.log("Update The Appointment to confirmed", err);
+    //
+  }
+  client.close();
+};
 module.exports = {
   addAppointment,
   deleteSpecificAppointments,
   getAllAppointmentsReceiverId,
   getAllAppointmentsReceiverIdAndSenderId,
   changeAppointmentsToConfirmed,
+  getAppointmentById,
 };
