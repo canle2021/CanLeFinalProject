@@ -193,7 +193,7 @@ const Header = () => {
                 : "/LawyerProfile"
             }
           >
-            <button>Profile</button>
+            <button>My page</button>
           </Link>
           {listOfNewSenders && listOfNewSenders.length > 0 ? (
             <Link to={`new-message-senderIds-list`}>

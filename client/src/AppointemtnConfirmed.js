@@ -54,7 +54,7 @@ const AppointmentConfirmed = () => {
         <SenderP>Message: {appointmentDetail.message}</SenderP>
         <p>Appointent will start at : {appointmentDetail.start}</p>
         <p>Appointent will end at: {appointmentDetail.end}</p>
-        <p>Date: {appointmentDetail.date}</p>
+        <p>Appointent's date: {appointmentDetail.date}</p>
         <p>Duration: {appointmentDetail.duration} minutes</p>
         <p>Location: {appointmentDetail.location} minutes</p>
         <p>Hour rate: ${appointmentDetail.hourRate}/hr</p>

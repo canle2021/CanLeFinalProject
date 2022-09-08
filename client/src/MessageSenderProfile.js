@@ -73,7 +73,7 @@ const MessageSenderProfile = () => {
         <p>Country: {viewMessageSenderProfile.country}</p>
       </InformationDiv>
       <AppointmentView senderId={_id} />
-      <AppointmentCreate />
+      {userProfile.status !== "client" ? <AppointmentCreate /> : null}
       <MessageReplyMessage />
       <ConversationView senderId={_id} />
     </ClientProfileDiv>

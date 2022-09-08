@@ -117,6 +117,15 @@ const ListOfSendersForNewMessages = () => {
                   >
                     {sender.firstName} {sender.lastName}
                   </LinktoSenderProfile>
+                  {sender.senderId === "System Appointment Confirmed" ? (
+                    <LinktoSenderProfile>
+                      {/* to={`/message-sender-profile/${sender.senderId}` */}
+                      {/* // onClick={updateMessageToRead} */}
+                      {/* // > */}
+                      System Appointment Confirmed from:
+                      {sender.firstName} {sender.lastName}
+                    </LinktoSenderProfile>
+                  ) : null}
                 </EachSenderDiv>
               );
             })}
