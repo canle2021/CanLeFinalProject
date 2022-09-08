@@ -16,7 +16,10 @@ const AppointmentView = ({ senderId }) => {
     setConversation,
     allAppointmentsReveiveIdSenderId,
     SetAllAppointmentsReveiveIdSenderId,
+    appointmentIdConfirmed,
+    setAppointmentIdConfirmed,
   } = useContext(UserContext);
+  const navigate = useNavigate();
   console.log("userProfile", userProfile._id);
   console.log(
     "allAppointmentsReveiveIdSenderId",
@@ -30,7 +33,6 @@ const AppointmentView = ({ senderId }) => {
       })
       .then((data) => {
         SetAllAppointmentsReveiveIdSenderId(data.data || []);
-        console.log("data.data", data.data);
       })
       .catch((err) => {
         console.log("err", err);
@@ -62,6 +64,10 @@ const AppointmentView = ({ senderId }) => {
               .then((data) => {
                 if (data.status === 200) {
                   alert("You successfully confirm the appointment ");
+                  setAppointmentIdConfirmed(data.data);
+                  console.log("setAppointmentIdConfirmed", data.data);
+                  localStorage.setItem("appointmentId", `${data.data}`);
+                  // navigate(`/AppointmentConfirmed`);
                 } else {
                   alert(
                     "Sorry! You can not confirm this appointment at this time. Please try again. "
@@ -80,7 +86,7 @@ const AppointmentView = ({ senderId }) => {
                   Confirm
                 </ConfirmButton>
               ) : (
-                <PastAppointment>Appointment in the past</PastAppointment>
+                <PastAppointment>Appointment was confirmed</PastAppointment>
               )}
               <SubjectP>Appointment ID: {appointment._id}</SubjectP>
               <SubjectP>Subject: {appointment.subject}</SubjectP>

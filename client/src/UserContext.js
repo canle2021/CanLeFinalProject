@@ -21,7 +21,11 @@ export const UserProvider = ({ children }) => {
   ] = useState([]);
   const [listOfNewAppointmentSenders, setListOfNewAppointmentSenders] =
     useState();
-
+  const [appointmentIdConfirmed, setAppointmentIdConfirmed] = useState(
+    localStorage.getItem("appointmentId")
+      ? localStorage.getItem("appointmentId")
+      : null
+  );
   return (
     <UserContext.Provider
       value={{
@@ -53,6 +57,8 @@ export const UserProvider = ({ children }) => {
         setListOfNewAppointmentSenders,
         allAppointmentsReveiveIdSenderId,
         SetAllAppointmentsReveiveIdSenderId,
+        appointmentIdConfirmed,
+        setAppointmentIdConfirmed,
       }}
     >
       {children}
