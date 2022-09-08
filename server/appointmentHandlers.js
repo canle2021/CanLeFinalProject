@@ -38,11 +38,15 @@ const addAppointment = async (req, res) => {
     ...body,
   };
   if (
+    !body.subject ||
     !body.senderId ||
     !body.receiverId ||
+    !body.lawyer ||
+    !body.client ||
     !body.message ||
     !body.date ||
-    !body.time ||
+    !body.start ||
+    !body.end ||
     !body.duration ||
     !body.hourRate ||
     !body.location
@@ -140,8 +144,122 @@ const deleteSpecificAppointments = async (req, res) => {
   }
   client.close();
 };
+// **********************************************************/
+/*  get all appointments BY receiverId
+  /**********************************************************/
 
+const getAllAppointmentsReceiverId = async (req, res) => {
+  const { receiverId } = req.params;
+
+  try {
+    await client.connect();
+    const findAllAppointments = await db
+      .collection("appointments")
+      .find({ receiverId })
+      .sort({ time: -1 })
+      .toArray();
+
+    if (findAllAppointments.length < 1) {
+      return res.status(400).json({
+        status: 404,
+        message: ` Sorry, we can not find all appointments with the reciever Id : ${receiverId}`,
+      });
+    } else {
+      return res.status(200).json({
+        status: 200,
+        data: findAllAppointments,
+        message: ` We successfully all appointments with the reciever Id : ${receiverId}`,
+      });
+    }
+  } catch (err) {
+    console.log("get All Appointments By ReceiverId ", err);
+    //
+  }
+  client.close();
+};
+/**********************************************************/
+/*  get All Appointments BY ReceiverId AndSenderId
+  /**********************************************************/
+
+const getAllAppointmentsReceiverIdAndSenderId = async (req, res) => {
+  const { senderId } = req.params;
+  const { receiverId } = req.params;
+
+  try {
+    await client.connect();
+    const findAllAppointments = await db
+      .collection("appointments")
+      .find({ receiverId: receiverId, senderId: senderId })
+      .sort({ time: -1 })
+      .toArray();
+
+    if (findAllAppointments.length < 1) {
+      return res.status(400).json({
+        status: 404,
+        message: ` Sorry, we can not find all appointments with the reciever Id : ${receiverId} and sender ID: ${senderId}`,
+      });
+    } else {
+      return res.status(200).json({
+        status: 200,
+        data: findAllAppointments,
+        message: ` We successfully all appointments with the reciever Id : ${receiverId} and sender ID: ${senderId}`,
+      });
+    }
+  } catch (err) {
+    console.log("get All Appointments By ReceiverId and SenderID", err);
+    //
+  }
+  client.close();
+};
+/**********************************************************/
+/*  Change isConfrimed from false to true after click on 
+/**********************************************************/
+const changeAppointmentsToConfirmed = async (req, res) => {
+  const { _id } = req.body;
+  console.log({ _id });
+  try {
+    await client.connect();
+    const findAppointment = await db
+      .collection("appointments")
+      .findOne({ _id });
+    if (!findAppointment) {
+      return res.status(400).json({
+        status: 404,
+        message: ` Sorry, we could not find an Appointment with the Id : ${_id}`,
+      });
+    }
+
+    const updateAppointmentsToConfirmed = await db
+      .collection("appointments")
+      .updateOne(
+        {
+          _id,
+        },
+        { $set: { isConfirmed: true } }
+      );
+
+    if (updateAppointmentsToConfirmed.modifiedCount > 0) {
+      return res.status(200).json({
+        status: 200,
+        data: {},
+        message: ` The Appointment with the Id : ${_id} was successfully updated to confirmed`,
+      });
+    } else {
+      return res.status(500).json({
+        status: 500,
+        message: ` Sorry! The Appointment with the Id : ${_id} was NOT updated to confirmed  successfully for some reason.`,
+      });
+    }
+  } catch (err) {
+    console.log("Update The Appointment to confirmed", err);
+    //
+  }
+  client.close();
+};
 module.exports = {
   addAppointment,
   deleteSpecificAppointments,
+  getAllAppointmentsReceiverId,
+  getAllAppointmentsReceiverIdAndSenderId,
+  changeAppointmentsToConfirmed,
 };

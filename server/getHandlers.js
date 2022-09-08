@@ -165,38 +165,6 @@ const getSpecificAppointments = async (req, res) => {
   }
   client.close();
 };
-/**********************************************************/
-/*  get  Appointments By Receiver
-  /**********************************************************/
-
-const getAppointmentsByReceiver = async (req, res) => {
-  const { receiverId } = req.params;
-
-  try {
-    await client.connect();
-    const findAppointments = await db
-      .collection("appointments")
-      .find({ receiverId })
-      .toArray();
-
-    if (findAppointments.length < 1) {
-      return res.status(400).json({
-        status: 404,
-        message: ` Sorry, we can not find all the Appointments with receiver's id: ${receiverId} information`,
-      });
-    } else {
-      return res.status(200).json({
-        status: 200,
-        data: findAppointments,
-        message: ` We successfully find the Appointment with id: ${receiverId}`,
-      });
-    }
-  } catch (err) {
-    console.log("get Appointments by receiver id ", err);
-    //
-  }
-  client.close();
-};
 
 /**********************************************************/
 /*  get specific User BY EMAIL
@@ -237,6 +205,6 @@ module.exports = {
   getSpecificUser,
   getAppointments,
   getSpecificAppointments,
-  getAppointmentsByReceiver,
+
   getSpecificUserByEmail,
 };

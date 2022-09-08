@@ -8,7 +8,6 @@ const {
   getLawyers,
   getAppointments,
   getSpecificAppointments,
-  getAppointmentsByReceiver,
   getSpecificUserByEmail,
 } = require("./getHandlers");
 const { createAccount, addPicture } = require("./addAccount&Picture");
@@ -39,6 +38,9 @@ const {
 const {
   addAppointment,
   deleteSpecificAppointments,
+  getAllAppointmentsReceiverId,
+  getAllAppointmentsReceiverIdAndSenderId,
+  changeAppointmentsToConfirmed,
 } = require("./appointmentHandlers");
 const PORT = 8000;
 
@@ -72,7 +74,7 @@ express()
   .get(`/api/get-specific-appointment/:_id`, getSpecificAppointments)
   .get(
     `/api/get-appointments-by-receiverId/:receiverId`,
-    getAppointmentsByReceiver
+    getAllAppointmentsReceiverId
   )
   .get(
     `/api/get-all-messages-by-receiverId/:receiverId`,
@@ -80,10 +82,15 @@ express()
   )
   .get(`/api/get-all-messages-by-senderId/:senderId`, getAllMessagesBySenderId)
   .get(`/api/get-conversation/:receiverId/:senderId`, getConversation)
+  .get(
+    `/api/get-appointment-both-sides/:receiverId/:senderId`,
+    getAllAppointmentsReceiverIdAndSenderId
+  )
   .patch(
     `/api/update-all-messages-by-senderId-receiverId-to-read`,
     changeMessageToRead
   )
+  .patch(`/api/update-conversation-to-confirmed`, changeAppointmentsToConfirmed)
 
   .post(`/api/add-user`, createAccount)
   .post(`/api/add-user-picture`, addPicture)
