@@ -22,6 +22,7 @@ const AppointmentCreate = ({}) => {
     lawyer: `${userProfile.firstName} ${userProfile.lastName}`,
     lawyerEmail: userProfile.email,
     isConfirmed: false,
+    timezone: "GMT-0600 (Mountain Daylight Time)",
   });
 
   const handleChange = (event) => {

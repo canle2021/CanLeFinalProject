@@ -49,6 +49,7 @@ const addAppointment = async (req, res) => {
     !body.end ||
     !body.duration ||
     !body.hourRate ||
+    !body.timeZone ||
     !body.location
   ) {
     return res.status(400).json({
