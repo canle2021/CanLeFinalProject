@@ -69,7 +69,7 @@ const AppointmentConfirmed = () => {
         <p>Appointent will end at: {timeEndStartappointment.end}</p>
 
         <p>Duration: {appointmentDetail.duration} minutes</p>
-        <p>Location: {appointmentDetail.location} minutes</p>
+        <p>Location: {appointmentDetail.location} </p>
         <p>Hour rate: ${appointmentDetail.hourRate}/hr</p>
 
         <p>Booked at: {appointmentDetail.timeOfCreateingAppointmentToString}</p>
