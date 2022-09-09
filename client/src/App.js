@@ -13,6 +13,7 @@ import AppointmentConfirmed from "./AppointemtnConfirmed";
 import MessageSenderProfile from "./MessageSenderProfile";
 import ListOfSendersForNewMessages from "./ListOfSendersForNewMessages";
 import ListOfSendersForNewAppointment from "./ListOfSendersForNewAppointment";
+import UpComingAppointments from "./UpComingAppointments";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
@@ -41,6 +42,10 @@ function App() {
           <Route
             path="/LawyerWorkingPage/:id"
             element={<LawyerWorkingPage />}
+          />
+          <Route
+            path="/upcoming-appointments"
+            element={<UpComingAppointments />}
           />
           <Route
             path="/AppointmentConfirmed"

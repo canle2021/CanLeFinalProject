@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useParams } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 import MessagesView from "./MeesagesView";
+import UpComingAppointments from "./UpComingAppointments";
 const LawyerProfile = () => {
   const navigate = useNavigate();
   const {
@@ -40,10 +41,20 @@ const LawyerProfile = () => {
         <p>Postal Code: {userProfile.postalCode}</p>
         <p>Country: {userProfile.country}</p>
       </InformationDiv>
+      <LinkToUpcomingAppointmentsPage to="/upcoming-appointments">
+        <UpComingAppointmentsDiv>UpComingAppointments</UpComingAppointmentsDiv>
+      </LinkToUpcomingAppointmentsPage>
+
       <MessagesView />
     </LawyerProfileDiv>
   );
 };
+const UpComingAppointmentsDiv = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+`;
+const LinkToUpcomingAppointmentsPage = styled(Link)``;
+
 const InformationDiv = styled.div``;
 
 const LawyerProfileDiv = styled.div``;

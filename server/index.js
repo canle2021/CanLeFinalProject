@@ -41,6 +41,7 @@ const {
   getAllAppointmentsReceiverIdAndSenderId,
   changeAppointmentsToConfirmed,
   getAppointmentById,
+  getAllAppointmentsBySenderId,
 } = require("./appointmentHandlers");
 const PORT = 8000;
 
@@ -73,6 +74,10 @@ express()
   .get(`/api/get-appointments`, getAppointments)
   .get(`/api/get-appointment/:_id`, getAppointmentById)
   .get(
+    `/api/get-appointments-by-senderId/:senderId`,
+    getAllAppointmentsBySenderId
+  )
+  .get(
     `/api/get-appointments-by-receiverId/:receiverId`,
     getAllAppointmentsReceiverId
   )
@@ -80,6 +85,7 @@ express()
     `/api/get-all-messages-by-receiverId/:receiverId`,
     getAllMessagesByReceiverId
   )
+
   .get(`/api/get-all-messages-by-senderId/:senderId`, getAllMessagesBySenderId)
   .get(`/api/get-conversation/:receiverId/:senderId`, getConversation)
   .get(
