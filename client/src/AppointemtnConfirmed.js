@@ -22,6 +22,7 @@ const AppointmentConfirmed = () => {
   } = useContext(UserContext);
   let appointmentDetailArray = [];
   const [appointmentDetail, setAppointmentDetail] = useState([]);
+  const [timeEndStartappointment, setTimeEndStartappointment] = useState({});
   useEffect(() => {
     appointmentDetailArray.push(
       fetch(`/api/get-appointment/${appointmentIdConfirmed}`)
@@ -38,6 +39,18 @@ const AppointmentConfirmed = () => {
     );
     Promise.all(appointmentDetailArray).then((data) => {
       setAppointmentDetail(data[0]);
+      // to get the format : Sat Sep 10 2022 12:42:00 GMT-0600 (Mountain Daylight Time), this format includes weekday
+      const timeStart = new Date(data[0].timeStartAppointment);
+      const timeStartToNumber = timeStart.getTime();
+      const timeStartToString = new Date(timeStartToNumber).toString();
+      //
+      const timeEnd = new Date(data[0].timeEndAppointment);
+      const timeEndToNumber = timeEnd.getTime();
+      const timeEndToString = new Date(timeEndToNumber).toString();
+      setTimeEndStartappointment({
+        start: timeStartToString,
+        end: timeEndToString,
+      });
     });
   }, [appointmentIdConfirmed]);
 
@@ -52,9 +65,9 @@ const AppointmentConfirmed = () => {
         <SenderP>Client: {appointmentDetail.client}</SenderP>
         <p>Client's Email: {appointmentDetail.clientEmail}</p>
         <SenderP>Message: {appointmentDetail.message}</SenderP>
-        <p>Appointent will start at : {appointmentDetail.start}</p>
-        <p>Appointent will end at: {appointmentDetail.end}</p>
-        <p>Appointent's date: {appointmentDetail.date}</p>
+        <p>Appointent will start at : {timeEndStartappointment.start}</p>
+        <p>Appointent will end at: {timeEndStartappointment.end}</p>
+
         <p>Duration: {appointmentDetail.duration} minutes</p>
         <p>Location: {appointmentDetail.location} minutes</p>
         <p>Hour rate: ${appointmentDetail.hourRate}/hr</p>

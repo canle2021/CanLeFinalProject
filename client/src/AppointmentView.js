@@ -134,11 +134,23 @@ const AppointmentView = ({ senderId }) => {
               <SenderP>Client: {appointment.client}</SenderP>
 
               <p>Message: {appointment.message}</p>
-              <p>Start: {appointment.start}</p>
-              <p>End: {appointment.end}</p>
+              <p>
+                Starts at:{" "}
+                {new Date(
+                  new Date(appointment.timeStartAppointment).getTime()
+                ).toString()}
+              </p>
+              <p>
+                Ends at:{" "}
+                {new Date(
+                  new Date(appointment.timeEndAppointment).getTime()
+                ).toString()}
+              </p>
               <p>Duration: {appointment.duration} minutes</p>
-              <p>Date: {appointment.date}</p>
-              <p>Booked at: {appointment.timeOfCreateingAppointmentToString}</p>
+
+              <p>
+                Was booked at: {appointment.timeOfCreateingAppointmentToString}
+              </p>
             </Message>
           );
         })}

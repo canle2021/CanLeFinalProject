@@ -39,6 +39,8 @@ const AppointmentCreate = ({}) => {
       client: `${viewMessageSenderProfile.firstName} ${viewMessageSenderProfile.lastName}`,
       clientEmail: viewMessageSenderProfile.email,
       ...values,
+      timeStartAppointment: `${values.date} ${values.start} GMT-0600 (Mountain Daylight Time)`,
+      timeEndAppointment: `${values.date} ${values.end} GMT-0600 (Mountain Daylight Time)`,
       timeOfCreateingAppointment: Date.now(),
       timeOfCreateingAppointmentToString: Date(Date.now()).toString(),
       //  this is for both when a client click on a specific lawyer page or click on message to see who sent that message
@@ -108,6 +110,7 @@ const AppointmentCreate = ({}) => {
             required
             onChange={handleChange}
           />
+          <small>Timezone: GMT-0600 (Mountain Daylight Time) </small>
           <small>Start:</small>
           <Input
             placeholder="Start (required)"
@@ -124,6 +127,7 @@ const AppointmentCreate = ({}) => {
             required
             onChange={handleChange}
           />
+
           <Input
             placeholder="Duration/minutes (required)"
             type="number"
