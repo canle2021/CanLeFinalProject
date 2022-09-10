@@ -70,41 +70,49 @@ const UpComingAppointments = () => {
   return (
     <UpComingAppointmentsDiv>
       <h1>Upcoming Appointments:</h1>
+      {appointmentsDetail.length < 1 ? (
+        <h2>You have no upcoming appointment!</h2>
+      ) : (
+        <div>
+          {appointmentsDetail.map((appointment) => {
+            // to get the format Sat Sep 10 2022 16:16:00 GMT-0600 (Mountain Daylight Time)
+            const timeStart = new Date(appointment.timeStartAppointment);
+            const timeStartToNumber = timeStart.getTime();
+            const timeStartToString = new Date(timeStartToNumber).toString();
+            //
+            const timeEnd = new Date(appointment.timeEndAppointment);
+            const timeEndToNumber = timeEnd.getTime();
+            const timeEndToString = new Date(timeEndToNumber).toString();
+            return (
+              <Appointment>
+                <SubjectP>Appointment ID: {appointment._id}</SubjectP>
+                <SubjectP>Subject: {appointment.subject}</SubjectP>
+                <SenderP>Lawyer: {appointment.lawyer}</SenderP>
+                <p>Lawyer's Email: {appointment.lawyerEmail}</p>
+                <Link to={`/message-sender-profile/${appointment.receiverId}`}>
+                  <SenderP>Client: {appointment.client}</SenderP>
+                </Link>
+                <p>Client's Email: {appointment.clientEmail}</p>
+                <SenderP>Message: {appointment.message}</SenderP>
+                <p>Appointent will start at : {timeStartToString}</p>
+                <p>Appointent will end at: {timeEndToString}</p>
 
-      {appointmentsDetail.map((appointment) => {
-        // to get the format Sat Sep 10 2022 16:16:00 GMT-0600 (Mountain Daylight Time)
-        const timeStart = new Date(appointment.timeStartAppointment);
-        const timeStartToNumber = timeStart.getTime();
-        const timeStartToString = new Date(timeStartToNumber).toString();
-        //
-        const timeEnd = new Date(appointment.timeEndAppointment);
-        const timeEndToNumber = timeEnd.getTime();
-        const timeEndToString = new Date(timeEndToNumber).toString();
-        return (
-          <Appointment>
-            <SubjectP>Appointment ID: {appointment._id}</SubjectP>
-            <SubjectP>Subject: {appointment.subject}</SubjectP>
-            <SenderP>Lawyer: {appointment.lawyer}</SenderP>
-            <p>Lawyer's Email: {appointment.lawyerEmail}</p>
-            <Link to={`/message-sender-profile/${appointment.receiverId}`}>
-              <SenderP>Client: {appointment.client}</SenderP>
-            </Link>
-            <p>Client's Email: {appointment.clientEmail}</p>
-            <SenderP>Message: {appointment.message}</SenderP>
-            <p>Appointent will start at : {timeStartToString}</p>
-            <p>Appointent will end at: {timeEndToString}</p>
+                <p>Duration: {appointment.duration} minutes</p>
+                <p>Location: {appointment.location} </p>
+                <p>Hour rate: ${appointment.hourRate}/hr</p>
 
-            <p>Duration: {appointment.duration} minutes</p>
-            <p>Location: {appointment.location} </p>
-            <p>Hour rate: ${appointment.hourRate}/hr</p>
-
-            <p>Booked at: {appointment.timeOfCreateingAppointmentToString}</p>
-            <p>
-              Confirmed by client: {appointment.isConfirmed ? "Yes" : "Not yet"}
-            </p>
-          </Appointment>
-        );
-      })}
+                <p>
+                  Booked at: {appointment.timeOfCreateingAppointmentToString}
+                </p>
+                <p>
+                  Confirmed by client:{" "}
+                  {appointment.isConfirmed ? "Yes" : "Not yet"}
+                </p>
+              </Appointment>
+            );
+          })}
+        </div>
+      )}
     </UpComingAppointmentsDiv>
   );
 };
