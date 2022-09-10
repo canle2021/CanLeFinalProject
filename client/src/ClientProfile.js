@@ -44,15 +44,21 @@ const ClientProfile = () => {
         <p>Country: {userProfile.country}</p>
       </InformationDiv>
       <LinkToAppointmentsPage to="/client-upcoming-appointments">
-        Upcoming appointments:
+        <AppointmentsDiv> Upcoming appointments</AppointmentsDiv>
+      </LinkToAppointmentsPage>
+      <LinkToAppointmentsPage to="/client-not-confirmed-appointments">
+        <AppointmentsDiv> Not confirmed appointments</AppointmentsDiv>
       </LinkToAppointmentsPage>
       <MessagesView />
     </ClientProfileDiv>
   );
 };
+const AppointmentsDiv = styled.div``;
 const LinkToAppointmentsPage = styled(Link)``;
 const InformationDiv = styled.div``;
 
-const ClientProfileDiv = styled.div``;
+const ClientProfileDiv = styled.div`
+  min-height: 100vh;
+`;
 
 export default ClientProfile;

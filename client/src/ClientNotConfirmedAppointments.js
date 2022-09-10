@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
 
-const ClientUpComingAppointments = () => {
+const ClientNotConfirmedAppointments = () => {
   const {
     emailToFetchUser,
     userProfile,
@@ -46,7 +46,7 @@ const ClientUpComingAppointments = () => {
         const nextAppointmentsFilter = data[0].filter((element) => {
           const newDateOfTime = new Date(element.timeStartAppointment);
           const timeToNumber = newDateOfTime.getTime();
-          if (timeToNumber > Date.now() && element.isConfirmed === true) {
+          if (timeToNumber > Date.now() && element.isConfirmed === false) {
             return true;
           } else {
             return false;
@@ -63,9 +63,9 @@ const ClientUpComingAppointments = () => {
 
   return (
     <UpComingAppointmentsDiv>
-      <h1>Client's upcoming appointments:</h1>
+      <h1>Client's not confirmed appointments:</h1>
       {appointmentsDetail.length < 1 ? (
-        <h2>You have no upcoming appointment!</h2>
+        <h2>You have no not confirmed appointment!</h2>
       ) : (
         <div>
           {appointmentsDetail.map((appointment) => {
@@ -115,7 +115,7 @@ const ClientUpComingAppointments = () => {
 const UpComingAppointmentsDiv = styled.div`
   min-height: 100vh;
 `;
-const PastAppointment = styled.h2``;
+
 const SenderP = styled.p`
   font-weight: bold;
 `;
@@ -126,4 +126,4 @@ const Appointment = styled.div`
   border-bottom: 2px solid blue;
 `;
 
-export default ClientUpComingAppointments;
+export default ClientNotConfirmedAppointments;

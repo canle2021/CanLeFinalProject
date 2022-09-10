@@ -27,6 +27,7 @@ const AppointmentView = ({ senderId }) => {
   );
 
   useEffect(() => {
+    // this makes sure that can fetch data based on 2 sides of id
     fetch(
       `/api/get-appointment-both-sides/${
         userProfile.status === "client" ? userProfile._id : senderId
