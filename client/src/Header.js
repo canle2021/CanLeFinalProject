@@ -26,17 +26,7 @@ const Header = () => {
     setListOfNewAppointmentSenders,
   } = useContext(UserContext);
   let userId = [];
-  const {
-    loginWithRedirect,
-    user,
-    isAuthenticated,
-    logout,
-    getAccessTokenSilently,
-  } = useAuth0();
-
-  getAccessTokenSilently().then((res) => {
-    console.log("getAccessTokenSilently", res);
-  });
+  const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
 
   setSucessfullyVerification(isAuthenticated);
   useEffect(() => {
@@ -186,8 +176,7 @@ const Header = () => {
     // loginWithRedirect();
     navigate("/signUp");
   };
-  console.log("userProfile", userProfile);
-  console.log("all messages", allMessagesReveived);
+
   return (
     <HeaderDiv>
       <Link to="/">
