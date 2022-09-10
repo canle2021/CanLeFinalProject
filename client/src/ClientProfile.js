@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import MessagesView from "./MeesagesView";
+import { Link } from "react-router-dom";
 const ClientProfile = () => {
   const navigate = useNavigate();
   const {
@@ -42,10 +43,14 @@ const ClientProfile = () => {
         <p>Postal Code: {userProfile.postalCode}</p>
         <p>Country: {userProfile.country}</p>
       </InformationDiv>
+      <LinkToAppointmentsPage to="/client-upcoming-appointments">
+        Upcoming appointments:
+      </LinkToAppointmentsPage>
       <MessagesView />
     </ClientProfileDiv>
   );
 };
+const LinkToAppointmentsPage = styled(Link)``;
 const InformationDiv = styled.div``;
 
 const ClientProfileDiv = styled.div``;

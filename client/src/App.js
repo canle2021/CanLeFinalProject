@@ -16,6 +16,7 @@ import UpComingAppointments from "./LawyerAppointmentTools/UpComingAppointments"
 import NotConfirmedUpcomingAppointments from "./LawyerAppointmentTools/NotConfirmedUpcomingAppointments";
 import OnGoingAppointments from "./LawyerAppointmentTools/OnGoingAppointments";
 import PassedAppointments from "./LawyerAppointmentTools/PassedAppointments";
+import ClientUpComingAppointments from "./ClientUpComingAppointments";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
@@ -61,6 +62,10 @@ function App() {
           <Route
             path="/AppointmentConfirmed"
             element={<AppointmentConfirmed />}
+          />
+          <Route
+            path="/client-upcoming-appointments"
+            element={<ClientUpComingAppointments />}
           />
 
           <Route path="*" element={<ErrorPage />} />
