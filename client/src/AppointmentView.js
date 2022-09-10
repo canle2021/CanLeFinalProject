@@ -27,7 +27,11 @@ const AppointmentView = ({ senderId }) => {
   );
 
   useEffect(() => {
-    fetch(`/api/get-appointment-both-sides/${userProfile._id}/${senderId}`)
+    fetch(
+      `/api/get-appointment-both-sides/${
+        userProfile.status === "client" ? userProfile._id : senderId
+      }/${userProfile.status === "client" ? senderId : userProfile._id}`
+    )
       .then((res) => {
         return res.json();
       })
