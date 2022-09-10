@@ -26,7 +26,18 @@ const Header = () => {
     setListOfNewAppointmentSenders,
   } = useContext(UserContext);
   let userId = [];
-  const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
+  const {
+    loginWithRedirect,
+    user,
+    isAuthenticated,
+    logout,
+    getAccessTokenSilently,
+  } = useAuth0();
+
+  getAccessTokenSilently().then((res) => {
+    console.log("getAccessTokenSilently", res);
+  });
+
   setSucessfullyVerification(isAuthenticated);
   useEffect(() => {
     if (user?.email) {

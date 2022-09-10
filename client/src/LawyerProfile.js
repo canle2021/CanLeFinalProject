@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useParams } from "react";
+import React, { useContext, useEffect, useParams, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 import MessagesView from "./MeesagesView";
-
+import MessageSenderList from "./MessageSenderList";
 const LawyerProfile = () => {
   const navigate = useNavigate();
   const {
@@ -13,7 +13,10 @@ const LawyerProfile = () => {
     setUserInDatabase,
   } = useContext(UserContext);
 
-  console.log("userProfile", userProfile);
+  const [toggleSenderList, setToggleSenderList] = useState(false);
+  const clickToSee = () => {
+    setToggleSenderList(!toggleSenderList);
+  };
   useEffect(() => {
     if (!sucessfullyVerification) {
       navigate("/");
@@ -28,6 +31,25 @@ const LawyerProfile = () => {
       <h1>
         Lawyer {userProfile.firstName} {userProfile.lastName} page
       </h1>
+      <AppointmentTools>
+        <LinkToAppointmentsPage to="/upcoming-appointments">
+          <Button>Up coming appointments</Button>
+        </LinkToAppointmentsPage>
+        <LinkToAppointmentsPage to="/not-confimed-upcoming-appointments">
+          <Button>Not confirmed appointments</Button>
+        </LinkToAppointmentsPage>
+        <LinkToAppointmentsPage to="/ongoing-appointments">
+          <Button>Ongoing appointments</Button>
+        </LinkToAppointmentsPage>
+        <LinkToAppointmentsPage to="/passed-appointments">
+          <Button>Passed appointments</Button>
+        </LinkToAppointmentsPage>
+      </AppointmentTools>
+
+      <ClientTools>
+        <Button onClick={clickToSee}>Message senders list</Button>
+        {toggleSenderList ? <MessageSenderList /> : null}
+      </ClientTools>
       <InformationDiv>
         <p>Picture Id: {userProfile.pictureId}</p>
         <p>Username: {userProfile.userName}</p>
@@ -41,24 +63,19 @@ const LawyerProfile = () => {
         <p>Postal Code: {userProfile.postalCode}</p>
         <p>Country: {userProfile.country}</p>
       </InformationDiv>
-      <LinkToAppointmentsPage to="/upcoming-appointments">
-        <AppointmentsDiv>Up coming appointments</AppointmentsDiv>
-      </LinkToAppointmentsPage>
-      <LinkToAppointmentsPage to="/not-confimed-upcoming-appointments">
-        <AppointmentsDiv>Not confirmed appointments</AppointmentsDiv>
-      </LinkToAppointmentsPage>
-      <LinkToAppointmentsPage to="/ongoing-appointments">
-        <AppointmentsDiv>Ongoing appointments</AppointmentsDiv>
-      </LinkToAppointmentsPage>
-      <LinkToAppointmentsPage to="/passed-appointments">
-        <AppointmentsDiv>Passed appointments</AppointmentsDiv>
-      </LinkToAppointmentsPage>
-
       <MessagesView />
     </LawyerProfileDiv>
   );
 };
-const AppointmentsDiv = styled.div`
+const ListOfMessageSenders = styled.div``;
+const ClientTools = styled.div`
+  margin-top: 20px;
+`;
+const AppointmentTools = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const Button = styled.button`
   font-size: 1.5rem;
   font-weight: bold;
 `;
