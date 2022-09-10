@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useParams, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
-import MessagesView from "./MeesagesView";
+
 import MessageSenderList from "./MessageSenderList";
 const LawyerProfile = () => {
   const navigate = useNavigate();
@@ -63,11 +63,10 @@ const LawyerProfile = () => {
         <p>Postal Code: {userProfile.postalCode}</p>
         <p>Country: {userProfile.country}</p>
       </InformationDiv>
-      <MessagesView />
     </LawyerProfileDiv>
   );
 };
-const ListOfMessageSenders = styled.div``;
+
 const ClientTools = styled.div`
   margin-top: 20px;
 `;
@@ -83,6 +82,8 @@ const LinkToAppointmentsPage = styled(Link)``;
 
 const InformationDiv = styled.div``;
 
-const LawyerProfileDiv = styled.div``;
+const LawyerProfileDiv = styled.div`
+  min-height: 100vh;
+`;
 
 export default LawyerProfile;

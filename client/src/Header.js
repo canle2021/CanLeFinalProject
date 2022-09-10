@@ -193,8 +193,7 @@ const Header = () => {
       <Link to="/">
         <h1>Header</h1>
       </Link>
-      <input type="date" />
-      <input type="time" />
+
       {sucessfullyVerification && emailToFetchUser ? (
         <div>
           <button onClick={logUserOut}>Logout</button>

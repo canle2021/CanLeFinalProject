@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useParams, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
-import MessagesView from "./MeesagesView";
+
 import { Link } from "react-router-dom";
 import MessageSenderList from "./MessageSenderList";
 const ClientProfile = () => {
@@ -60,8 +60,6 @@ const ClientProfile = () => {
         <Button onClick={clickToSee}>Message senders list</Button>
         {toggleSenderList ? <MessageSenderList /> : null}
       </SenderManagementTools>
-
-      <MessagesView />
     </ClientProfileDiv>
   );
 };
