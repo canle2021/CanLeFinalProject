@@ -42,7 +42,14 @@ const LawyerProfile = () => {
         <p>Country: {userProfile.country}</p>
       </InformationDiv>
       <LinkToUpcomingAppointmentsPage to="/upcoming-appointments">
-        <UpComingAppointmentsDiv>UpComingAppointments</UpComingAppointmentsDiv>
+        <UpComingAppointmentsDiv>
+          Up coming appointments
+        </UpComingAppointmentsDiv>
+      </LinkToUpcomingAppointmentsPage>
+      <LinkToUpcomingAppointmentsPage to="/not-confimed-upcoming-appointments">
+        <UpComingAppointmentsDiv>
+          Not confirmed appointments
+        </UpComingAppointmentsDiv>
       </LinkToUpcomingAppointmentsPage>
 
       <MessagesView />

@@ -58,10 +58,6 @@ const MessageSenderProfile = () => {
         <Picture src={viewMessageSenderPicture.picture}></Picture>
       </LawyerpictureDiv>
       <InformationDiv>
-        {userProfile.status !== "client" ? (
-          <p>UserId: {viewMessageSenderProfile._id}</p>
-        ) : null}
-        <p>Username: {viewMessageSenderProfile.userName}</p>
         <p>FirstName: {viewMessageSenderProfile.firstName}</p>
         <p>LastName: {viewMessageSenderProfile.lastName}</p>
         <p>Email: {viewMessageSenderProfile.email}</p>
