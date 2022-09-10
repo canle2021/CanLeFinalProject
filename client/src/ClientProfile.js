@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useParams } from "react";
+import React, { useContext, useEffect, useParams, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import MessagesView from "./MeesagesView";
 import { Link } from "react-router-dom";
+import MessageSenderList from "./MessageSenderList";
 const ClientProfile = () => {
   const navigate = useNavigate();
   const {
@@ -12,8 +13,10 @@ const ClientProfile = () => {
     userInDatabase,
     setUserInDatabase,
   } = useContext(UserContext);
-
-  console.log("userProfile", userProfile);
+  const [toggleSenderList, setToggleSenderList] = useState(false);
+  const clickToSee = () => {
+    setToggleSenderList(!toggleSenderList);
+  };
 
   useEffect(() => {
     if (!sucessfullyVerification) {
@@ -44,19 +47,26 @@ const ClientProfile = () => {
         <p>Country: {userProfile.country}</p>
       </InformationDiv>
       <LinkToAppointmentsPage to="/client-upcoming-appointments">
-        <AppointmentsDiv> Upcoming appointments</AppointmentsDiv>
+        <Button> Upcoming appointments</Button>
       </LinkToAppointmentsPage>
       <LinkToAppointmentsPage to="/client-not-confirmed-appointments">
-        <AppointmentsDiv> Not confirmed appointments</AppointmentsDiv>
+        <Button> Not confirmed appointments</Button>
       </LinkToAppointmentsPage>
       <LinkToAppointmentsPage to="/client-passed-appointments">
-        <AppointmentsDiv> Passed appointments</AppointmentsDiv>
+        <Button> Passed appointments</Button>
       </LinkToAppointmentsPage>
+
+      <SenderManagementTools>
+        <Button onClick={clickToSee}>Message senders list</Button>
+        {toggleSenderList ? <MessageSenderList /> : null}
+      </SenderManagementTools>
+
       <MessagesView />
     </ClientProfileDiv>
   );
 };
-const AppointmentsDiv = styled.div``;
+const SenderManagementTools = styled.div``;
+const Button = styled.button``;
 const LinkToAppointmentsPage = styled(Link)``;
 const InformationDiv = styled.div``;
 
