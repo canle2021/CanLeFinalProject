@@ -90,7 +90,7 @@ const ListOfSendersForNewAppointment = () => {
               return (
                 <EachSenderDiv key={index}>
                   <LinktoSenderProfile
-                    to={`/message-sender-profile/${apointment.senderId}`}
+                    to={`/client-not-confirmed-appointments`}
                     // onClick={updateMessageToRead}
                   >
                     Lawyer: {apointment.lawyer}/ Appointment Date:{" "}

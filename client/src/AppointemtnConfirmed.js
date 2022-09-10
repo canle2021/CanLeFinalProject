@@ -56,7 +56,7 @@ const AppointmentConfirmed = () => {
 
   return (
     <AppointmentConfirmedDiv>
-      <h1>Appointment Confirmed:</h1>
+      <h1>Appointment Confirmation:</h1>
       <Message>
         <SubjectP>Appointment ID: {appointmentDetail._id}</SubjectP>
         <SubjectP>Subject: {appointmentDetail.subject}</SubjectP>

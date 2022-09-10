@@ -126,36 +126,42 @@ const AppointmentView = ({ senderId }) => {
 
           return (
             <Message key={index}>
-              {!appointment.isConfirmed ? (
-                <ConfirmButton onClick={updateAppointmentToConfirmed}>
-                  Confirm
-                </ConfirmButton>
-              ) : (
-                <PastAppointment>Appointment was confirmed</PastAppointment>
+              {!appointment.isConfirmed &&
+              userProfile.status === "lawyer" ? null : (
+                <div>
+                  {!appointment.isConfirmed ? (
+                    <ConfirmButton onClick={updateAppointmentToConfirmed}>
+                      Confirm
+                    </ConfirmButton>
+                  ) : (
+                    <PastAppointment>Appointment was confirmed</PastAppointment>
+                  )}
+                  <SubjectP>Appointment ID: {appointment._id}</SubjectP>
+                  <SubjectP>Subject: {appointment.subject}</SubjectP>
+                  <SenderP>Lawyer: {appointment.lawyer}</SenderP>
+                  <SenderP>Client: {appointment.client}</SenderP>
+
+                  <p>Message: {appointment.message}</p>
+                  <p>
+                    Starts at:{" "}
+                    {new Date(
+                      new Date(appointment.timeStartAppointment).getTime()
+                    ).toString()}
+                  </p>
+                  <p>
+                    Ends at:{" "}
+                    {new Date(
+                      new Date(appointment.timeEndAppointment).getTime()
+                    ).toString()}
+                  </p>
+                  <p>Duration: {appointment.duration} minutes</p>
+
+                  <p>
+                    Was booked at:{" "}
+                    {appointment.timeOfCreateingAppointmentToString}
+                  </p>
+                </div>
               )}
-              <SubjectP>Appointment ID: {appointment._id}</SubjectP>
-              <SubjectP>Subject: {appointment.subject}</SubjectP>
-              <SenderP>Lawyer: {appointment.lawyer}</SenderP>
-              <SenderP>Client: {appointment.client}</SenderP>
-
-              <p>Message: {appointment.message}</p>
-              <p>
-                Starts at:{" "}
-                {new Date(
-                  new Date(appointment.timeStartAppointment).getTime()
-                ).toString()}
-              </p>
-              <p>
-                Ends at:{" "}
-                {new Date(
-                  new Date(appointment.timeEndAppointment).getTime()
-                ).toString()}
-              </p>
-              <p>Duration: {appointment.duration} minutes</p>
-
-              <p>
-                Was booked at: {appointment.timeOfCreateingAppointmentToString}
-              </p>
             </Message>
           );
         })}
