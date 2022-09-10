@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Header from "./Header";
 import HomePage from "./HomePage";
 import Footer from "./Footer";
-
 import SignUpPage from "./SignUp";
 import SpecificLawyer from "./SpecificLawyer";
 import ClientProfile from "./ClientProfile";
@@ -15,6 +14,7 @@ import ListOfSendersForNewMessages from "./ListOfSendersForNewMessages";
 import ListOfSendersForNewAppointment from "./ListOfSendersForNewAppointment";
 import UpComingAppointments from "./UpComingAppointments";
 import NotConfirmedUpcomingAppointments from "./NotConfirmedUpcomingAppointments";
+import OnGoingAppointments from "./OnGoingAppointments";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
@@ -47,6 +47,10 @@ function App() {
           <Route
             path="/upcoming-appointments"
             element={<UpComingAppointments />}
+          />
+          <Route
+            path="/ongoing-appointments"
+            element={<OnGoingAppointments />}
           />
           <Route
             path="/not-confimed-upcoming-appointments"

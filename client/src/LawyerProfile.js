@@ -41,26 +41,25 @@ const LawyerProfile = () => {
         <p>Postal Code: {userProfile.postalCode}</p>
         <p>Country: {userProfile.country}</p>
       </InformationDiv>
-      <LinkToUpcomingAppointmentsPage to="/upcoming-appointments">
-        <UpComingAppointmentsDiv>
-          Up coming appointments
-        </UpComingAppointmentsDiv>
-      </LinkToUpcomingAppointmentsPage>
-      <LinkToUpcomingAppointmentsPage to="/not-confimed-upcoming-appointments">
-        <UpComingAppointmentsDiv>
-          Not confirmed appointments
-        </UpComingAppointmentsDiv>
-      </LinkToUpcomingAppointmentsPage>
+      <LinkToAppointmentsPage to="/upcoming-appointments">
+        <AppointmentsDiv>Up coming appointments</AppointmentsDiv>
+      </LinkToAppointmentsPage>
+      <LinkToAppointmentsPage to="/not-confimed-upcoming-appointments">
+        <AppointmentsDiv>Not confirmed appointments</AppointmentsDiv>
+      </LinkToAppointmentsPage>
+      <LinkToAppointmentsPage to="/ongoing-appointments">
+        <AppointmentsDiv>Ongoing appointments</AppointmentsDiv>
+      </LinkToAppointmentsPage>
 
       <MessagesView />
     </LawyerProfileDiv>
   );
 };
-const UpComingAppointmentsDiv = styled.div`
+const AppointmentsDiv = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
 `;
-const LinkToUpcomingAppointmentsPage = styled(Link)``;
+const LinkToAppointmentsPage = styled(Link)``;
 
 const InformationDiv = styled.div``;
 
