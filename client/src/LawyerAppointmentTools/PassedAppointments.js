@@ -2,11 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../UserContext";
 import { useNavigate } from "react-router-dom";
-import MessageToLawyer from "./MessageToLawyer";
+import MessageToLawyer from "../MessageToLawyer";
 
-const UpComingAppointments = () => {
+const PassedAppointments = () => {
   const {
     emailToFetchUser,
     userProfile,
@@ -50,9 +50,10 @@ const UpComingAppointments = () => {
       Promise.all(appointmentDetailArray).then((data) => {
         // setAppointmentsDetail(data[0]);
         const nextAppointmentsFilter = data[0].filter((element) => {
-          const newDateOfTime = new Date(element.timeStartAppointment);
-          const timeToNumber = newDateOfTime.getTime();
-          if (timeToNumber > Date.now() && element.isConfirmed === true) {
+          const newDateOfTimeEnd = new Date(element.timeEndAppointment);
+          const timeEndToNumber = newDateOfTimeEnd.getTime();
+          // includes not confirmed and passed
+          if (timeEndToNumber < Date.now()) {
             return true;
           } else {
             return false;
@@ -69,7 +70,7 @@ const UpComingAppointments = () => {
 
   return (
     <UpComingAppointmentsDiv>
-      <h1>Upcoming Appointments:</h1>
+      <h1>Passed appointments:</h1>
 
       {appointmentsDetail.map((appointment) => {
         // to get the format Sat Sep 10 2022 16:16:00 GMT-0600 (Mountain Daylight Time)
@@ -120,4 +121,4 @@ const Appointment = styled.div`
   border-bottom: 2px solid blue;
 `;
 
-export default UpComingAppointments;
+export default PassedAppointments;

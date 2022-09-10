@@ -12,10 +12,10 @@ import AppointmentConfirmed from "./AppointemtnConfirmed";
 import MessageSenderProfile from "./MessageSenderProfile";
 import ListOfSendersForNewMessages from "./ListOfSendersForNewMessages";
 import ListOfSendersForNewAppointment from "./ListOfSendersForNewAppointment";
-import UpComingAppointments from "./UpComingAppointments";
-import NotConfirmedUpcomingAppointments from "./NotConfirmedUpcomingAppointments";
-import OnGoingAppointments from "./OnGoingAppointments";
-import PassedAppointments from "./PassedAppointments";
+import UpComingAppointments from "./LawyerAppointmentTools/UpComingAppointments";
+import NotConfirmedUpcomingAppointments from "./LawyerAppointmentTools/NotConfirmedUpcomingAppointments";
+import OnGoingAppointments from "./LawyerAppointmentTools/OnGoingAppointments";
+import PassedAppointments from "./LawyerAppointmentTools/PassedAppointments";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (

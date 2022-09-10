@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 import MessagesView from "./MeesagesView";
-import UpComingAppointments from "./UpComingAppointments";
+
 const LawyerProfile = () => {
   const navigate = useNavigate();
   const {
