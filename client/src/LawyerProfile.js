@@ -50,6 +50,9 @@ const LawyerProfile = () => {
       <LinkToAppointmentsPage to="/ongoing-appointments">
         <AppointmentsDiv>Ongoing appointments</AppointmentsDiv>
       </LinkToAppointmentsPage>
+      <LinkToAppointmentsPage to="/passed-appointments">
+        <AppointmentsDiv>Passed appointments</AppointmentsDiv>
+      </LinkToAppointmentsPage>
 
       <MessagesView />
     </LawyerProfileDiv>

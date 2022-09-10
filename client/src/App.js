@@ -15,6 +15,7 @@ import ListOfSendersForNewAppointment from "./ListOfSendersForNewAppointment";
 import UpComingAppointments from "./UpComingAppointments";
 import NotConfirmedUpcomingAppointments from "./NotConfirmedUpcomingAppointments";
 import OnGoingAppointments from "./OnGoingAppointments";
+import PassedAppointments from "./PassedAppointments";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             path="/ongoing-appointments"
             element={<OnGoingAppointments />}
           />
+          <Route path="/passed-appointments" element={<PassedAppointments />} />
           <Route
             path="/not-confimed-upcoming-appointments"
             element={<NotConfirmedUpcomingAppointments />}

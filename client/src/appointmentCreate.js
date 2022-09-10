@@ -15,8 +15,7 @@ const AppointmentCreate = ({}) => {
     setViewMessageSenderProfile,
   } = useContext(UserContext);
   // remember to delete all the white space begining and at the end of each input
-  console.log("viewMessageSenderProfile", viewMessageSenderProfile);
-  console.log("specificLawyer", specificLawyer);
+
   const [values, setValues] = useState({
     senderId: userProfile._id,
     lawyer: `${userProfile.firstName} ${userProfile.lastName}`,
@@ -71,8 +70,6 @@ const AppointmentCreate = ({}) => {
 
     console.log("objectToBePosted", objectToBePosted);
   };
-
-  console.log("values", values);
 
   return (
     <AppointmentCreateDiv>
