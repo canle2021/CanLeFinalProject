@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import styled from "styled-components";
@@ -22,9 +22,16 @@ const MessageSenderProfile = () => {
     viewMessageSenderPicture,
     setViewMessageSenderPicture,
   } = useContext(UserContext);
-
-  console.log("allMessagesReveived", allMessagesReveived);
   const { _id } = useParams();
+
+  const [toggleAppointment, setToggleAppointment] = useState(false);
+  const [toggleMessage, setToggleMessage] = useState(false);
+  const clickToShowMessage = () => {
+    setToggleMessage(!toggleMessage);
+  };
+  const clickToShowAppointment = () => {
+    setToggleAppointment(!toggleAppointment);
+  };
 
   useEffect(() => {
     fetch(`/api/get-specific-user/${_id}`)
@@ -70,12 +77,33 @@ const MessageSenderProfile = () => {
       </InformationDiv>
       {userProfile.status !== "client" ? <AppointmentCreate /> : null}
       <MessageReplyMessage />
-      <AppointmentView senderId={_id} />
-      <ConversationView senderId={_id} />
+      <HistoryDiv>
+        <ListDiv>
+          <HistoryShowButton onClick={clickToShowAppointment}>
+            Show/Colapse appointment history
+          </HistoryShowButton>
+          {toggleAppointment ? <AppointmentView senderId={_id} /> : null}
+        </ListDiv>
+        <ListDiv>
+          <HistoryShowButton onClick={clickToShowMessage}>
+            Show/Colapse conversation history
+          </HistoryShowButton>
+          {toggleMessage ? <ConversationView senderId={_id} /> : null}
+        </ListDiv>
+      </HistoryDiv>
     </ClientProfileDiv>
   );
 };
-
+const HistoryDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+  margin-bottom: 50px;
+`;
+const HistoryShowButton = styled.button``;
+const ListDiv = styled.div`
+  margin-left: 60px;
+`;
 const Picture = styled.img``;
 const LawyerpictureDiv = styled.div`
   display: flex;
