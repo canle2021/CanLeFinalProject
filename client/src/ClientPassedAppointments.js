@@ -2,11 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { UserContext } from "../UserContext";
+import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
-import MessageToLawyer from "../MessageToLawyer";
 
-const NotConfirmedUpcomingAppointments = () => {
+const ClientPassedAppointments = () => {
   const {
     emailToFetchUser,
     userProfile,
@@ -27,17 +26,12 @@ const NotConfirmedUpcomingAppointments = () => {
 
   let appointmentDetailArray = [];
   const [appointmentsDetail, setAppointmentsDetail] = useState([]);
-  const [timeEndStartappointment, setTimeEndStartappointment] = useState({});
+
   useEffect(() => {
-    if (
-      sucessfullyVerification &&
-      emailToFetchUser &&
-      userProfile.status === "lawyer"
-    ) {
+    if (sucessfullyVerification && emailToFetchUser) {
       appointmentDetailArray.push(
-        fetch(`/api/get-appointments-by-senderId/${userProfile._id}`)
+        fetch(`/api/get-appointments-by-receiverId/${userProfile._id}`)
           .then((res) => {
-            console.log("appointmentIdConfirmed", appointmentIdConfirmed);
             return res.json();
           })
           .then((data) => {
@@ -50,9 +44,10 @@ const NotConfirmedUpcomingAppointments = () => {
       Promise.all(appointmentDetailArray).then((data) => {
         // setAppointmentsDetail(data[0]);
         const nextAppointmentsFilter = data[0].filter((element) => {
-          const newDateOfTime = new Date(element.timeStartAppointment);
-          const timeToNumber = newDateOfTime.getTime();
-          if (timeToNumber > Date.now() && element.isConfirmed === false) {
+          const newDateOfTimeEnd = new Date(element.timeEndAppointment);
+          const timeEndToNumber = newDateOfTimeEnd.getTime();
+          // includes not confirmed and passed
+          if (timeEndToNumber < Date.now()) {
             return true;
           } else {
             return false;
@@ -69,9 +64,9 @@ const NotConfirmedUpcomingAppointments = () => {
 
   return (
     <UpComingAppointmentsDiv>
-      <h1>Appointment not confirmed by client:</h1>
+      <h1>Client's passed appointments:</h1>
       {appointmentsDetail.length < 1 ? (
-        <h2>You have no not confirmed appointment!</h2>
+        <h2>You have no passed appointment!</h2>
       ) : (
         <div>
           {appointmentsDetail.map((appointment) => {
@@ -87,11 +82,13 @@ const NotConfirmedUpcomingAppointments = () => {
               <Appointment>
                 <SubjectP>Appointment ID: {appointment._id}</SubjectP>
                 <SubjectP>Subject: {appointment.subject}</SubjectP>
-                <SenderP>Lawyer: {appointment.lawyer}</SenderP>
-                <p>Lawyer's Email: {appointment.lawyerEmail}</p>
-                <Link to={`/message-sender-profile/${appointment.receiverId}`}>
-                  <SenderP>Client: {appointment.client}</SenderP>
+                <Link to={`/message-sender-profile/${appointment.senderId}`}>
+                  <SenderP>Lawyer: {appointment.lawyer}</SenderP>
                 </Link>
+                <p>Lawyer's Email: {appointment.lawyerEmail}</p>
+
+                <SenderP>Client: {appointment.client}</SenderP>
+
                 <p>Client's Email: {appointment.clientEmail}</p>
                 <SenderP>Message: {appointment.message}</SenderP>
                 <p>Appointent will start at : {timeStartToString}</p>
@@ -130,4 +127,4 @@ const Appointment = styled.div`
   border-bottom: 2px solid blue;
 `;
 
-export default NotConfirmedUpcomingAppointments;
+export default ClientPassedAppointments;

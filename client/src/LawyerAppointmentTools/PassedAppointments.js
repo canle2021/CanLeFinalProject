@@ -117,7 +117,9 @@ const PassedAppointments = () => {
     </UpComingAppointmentsDiv>
   );
 };
-const UpComingAppointmentsDiv = styled.div``;
+const UpComingAppointmentsDiv = styled.div`
+  min-height: 100vh;
+`;
 const PastAppointment = styled.h2``;
 const SenderP = styled.p`
   font-weight: bold;

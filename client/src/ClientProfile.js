@@ -49,6 +49,9 @@ const ClientProfile = () => {
       <LinkToAppointmentsPage to="/client-not-confirmed-appointments">
         <AppointmentsDiv> Not confirmed appointments</AppointmentsDiv>
       </LinkToAppointmentsPage>
+      <LinkToAppointmentsPage to="/client-passed-appointments">
+        <AppointmentsDiv> Passed appointments</AppointmentsDiv>
+      </LinkToAppointmentsPage>
       <MessagesView />
     </ClientProfileDiv>
   );
