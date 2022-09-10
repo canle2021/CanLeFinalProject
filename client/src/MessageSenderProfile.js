@@ -25,7 +25,7 @@ const MessageSenderProfile = () => {
   const { _id } = useParams();
 
   const [toggleAppointment, setToggleAppointment] = useState(false);
-  const [toggleMessage, setToggleMessage] = useState(false);
+  const [toggleMessage, setToggleMessage] = useState(true);
   const clickToShowMessage = () => {
     setToggleMessage(!toggleMessage);
   };
@@ -80,13 +80,13 @@ const MessageSenderProfile = () => {
       <HistoryDiv>
         <ListDiv>
           <HistoryShowButton onClick={clickToShowAppointment}>
-            Show/Colapse appointment history
+            Show/Hide appointment history
           </HistoryShowButton>
           {toggleAppointment ? <AppointmentView senderId={_id} /> : null}
         </ListDiv>
         <ListDiv>
           <HistoryShowButton onClick={clickToShowMessage}>
-            Show/Colapse conversation history
+            Show/Hide conversation
           </HistoryShowButton>
           {toggleMessage ? <ConversationView senderId={_id} /> : null}
         </ListDiv>
