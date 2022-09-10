@@ -16,9 +16,9 @@ import UpComingAppointments from "./LawyerAppointmentTools/UpComingAppointments"
 import NotConfirmedUpcomingAppointments from "./LawyerAppointmentTools/NotConfirmedUpcomingAppointments";
 import OnGoingAppointments from "./LawyerAppointmentTools/OnGoingAppointments";
 import PassedAppointments from "./LawyerAppointmentTools/PassedAppointments";
-import ClientUpComingAppointments from "./ClientUpComingAppointments";
-import ClientNotConfirmedAppointments from "./ClientNotConfirmedAppointments";
-import ClientPassedAppointments from "./ClientPassedAppointments";
+import ClientUpComingAppointments from "./ClientAppointmentTools/ClientUpComingAppointments";
+import ClientNotConfirmedAppointments from "./ClientAppointmentTools/ClientNotConfirmedAppointments";
+import ClientPassedAppointments from "./ClientAppointmentTools/ClientPassedAppointments";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (

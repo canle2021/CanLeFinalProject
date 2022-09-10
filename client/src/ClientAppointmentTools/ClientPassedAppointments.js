@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../UserContext";
 import { useNavigate } from "react-router-dom";
 
-const ClientNotConfirmedAppointments = () => {
+const ClientPassedAppointments = () => {
   const {
     emailToFetchUser,
     userProfile,
@@ -44,9 +44,10 @@ const ClientNotConfirmedAppointments = () => {
       Promise.all(appointmentDetailArray).then((data) => {
         // setAppointmentsDetail(data[0]);
         const nextAppointmentsFilter = data[0].filter((element) => {
-          const newDateOfTime = new Date(element.timeStartAppointment);
-          const timeToNumber = newDateOfTime.getTime();
-          if (timeToNumber > Date.now() && element.isConfirmed === false) {
+          const newDateOfTimeEnd = new Date(element.timeEndAppointment);
+          const timeEndToNumber = newDateOfTimeEnd.getTime();
+          // includes not confirmed and passed
+          if (timeEndToNumber < Date.now()) {
             return true;
           } else {
             return false;
@@ -63,9 +64,9 @@ const ClientNotConfirmedAppointments = () => {
 
   return (
     <UpComingAppointmentsDiv>
-      <h1>Client's not confirmed appointments:</h1>
+      <h1>Client's passed appointments:</h1>
       {appointmentsDetail.length < 1 ? (
-        <h2>You have no not confirmed appointment!</h2>
+        <h2>You have no passed appointment!</h2>
       ) : (
         <div>
           {appointmentsDetail.map((appointment) => {
@@ -115,7 +116,7 @@ const ClientNotConfirmedAppointments = () => {
 const UpComingAppointmentsDiv = styled.div`
   min-height: 100vh;
 `;
-
+const PastAppointment = styled.h2``;
 const SenderP = styled.p`
   font-weight: bold;
 `;
@@ -126,4 +127,4 @@ const Appointment = styled.div`
   border-bottom: 2px solid blue;
 `;
 
-export default ClientNotConfirmedAppointments;
+export default ClientPassedAppointments;
