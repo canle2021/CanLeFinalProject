@@ -24,6 +24,8 @@ const Header = () => {
     SetAllAppointmentsReveived,
     listOfNewAppointmentSenders,
     setListOfNewAppointmentSenders,
+    userProfilePicture,
+    setUserProfilePicture,
   } = useContext(UserContext);
   let userId = [];
   const { loginWithRedirect, user, isAuthenticated, logout } = useAuth0();
@@ -43,6 +45,7 @@ const Header = () => {
           .then((data) => {
             if (data.status === 200) {
               setUserProfile(data.userData || []);
+              setUserProfilePicture(data.userPicture || []);
               setUserInDatabase(true);
               console.log("date", data);
               console.log("data.userData._id", data.userData._id);

@@ -11,6 +11,8 @@ const LawyerProfile = () => {
     sucessfullyVerification,
     userInDatabase,
     setUserInDatabase,
+    userProfilePicture,
+    setUserProfilePicture,
   } = useContext(UserContext);
 
   const [toggleSenderList, setToggleSenderList] = useState(false);
@@ -51,22 +53,33 @@ const LawyerProfile = () => {
         {toggleSenderList ? <MessageSenderList /> : null}
       </ClientTools>
       <InformationDiv>
-        <p>Picture Id: {userProfile.pictureId}</p>
-        <p>Username: {userProfile.userName}</p>
-        <p>FirstName: {userProfile.firstName}</p>
-        <p>LastName: {userProfile.lastName}</p>
-        <p>Email: {userProfile.email}</p>
-        <p>Status: {userProfile.status}</p>
-        <p>Phone: {userProfile.phone}</p>
-        <p>City: {userProfile.city}</p>
-        <p>Province: {userProfile.province}</p>
-        <p>Postal Code: {userProfile.postalCode}</p>
-        <p>Country: {userProfile.country}</p>
+        <Picture src={userProfilePicture.picture}></Picture>
+        <InformationP>Username: {userProfile.userName}</InformationP>
+        <InformationP>FirstName: {userProfile.firstName}</InformationP>
+        <InformationP>LastName: {userProfile.lastName}</InformationP>
+
+        <InformationP>Working Email: {userProfile.email}</InformationP>
+        <InformationP>Status: {userProfile.status}</InformationP>
+        <InformationP>Phone: {userProfile.phone}</InformationP>
+        <InformationP>
+          Practice Areas : {userProfile.practiceAreas}
+        </InformationP>
+        <InformationP>Education: {userProfile.education}</InformationP>
+        <InformationP>Experience: {userProfile.experience}</InformationP>
+        <InformationP>Credentials: {userProfile.credentials}</InformationP>
+        <InformationP>Languages: {userProfile.languages}</InformationP>
+
+        <InformationP>City: {userProfile.city}</InformationP>
+        <InformationP>Province: {userProfile.province}</InformationP>
+        <InformationP>Postal Code: {userProfile.postalCode}</InformationP>
+        <InformationP>Country: {userProfile.country}</InformationP>
+        <InformationP>Quote: {userProfile.quote}</InformationP>
       </InformationDiv>
     </LawyerProfileDiv>
   );
 };
-
+const Picture = styled.img``;
+const InformationP = styled.p``;
 const ClientTools = styled.div`
   margin-top: 20px;
 `;

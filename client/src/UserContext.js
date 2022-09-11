@@ -26,6 +26,8 @@ export const UserProvider = ({ children }) => {
       ? localStorage.getItem("appointmentId")
       : null
   );
+  const [userProfilePicture, setUserProfilePicture] = useState([]);
+
   return (
     <UserContext.Provider
       value={{
@@ -59,6 +61,8 @@ export const UserProvider = ({ children }) => {
         SetAllAppointmentsReveiveIdSenderId,
         appointmentIdConfirmed,
         setAppointmentIdConfirmed,
+        userProfilePicture,
+        setUserProfilePicture,
       }}
     >
       {children}
