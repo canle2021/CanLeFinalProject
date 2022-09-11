@@ -40,6 +40,16 @@ const SpecificLawyer = () => {
           {specificLawyer.firstName} {specificLawyer.lastName}, Lawyer
         </Name>
       </LawyerpictureDiv>
+      <InformationP>{specificLawyer.quote}</InformationP>
+      <InformationP>Phone: {specificLawyer.phone}</InformationP>
+      <InformationP>Email: {specificLawyer.email}</InformationP>
+      <InformationP>
+        Practice Areas : {specificLawyer.practiceAreas}
+      </InformationP>
+      <InformationP>Education: {specificLawyer.education}</InformationP>
+      <InformationP>Experience: {specificLawyer.experience}</InformationP>
+      <InformationP>Credentials: {specificLawyer.credentials}</InformationP>
+      <InformationP>Languages: {specificLawyer.languages}</InformationP>
 
       {sucessfullyVerification &&
       userProfile._id &&
@@ -50,6 +60,7 @@ const SpecificLawyer = () => {
     // Lawyer can not message to lawyer
   );
 };
+const InformationP = styled.p``;
 const Name = styled.p``;
 const Picture = styled.img``;
 const LawyerpictureDiv = styled.div`
@@ -57,6 +68,8 @@ const LawyerpictureDiv = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const SpecificLawyerDiv = styled.div``;
+const SpecificLawyerDiv = styled.div`
+  min-height: 100vh;
+`;
 
 export default SpecificLawyer;
