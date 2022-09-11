@@ -19,6 +19,7 @@ import PassedAppointments from "./LawyerAppointmentTools/PassedAppointments";
 import ClientUpComingAppointments from "./ClientAppointmentTools/ClientUpComingAppointments";
 import ClientNotConfirmedAppointments from "./ClientAppointmentTools/ClientNotConfirmedAppointments";
 import ClientPassedAppointments from "./ClientAppointmentTools/ClientPassedAppointments";
+import EditUsername from "./ProfleUpdateTools/EditUsername";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
@@ -77,6 +78,7 @@ function App() {
             path="/client-passed-appointments"
             element={<ClientPassedAppointments />}
           />
+          <Route path="/edit-username" element={<EditUsername />} />
 
           <Route path="*" element={<ErrorPage />} />
         </Routes>

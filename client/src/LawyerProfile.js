@@ -54,7 +54,12 @@ const LawyerProfile = () => {
       </ClientTools>
       <InformationDiv>
         <Picture src={userProfilePicture.picture}></Picture>
-        <InformationP>Username: {userProfile.userName}</InformationP>
+        <EditDiv>
+          <InformationP>Username: {userProfile.userName}</InformationP>
+          <LinkToEditPage to="/edit-username">
+            <Button>Edit</Button>
+          </LinkToEditPage>
+        </EditDiv>
         <InformationP>FirstName: {userProfile.firstName}</InformationP>
         <InformationP>LastName: {userProfile.lastName}</InformationP>
 
@@ -78,6 +83,15 @@ const LawyerProfile = () => {
     </LawyerProfileDiv>
   );
 };
+const LinkToEditPage = styled(Link)``;
+const EditDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
+  text-align: center;
+  align-items: center;
+  align-content: center;
+`;
 const Picture = styled.img``;
 const InformationP = styled.p``;
 const ClientTools = styled.div`
@@ -88,7 +102,7 @@ const AppointmentTools = styled.div`
   justify-content: space-between;
 `;
 const Button = styled.button`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
 `;
 const LinkToAppointmentsPage = styled(Link)``;
