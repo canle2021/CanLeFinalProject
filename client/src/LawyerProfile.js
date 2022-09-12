@@ -135,7 +135,12 @@ const LawyerProfile = () => {
           </LinkToEditPage>
         </EditDiv>
 
-        <InformationP>Quote: {userProfile.quote}</InformationP>
+        <EditDiv>
+          <InformationP>Quote: {userProfile.quote}</InformationP>
+          <LinkToEditPage to="/edit-quote">
+            <Button>Edit</Button>
+          </LinkToEditPage>
+        </EditDiv>
       </InformationDiv>
     </LawyerProfileDiv>
   );
