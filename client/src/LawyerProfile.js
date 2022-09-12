@@ -79,7 +79,15 @@ const LawyerProfile = () => {
         </EditDiv>
 
         <InformationP>Status: {userProfile.status}</InformationP>
-        <InformationP>Phone: {userProfile.phone}</InformationP>
+
+        <EditDiv>
+          <InformationP>Phone: {userProfile.phone}</InformationP>
+
+          <LinkToEditPage to="/edit-phone-number">
+            <Button>Edit</Button>
+          </LinkToEditPage>
+        </EditDiv>
+
         <InformationP>
           Practice Areas : {userProfile.practiceAreas}
         </InformationP>

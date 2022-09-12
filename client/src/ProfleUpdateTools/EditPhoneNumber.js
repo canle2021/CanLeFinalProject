@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { UserContext } from "../UserContext";
 import { AiOutlineForm } from "react-icons/ai";
 
-const EditEmail = () => {
+const EditPhoneNumber = () => {
   const navigate = useNavigate();
 
   const { userProfile, sucessfullyVerification } = useContext(UserContext);
@@ -27,7 +27,7 @@ const EditEmail = () => {
       ...values,
     };
     try {
-      const posting = await fetch(`/api/update-email`, {
+      const posting = await fetch(`/api/update-phone-number`, {
         method: "PATCH",
         body: JSON.stringify(objectToBePosted),
         headers: {
@@ -39,7 +39,7 @@ const EditEmail = () => {
       console.log("converToJson", converToJson);
       if (converToJson.status === 200) {
         alert(
-          "THANK YOU! You successfully edit your name. Please refresh 'My page' to see the update"
+          "THANK YOU! You successfully edit your username. Please refresh 'My page' to see the update"
         );
         navigate("/LawyerProfile");
       } else {
@@ -66,26 +66,25 @@ const EditEmail = () => {
         <Form onSubmit={handleSubmit}>
           <SignUpTitle>
             <AiOutlineForm style={{ marginRight: "10px", fontSize: "30px" }} />
-            Update email
+            Update Username
           </SignUpTitle>
 
-          <HeadLine>Your current email adddress: {userProfile.email}</HeadLine>
-          <HeadLine>New email adddress:</HeadLine>
+          <HeadLine>Current phone number: {userProfile.phone}</HeadLine>
+          <HeadLine>New phone number:</HeadLine>
           <Input
-            placeholder="Your email adddress"
-            type="email"
-            name="email"
+            placeholder="Phone Number (required)"
+            type="tel"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            name="phone"
             required
             onChange={handleChange}
           />
+          <small>* Phone Number Format: 123-456-7890</small>
 
           <SubmitButton
             type="submit"
             value="Submit"
-            // onClick={() => loginWithRedirect()}
-            // disabled={disabled}
             name="confirmButton"
-            // className={disabled ? "disabled" : ""}
           ></SubmitButton>
         </Form>
       </FormDiv>
@@ -157,4 +156,4 @@ const FormDiv = styled.div`
 `;
 const SignUpPageDiv = styled.div``;
 
-export default EditEmail;
+export default EditPhoneNumber;
