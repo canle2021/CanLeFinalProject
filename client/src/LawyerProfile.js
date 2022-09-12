@@ -71,7 +71,13 @@ const LawyerProfile = () => {
           </LinkToEditPage>
         </EditDiv>
 
-        <InformationP>Email: {userProfile.email}</InformationP>
+        <EditDiv>
+          <InformationP>Email: {userProfile.email}</InformationP>
+          <LinkToEditPage to="/edit-email">
+            <Button>Edit</Button>
+          </LinkToEditPage>
+        </EditDiv>
+
         <InformationP>Status: {userProfile.status}</InformationP>
         <InformationP>Phone: {userProfile.phone}</InformationP>
         <InformationP>

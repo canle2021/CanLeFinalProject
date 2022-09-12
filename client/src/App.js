@@ -21,6 +21,7 @@ import ClientNotConfirmedAppointments from "./ClientAppointmentTools/ClientNotCo
 import ClientPassedAppointments from "./ClientAppointmentTools/ClientPassedAppointments";
 import EditUsername from "./ProfleUpdateTools/EditUsername";
 import EditName from "./ProfleUpdateTools/EditName";
+import EditEmail from "./ProfleUpdateTools/EditEmail";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
@@ -81,6 +82,7 @@ function App() {
           />
           <Route path="/edit-username" element={<EditUsername />} />
           <Route path="/edit-name" element={<EditName />} />
+          <Route path="/edit-email" element={<EditEmail />} />
 
           <Route path="*" element={<ErrorPage />} />
         </Routes>
