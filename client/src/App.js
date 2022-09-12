@@ -30,6 +30,7 @@ import EditCredentials from "./ProfleUpdateTools/EditCredentials";
 import EditLanguages from "./ProfleUpdateTools/EditLanguages";
 import EditAddress from "./ProfleUpdateTools/EditAddress";
 import EditQuote from "./ProfleUpdateTools/EditQuote";
+import EditPicture from "./ProfleUpdateTools/EditQuote copy";
 
 import ErrorPage from "./ErrorPage";
 function App() {
@@ -100,6 +101,7 @@ function App() {
           <Route path="/edit-languages" element={<EditLanguages />} />
           <Route path="/edit-address" element={<EditAddress />} />
           <Route path="/edit-quote" element={<EditQuote />} />
+          <Route path="/edit-picture" element={<EditPicture />} />
 
           <Route path="*" element={<ErrorPage />} />
         </Routes>

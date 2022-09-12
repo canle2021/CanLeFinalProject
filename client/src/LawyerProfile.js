@@ -53,7 +53,13 @@ const LawyerProfile = () => {
         {toggleSenderList ? <MessageSenderList /> : null}
       </ClientTools>
       <InformationDiv>
-        <Picture src={userProfilePicture.picture}></Picture>
+        <EditDiv>
+          <Picture src={userProfilePicture.picture}></Picture>
+
+          <LinkToEditPage to="/edit-picture">
+            <Button>Edit</Button>
+          </LinkToEditPage>
+        </EditDiv>
         <EditDiv>
           <InformationP>Username: {userProfile.userName}</InformationP>
           <LinkToEditPage to="/edit-username">
