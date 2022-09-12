@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { UserContext } from "../UserContext";
 import { AiOutlineForm } from "react-icons/ai";
 
-const EditPracticeAreas = () => {
+const EditEducation = () => {
   const navigate = useNavigate();
 
   const { userProfile, sucessfullyVerification } = useContext(UserContext);
@@ -27,7 +27,7 @@ const EditPracticeAreas = () => {
       ...values,
     };
     try {
-      const posting = await fetch(`/api/update-practice-areas`, {
+      const posting = await fetch(`/api/update-education`, {
         method: "PATCH",
         body: JSON.stringify(objectToBePosted),
         headers: {
@@ -39,7 +39,7 @@ const EditPracticeAreas = () => {
       console.log("converToJson", converToJson);
       if (converToJson.status === 200) {
         alert(
-          "THANK YOU! You successfully edit practice areas. Please refresh 'My page' to see the update"
+          "THANK YOU! You successfully edit your education. Please refresh 'My page' to see the update"
         );
         navigate("/LawyerProfile");
       } else {
@@ -66,15 +66,15 @@ const EditPracticeAreas = () => {
         <Form onSubmit={handleSubmit}>
           <SignUpTitle>
             <AiOutlineForm style={{ marginRight: "10px", fontSize: "30px" }} />
-            Update Practice Areas
+            Update Education
           </SignUpTitle>
 
-          <HeadLine>Your current Practice Areas: {userProfile.email}</HeadLine>
-          <HeadLine>New Practice Areas:</HeadLine>
+          <HeadLine>Your current education: {userProfile.email}</HeadLine>
+          <HeadLine>New education:</HeadLine>
           <Input
-            placeholder="Your Practice Areas"
+            placeholder="Your education"
             type="text"
-            name="practiceAreas"
+            name="education"
             required
             onChange={handleChange}
           />
@@ -159,4 +159,4 @@ const SignUpPageDiv = styled.div`
   min-height: 100vh;
 `;
 
-export default EditPracticeAreas;
+export default EditEducation;
