@@ -20,6 +20,7 @@ import ClientUpComingAppointments from "./ClientAppointmentTools/ClientUpComingA
 import ClientNotConfirmedAppointments from "./ClientAppointmentTools/ClientNotConfirmedAppointments";
 import ClientPassedAppointments from "./ClientAppointmentTools/ClientPassedAppointments";
 import EditUsername from "./ProfleUpdateTools/EditUsername";
+import EditName from "./ProfleUpdateTools/EditName";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
@@ -79,6 +80,7 @@ function App() {
             element={<ClientPassedAppointments />}
           />
           <Route path="/edit-username" element={<EditUsername />} />
+          <Route path="/edit-name" element={<EditName />} />
 
           <Route path="*" element={<ErrorPage />} />
         </Routes>

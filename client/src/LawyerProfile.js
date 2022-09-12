@@ -60,10 +60,18 @@ const LawyerProfile = () => {
             <Button>Edit</Button>
           </LinkToEditPage>
         </EditDiv>
-        <InformationP>FirstName: {userProfile.firstName}</InformationP>
-        <InformationP>LastName: {userProfile.lastName}</InformationP>
+        {/*  */}
+        <EditDiv>
+          <NameDiv>
+            <InformationP>FirstName: {userProfile.firstName}</InformationP>
+            <InformationP>LastName: {userProfile.lastName}</InformationP>
+          </NameDiv>
+          <LinkToEditPage to="/edit-name">
+            <Button>Edit</Button>
+          </LinkToEditPage>
+        </EditDiv>
 
-        <InformationP>Working Email: {userProfile.email}</InformationP>
+        <InformationP>Email: {userProfile.email}</InformationP>
         <InformationP>Status: {userProfile.status}</InformationP>
         <InformationP>Phone: {userProfile.phone}</InformationP>
         <InformationP>
@@ -83,12 +91,13 @@ const LawyerProfile = () => {
     </LawyerProfileDiv>
   );
 };
+const NameDiv = styled.div``;
 const LinkToEditPage = styled(Link)``;
 const EditDiv = styled.div`
   display: flex;
   justify-content: space-between;
   justify-items: center;
-  text-align: center;
+  /* text-align: center; */
   align-items: center;
   align-content: center;
 `;
