@@ -34,18 +34,6 @@ const ClientProfile = () => {
       <h1>
         Client {userProfile.firstName} {userProfile.lastName} profile
       </h1>
-      <InformationDiv>
-        <p>Username: {userProfile.userName}</p>
-        <p>FirstName: {userProfile.firstName}</p>
-        <p>LastName: {userProfile.lastName}</p>
-        <p>Email: {userProfile.email}</p>
-        <p>Status: {userProfile.status}</p>
-        <p>Phone: {userProfile.phone}</p>
-        <p>City: {userProfile.city}</p>
-        <p>Province: {userProfile.province}</p>
-        <p>Postal Code: {userProfile.postalCode}</p>
-        <p>Country: {userProfile.country}</p>
-      </InformationDiv>
       <LinkToAppointmentsPage to="/client-upcoming-appointments">
         <Button> Upcoming appointments</Button>
       </LinkToAppointmentsPage>
@@ -60,6 +48,52 @@ const ClientProfile = () => {
         <Button onClick={clickToSee}>Message senders list</Button>
         {toggleSenderList ? <MessageSenderList /> : null}
       </SenderManagementTools>
+      <InformationDiv>
+        <EditDiv>
+          <InformationP>Username: {userProfile.userName}</InformationP>
+          <LinkToEditPage to="/edit-username">
+            <Button>Edit</Button>
+          </LinkToEditPage>
+        </EditDiv>
+        <EditDiv>
+          <NameDiv>
+            <InformationP>FirstName: {userProfile.firstName}</InformationP>
+            <InformationP>LastName: {userProfile.lastName}</InformationP>
+          </NameDiv>
+          <LinkToEditPage to="/edit-name">
+            <Button>Edit</Button>
+          </LinkToEditPage>
+        </EditDiv>
+        <EditDiv>
+          <InformationP>Email: {userProfile.email}</InformationP>
+          <LinkToEditPage to="/edit-email">
+            <Button>Edit</Button>
+          </LinkToEditPage>
+        </EditDiv>
+
+        <p>Status: {userProfile.status}</p>
+
+        <EditDiv>
+          <InformationP>Phone: {userProfile.phone}</InformationP>
+          <LinkToEditPage to="/edit-phone-number">
+            <Button>Edit</Button>
+          </LinkToEditPage>
+        </EditDiv>
+        <EditDiv>
+          <h3>Address:</h3>
+
+          <AddressDiv>
+            <InformationP>Street: {userProfile.streetNumber}</InformationP>
+            <InformationP>City: {userProfile.city}</InformationP>
+            <InformationP>Province: {userProfile.province}</InformationP>
+            <InformationP>Postal Code: {userProfile.postalCode}</InformationP>
+            <InformationP>Country: {userProfile.country}</InformationP>
+          </AddressDiv>
+          <LinkToEditPage to="/edit-address">
+            <Button>Edit</Button>
+          </LinkToEditPage>
+        </EditDiv>
+      </InformationDiv>
     </ClientProfileDiv>
   );
 };
@@ -69,6 +103,31 @@ const LinkToAppointmentsPage = styled(Link)``;
 const InformationDiv = styled.div``;
 
 const ClientProfileDiv = styled.div`
+  min-height: 100vh;
+`;
+const AddressDiv = styled.div``;
+const NameDiv = styled.div``;
+const LinkToEditPage = styled(Link)``;
+const EditDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  border-bottom: dotted 1px green;
+  border-top: dotted 1px green;
+`;
+const Picture = styled.img``;
+const InformationP = styled.p``;
+const ClientTools = styled.div`
+  margin-top: 20px;
+`;
+const AppointmentTools = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const LawyerProfileDiv = styled.div`
   min-height: 100vh;
 `;
 
