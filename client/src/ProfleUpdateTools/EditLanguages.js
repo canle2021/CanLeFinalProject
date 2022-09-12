@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { UserContext } from "../UserContext";
 import { AiOutlineForm } from "react-icons/ai";
 
-const EditCredentials = () => {
+const EditLanguages = () => {
   const navigate = useNavigate();
 
   const { userProfile, sucessfullyVerification } = useContext(UserContext);
@@ -27,7 +27,7 @@ const EditCredentials = () => {
       ...values,
     };
     try {
-      const posting = await fetch(`/api/update-credentials`, {
+      const posting = await fetch(`/api/update-languages`, {
         method: "PATCH",
         body: JSON.stringify(objectToBePosted),
         headers: {
@@ -66,17 +66,15 @@ const EditCredentials = () => {
         <Form onSubmit={handleSubmit}>
           <SignUpTitle>
             <AiOutlineForm style={{ marginRight: "10px", fontSize: "30px" }} />
-            Update Credentials
+            Update Languages
           </SignUpTitle>
 
-          <HeadLine>
-            Your current Credentials: {userProfile.credentials}
-          </HeadLine>
-          <HeadLine>Update Credentials:</HeadLine>
+          <HeadLine>Your current languages: {userProfile.languages}</HeadLine>
+          <HeadLine>Update Languages:</HeadLine>
           <Input
-            placeholder="Your credentials"
+            placeholder="Your languages"
             type="text"
-            name="credentials"
+            name="languages"
             required
             onChange={handleChange}
           />
@@ -158,4 +156,4 @@ const SignUpPageDiv = styled.div`
   min-height: 100vh;
 `;
 
-export default EditCredentials;
+export default EditLanguages;
