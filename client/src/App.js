@@ -28,6 +28,7 @@ import EditEducation from "./ProfleUpdateTools/EditEducation";
 import EditExperience from "./ProfleUpdateTools/EditExperience";
 import EditCredentials from "./ProfleUpdateTools/EditCredentials";
 import EditLanguages from "./ProfleUpdateTools/EditLanguages";
+import EditAddress from "./ProfleUpdateTools/EditAddress";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
@@ -95,6 +96,7 @@ function App() {
           <Route path="/edit-experience" element={<EditExperience />} />
           <Route path="/edit-credentials" element={<EditCredentials />} />
           <Route path="/edit-languages" element={<EditLanguages />} />
+          <Route path="/edit-address" element={<EditAddress />} />
 
           <Route path="*" element={<ErrorPage />} />
         </Routes>

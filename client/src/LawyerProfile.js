@@ -82,16 +82,15 @@ const LawyerProfile = () => {
 
         <EditDiv>
           <InformationP>Phone: {userProfile.phone}</InformationP>
-
           <LinkToEditPage to="/edit-phone-number">
             <Button>Edit</Button>
           </LinkToEditPage>
         </EditDiv>
+
         <EditDiv>
           <InformationP>
             Practice Areas : {userProfile.practiceAreas}
           </InformationP>
-
           <LinkToEditPage to="/edit-practice-areas">
             <Button>Edit</Button>
           </LinkToEditPage>
@@ -124,15 +123,24 @@ const LawyerProfile = () => {
           </LinkToEditPage>
         </EditDiv>
 
-        <InformationP>City: {userProfile.city}</InformationP>
-        <InformationP>Province: {userProfile.province}</InformationP>
-        <InformationP>Postal Code: {userProfile.postalCode}</InformationP>
-        <InformationP>Country: {userProfile.country}</InformationP>
+        <EditDiv>
+          <AddressDiv>
+            <InformationP>City: {userProfile.city}</InformationP>
+            <InformationP>Province: {userProfile.province}</InformationP>
+            <InformationP>Postal Code: {userProfile.postalCode}</InformationP>
+            <InformationP>Country: {userProfile.country}</InformationP>
+          </AddressDiv>
+          <LinkToEditPage to="/edit-address">
+            <Button>Edit</Button>
+          </LinkToEditPage>
+        </EditDiv>
+
         <InformationP>Quote: {userProfile.quote}</InformationP>
       </InformationDiv>
     </LawyerProfileDiv>
   );
 };
+const AddressDiv = styled.div``;
 const NameDiv = styled.div``;
 const LinkToEditPage = styled(Link)``;
 const EditDiv = styled.div`
