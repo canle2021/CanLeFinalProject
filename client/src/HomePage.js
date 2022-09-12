@@ -21,26 +21,29 @@ const HomePage = () => {
   return (
     <HomePageDiv>
       <h1>HOME PAGE</h1>
-      {allLawyersPicture.map((picture, index) => {
-        return (
-          <Link to={`/lawyer/${picture._id}`} key={index}>
-            <LawyerpictureDiv>
-              <Picture src={picture.picture}></Picture>
-              <Name>
-                {allLawyersInformation.map((eachLawyer, index) => {
-                  if (eachLawyer._id === picture._id) {
-                    return (
-                      <span key={index}>
-                        {eachLawyer.firstName} {eachLawyer.lastName}, Lawyer
-                      </span>
-                    );
-                  }
-                })}
-              </Name>
-            </LawyerpictureDiv>
-          </Link>
-        );
-      })}
+
+      <Team>
+        {allLawyersPicture.map((picture, index) => {
+          return (
+            <Link to={`/lawyer/${picture._id}`} key={index}>
+              <LawyerpictureDiv>
+                <Picture src={picture.picture}></Picture>
+                <Name>
+                  {allLawyersInformation.map((eachLawyer, index) => {
+                    if (eachLawyer._id === picture._id) {
+                      return (
+                        <span key={index}>
+                          {eachLawyer.firstName} {eachLawyer.lastName}, Lawyer
+                        </span>
+                      );
+                    }
+                  })}
+                </Name>
+              </LawyerpictureDiv>
+            </Link>
+          );
+        })}
+      </Team>
     </HomePageDiv>
   );
 };
@@ -50,6 +53,13 @@ const LawyerpictureDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+const Team = styled.div`
+  flex-wrap: wrap;
+  gap: 40px 40px;
+  width: 1280px;
+  display: flex;
+  justify-content: center;
 `;
 const HomePageDiv = styled.div``;
 

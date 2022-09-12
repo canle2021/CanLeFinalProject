@@ -158,9 +158,10 @@ const EditDiv = styled.div`
   display: flex;
   justify-content: space-between;
   justify-items: center;
-  /* text-align: center; */
   align-items: center;
   align-content: center;
+  border-bottom: dotted 1px green;
+  border-top: dotted 1px green;
 `;
 const Picture = styled.img``;
 const InformationP = styled.p``;
