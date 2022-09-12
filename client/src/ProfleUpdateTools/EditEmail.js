@@ -155,6 +155,8 @@ const FormDiv = styled.div`
   border: solid 2px var(--color-alabama-crimson);
   height: fit-content;
 `;
-const SignUpPageDiv = styled.div``;
+const SignUpPageDiv = styled.div`
+  min-height: 100vh;
+`;
 
 export default EditEmail;
