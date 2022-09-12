@@ -69,7 +69,9 @@ const EditPracticeAreas = () => {
             Update Practice Areas
           </SignUpTitle>
 
-          <HeadLine>Your current Practice Areas: {userProfile.email}</HeadLine>
+          <HeadLine>
+            Your current Practice Areas: {userProfile.practiceAreas}
+          </HeadLine>
           <HeadLine>New Practice Areas:</HeadLine>
           <Input
             placeholder="Your Practice Areas"

@@ -99,13 +99,18 @@ const LawyerProfile = () => {
 
         <EditDiv>
           <InformationP>Education: {userProfile.education}</InformationP>
-
           <LinkToEditPage to="/edit-education">
             <Button>Edit</Button>
           </LinkToEditPage>
         </EditDiv>
 
-        <InformationP>Experience: {userProfile.experience}</InformationP>
+        <EditDiv>
+          <InformationP>Experience: {userProfile.experience}</InformationP>
+          <LinkToEditPage to="/edit-experience">
+            <Button>Edit</Button>
+          </LinkToEditPage>
+        </EditDiv>
+
         <InformationP>Credentials: {userProfile.credentials}</InformationP>
         <InformationP>Languages: {userProfile.languages}</InformationP>
 

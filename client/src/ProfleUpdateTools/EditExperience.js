@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { UserContext } from "../UserContext";
 import { AiOutlineForm } from "react-icons/ai";
 
-const EditEducation = () => {
+const EditExperience = () => {
   const navigate = useNavigate();
 
   const { userProfile, sucessfullyVerification } = useContext(UserContext);
@@ -27,7 +27,7 @@ const EditEducation = () => {
       ...values,
     };
     try {
-      const posting = await fetch(`/api/update-education`, {
+      const posting = await fetch(`/api/update-experience`, {
         method: "PATCH",
         body: JSON.stringify(objectToBePosted),
         headers: {
@@ -66,15 +66,15 @@ const EditEducation = () => {
         <Form onSubmit={handleSubmit}>
           <SignUpTitle>
             <AiOutlineForm style={{ marginRight: "10px", fontSize: "30px" }} />
-            Update Education
+            Update Experience
           </SignUpTitle>
 
-          <HeadLine>Your current education: {userProfile.education}</HeadLine>
-          <HeadLine>New education:</HeadLine>
+          <HeadLine>Your current experience: {userProfile.experience}</HeadLine>
+          <HeadLine>New experience:</HeadLine>
           <Input
-            placeholder="Your education"
+            placeholder="Your experience"
             type="text"
-            name="education"
+            name="experience"
             required
             onChange={handleChange}
           />
@@ -156,4 +156,4 @@ const SignUpPageDiv = styled.div`
   min-height: 100vh;
 `;
 
-export default EditEducation;
+export default EditExperience;

@@ -25,6 +25,7 @@ import EditEmail from "./ProfleUpdateTools/EditEmail";
 import EditPhoneNumber from "./ProfleUpdateTools/EditPhoneNumber";
 import EditPracticeAreas from "./ProfleUpdateTools/EditPracticeAreas";
 import EditEducation from "./ProfleUpdateTools/EditEducation";
+import EditExperience from "./ProfleUpdateTools/EditExperience";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
@@ -89,6 +90,7 @@ function App() {
           <Route path="/edit-phone-number" element={<EditPhoneNumber />} />
           <Route path="/edit-practice-areas" element={<EditPracticeAreas />} />
           <Route path="/edit-education" element={<EditEducation />} />
+          <Route path="/edit-experience" element={<EditExperience />} />
 
           <Route path="*" element={<ErrorPage />} />
         </Routes>
