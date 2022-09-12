@@ -29,7 +29,8 @@ import EditExperience from "./ProfleUpdateTools/EditExperience";
 import EditCredentials from "./ProfleUpdateTools/EditCredentials";
 import EditLanguages from "./ProfleUpdateTools/EditLanguages";
 import EditAddress from "./ProfleUpdateTools/EditAddress";
-import EditQuote from "./ProfleUpdateTools/EditName copy";
+import EditQuote from "./ProfleUpdateTools/EditQuote";
+
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
