@@ -39,7 +39,7 @@ const EditEmail = () => {
       console.log("converToJson", converToJson);
       if (converToJson.status === 200) {
         alert(
-          "THANK YOU! You successfully edit your name. Please refresh 'My page' to see the update"
+          "THANK YOU! You successfully edit your email. Please refresh 'My page' to see the update"
         );
         navigate("/LawyerProfile");
       } else {

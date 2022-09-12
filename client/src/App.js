@@ -23,7 +23,7 @@ import EditUsername from "./ProfleUpdateTools/EditUsername";
 import EditName from "./ProfleUpdateTools/EditName";
 import EditEmail from "./ProfleUpdateTools/EditEmail";
 import EditPhoneNumber from "./ProfleUpdateTools/EditPhoneNumber";
-import EditPracticeAreas from "./ProfleUpdateTools/EditEmail copy";
+import EditPracticeAreas from "./ProfleUpdateTools/EditPracticeAreas";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (

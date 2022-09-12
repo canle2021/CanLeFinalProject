@@ -39,7 +39,7 @@ const EditPhoneNumber = () => {
       console.log("converToJson", converToJson);
       if (converToJson.status === 200) {
         alert(
-          "THANK YOU! You successfully edit your username. Please refresh 'My page' to see the update"
+          "THANK YOU! You successfully edit your phone number. Please refresh 'My page' to see the update"
         );
         navigate("/LawyerProfile");
       } else {
