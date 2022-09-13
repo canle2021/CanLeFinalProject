@@ -110,7 +110,9 @@ const EditPicture = () => {
     </SignUpPageDiv>
   );
 };
-const Picture = styled.img``;
+const Picture = styled.img`
+  margin-left: 20px;
+`;
 const HeadLine = styled.h1`
   font-weight: bold;
   font-size: 1.5rem;
@@ -131,20 +133,16 @@ const SubmitButton = styled.input`
   justify-content: center;
   align-items: center;
   text-align: center;
-  width: 100%;
+  width: 400px;
   height: 60px;
   margin-top: 10px;
   font-family: "Roboto", sans-serif;
   border: none;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   &:hover {
-    background-color: #269157;
+    background-color: purple;
 
     transition: 0.5s ease-in-out;
-  }
-  &.disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
   }
 `;
 

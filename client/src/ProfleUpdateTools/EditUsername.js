@@ -69,7 +69,7 @@ const EditUsername = () => {
             Update Username
           </SignUpTitle>
 
-          <HeadLine>Old username: {userProfile.userName}</HeadLine>
+          <HeadLine>Current username: {userProfile.userName}</HeadLine>
           <HeadLine>New username:</HeadLine>
           <Input
             placeholder="Your new username"
@@ -118,13 +118,9 @@ const SubmitButton = styled.input`
   border: none;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   &:hover {
-    background-color: #269157;
+    background-color: purple;
 
     transition: 0.5s ease-in-out;
-  }
-  &.disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
   }
 `;
 

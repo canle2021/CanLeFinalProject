@@ -30,7 +30,7 @@ import EditCredentials from "./ProfleUpdateTools/EditCredentials";
 import EditLanguages from "./ProfleUpdateTools/EditLanguages";
 import EditAddress from "./ProfleUpdateTools/EditAddress";
 import EditQuote from "./ProfleUpdateTools/EditQuote";
-import EditPicture from "./ProfleUpdateTools/EditQuote copy";
+import EditPicture from "./ProfleUpdateTools/EditPicture";
 
 import ErrorPage from "./ErrorPage";
 function App() {
