@@ -115,6 +115,7 @@ const HeadLine = styled.h1`
 `;
 
 const SubmitButton = styled.input`
+  width: 465px;
   font-weight: 500;
   font-size: 20px;
   cursor: pointer;
@@ -125,7 +126,6 @@ const SubmitButton = styled.input`
   justify-content: center;
   align-items: center;
   text-align: center;
-  width: 100%;
   height: 60px;
   margin-top: 10px;
   font-family: "Roboto", sans-serif;
@@ -135,10 +135,6 @@ const SubmitButton = styled.input`
     background-color: #269157;
 
     transition: 0.5s ease-in-out;
-  }
-  &.disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
   }
 `;
 
@@ -157,23 +153,17 @@ const Form = styled.form`
   flex-direction: column;
 `;
 const Message = styled.textarea`
-  width: 390px;
-  height: 40px;
+  width: 450px;
+
+  height: 200px;
   margin-bottom: 10px;
   padding-left: 10px;
   border: 1px solid lightgrey;
   border-radius: 5px;
+  resize: none;
 `;
 const Subject = styled.input`
-  width: 390px;
-  height: 40px;
-  margin-bottom: 10px;
-  padding-left: 10px;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-`;
-const Input = styled.input`
-  width: 390px;
+  width: 450px;
   height: 40px;
   margin-bottom: 10px;
   padding-left: 10px;
