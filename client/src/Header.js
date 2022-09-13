@@ -188,16 +188,18 @@ const Header = () => {
 
       {sucessfullyVerification && emailToFetchUser ? (
         <div>
-          <button onClick={logUserOut}>Logout</button>
-          <Link
-            to={
-              userProfile.status === "client"
-                ? "/ClientProfile"
-                : "/LawyerProfile"
-            }
-          >
-            <button>My page</button>
-          </Link>
+          <HelloDiv>
+            <Link
+              to={
+                userProfile.status === "client"
+                  ? "/ClientProfile"
+                  : "/LawyerProfile"
+              }
+            >
+              <Button>Hello {userProfile.firstName}</Button>
+            </Link>
+            <Button onClick={logUserOut}>Logout</Button>
+          </HelloDiv>
           {listOfNewSenders && listOfNewSenders.length > 0 ? (
             <Link to={`new-message-senderIds-list`}>
               <NewMessagesAlert />
@@ -211,15 +213,47 @@ const Header = () => {
           ) : null}
         </div>
       ) : (
-        <div>
-          <button onClick={() => loginWithRedirect()}>Login</button>
-          <button onClick={() => signUserUp()}>Sign Up</button>
-        </div>
+        <LogoutDiv>
+          <Button onClick={() => signUserUp()}>Sign Up</Button>
+          <Button onClick={() => loginWithRedirect()}>Login</Button>
+        </LogoutDiv>
       )}
     </HeaderDiv>
   );
 };
+const Button = styled.button`
+  width: 150px;
+  height: 35px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  background-color: #30b06b;
+  color: #fff;
 
+  &:hover {
+    background-color: #269157;
+    color: violet;
+    transition: 0.5s ease-in-out;
+  }
+`;
+const LogoutDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 80%;
+  margin-right: 30px;
+  margin-bottom: 20px;
+`;
+const HelloDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 80%;
+  margin-right: 30px;
+  margin-bottom: 20px;
+`;
 const HeaderDiv = styled.div`
   color: #fff;
   background-color: black;
