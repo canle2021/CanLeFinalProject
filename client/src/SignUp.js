@@ -201,7 +201,7 @@ const SubmitButton = styled.input`
   justify-content: center;
   align-items: center;
   text-align: center;
-  width: 100%;
+  width: 405px;
   height: 60px;
   margin-top: 10px;
   font-family: "Roboto", sans-serif;
@@ -211,10 +211,6 @@ const SubmitButton = styled.input`
     background-color: #269157;
 
     transition: 0.5s ease-in-out;
-  }
-  &.disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
   }
 `;
 
