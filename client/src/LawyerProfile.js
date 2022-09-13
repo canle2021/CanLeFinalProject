@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useParams, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
+import { AiOutlineEdit } from "react-icons/ai";
 
 import MessageSenderList from "./MessageSenderList";
 const LawyerProfile = () => {
@@ -10,9 +11,8 @@ const LawyerProfile = () => {
     userProfile,
     sucessfullyVerification,
     userInDatabase,
-    setUserInDatabase,
+
     userProfilePicture,
-    setUserProfilePicture,
   } = useContext(UserContext);
 
   const [toggleSenderList, setToggleSenderList] = useState(false);
@@ -30,105 +30,107 @@ const LawyerProfile = () => {
   }, [sucessfullyVerification]);
   return (
     <LawyerProfileDiv>
-      <h1>
-        Lawyer {userProfile.firstName} {userProfile.lastName} page
-      </h1>
-      <AppointmentTools>
-        <LinkToAppointmentsPage to="/upcoming-appointments">
-          <Button>Up coming appointments</Button>
-        </LinkToAppointmentsPage>
-        <LinkToAppointmentsPage to="/not-confimed-upcoming-appointments">
-          <Button>Not confirmed appointments</Button>
-        </LinkToAppointmentsPage>
-        <LinkToAppointmentsPage to="/ongoing-appointments">
-          <Button>Ongoing appointments</Button>
-        </LinkToAppointmentsPage>
-        <LinkToAppointmentsPage to="/passed-appointments">
-          <Button>Passed appointments</Button>
-        </LinkToAppointmentsPage>
-      </AppointmentTools>
-
-      <ClientTools>
-        <Button onClick={clickToSee}>Message senders list</Button>
-        {toggleSenderList ? <MessageSenderList /> : null}
-      </ClientTools>
       <InformationDiv>
+        <h1>
+          Lawyer {userProfile.firstName} {userProfile.lastName}
+        </h1>
         <EditDiv>
           <Picture src={userProfilePicture.picture}></Picture>
-
           <LinkToEditPage to="/edit-picture">
-            <Button>Edit</Button>
+            <Button>
+              <AiOutlineEdit />
+            </Button>
           </LinkToEditPage>
         </EditDiv>
+        <BreakDiv />
         <EditDiv>
           <InformationP>Username: {userProfile.userName}</InformationP>
           <LinkToEditPage to="/edit-username">
-            <Button>Edit</Button>
+            <Button>
+              <AiOutlineEdit />
+            </Button>
           </LinkToEditPage>
         </EditDiv>
-        {/*  */}
+        <BreakDiv />
         <EditDiv>
           <NameDiv>
             <InformationP>FirstName: {userProfile.firstName}</InformationP>
             <InformationP>LastName: {userProfile.lastName}</InformationP>
           </NameDiv>
           <LinkToEditPage to="/edit-name">
-            <Button>Edit</Button>
+            <Button>
+              <AiOutlineEdit />
+            </Button>
           </LinkToEditPage>
         </EditDiv>
-
+        <BreakDiv />
         <EditDiv>
           <InformationP>Email: {userProfile.email}</InformationP>
           <LinkToEditPage to="/edit-email">
-            <Button>Edit</Button>
+            <Button>
+              <AiOutlineEdit />
+            </Button>
           </LinkToEditPage>
         </EditDiv>
-
+        <BreakDiv />
         <InformationP>Status: {userProfile.status}</InformationP>
 
         <EditDiv>
           <InformationP>Phone: {userProfile.phone}</InformationP>
           <LinkToEditPage to="/edit-phone-number">
-            <Button>Edit</Button>
+            <Button>
+              <AiOutlineEdit />
+            </Button>
           </LinkToEditPage>
         </EditDiv>
-
+        <BreakDiv />
         <EditDiv>
           <InformationP>
             Practice Areas : {userProfile.practiceAreas}
           </InformationP>
           <LinkToEditPage to="/edit-practice-areas">
-            <Button>Edit</Button>
+            <Button>
+              <AiOutlineEdit />
+            </Button>
           </LinkToEditPage>
         </EditDiv>
-
+        <BreakDiv />
         <EditDiv>
           <InformationP>Education: {userProfile.education}</InformationP>
           <LinkToEditPage to="/edit-education">
-            <Button>Edit</Button>
+            <Button>
+              <AiOutlineEdit />
+            </Button>
           </LinkToEditPage>
         </EditDiv>
-
+        <BreakDiv />
         <EditDiv>
           <InformationP>Experience: {userProfile.experience}</InformationP>
           <LinkToEditPage to="/edit-experience">
-            <Button>Edit</Button>
+            <Button>
+              <AiOutlineEdit />
+            </Button>
           </LinkToEditPage>
         </EditDiv>
-
+        <BreakDiv />
         <EditDiv>
           <InformationP>Credentials: {userProfile.credentials}</InformationP>
           <LinkToEditPage to="/edit-credentials">
-            <Button>Edit</Button>
+            <Button>
+              <AiOutlineEdit />
+            </Button>
           </LinkToEditPage>
         </EditDiv>
+        <BreakDiv />
         <EditDiv>
           <InformationP>Languages: {userProfile.languages}</InformationP>
           <LinkToEditPage to="/edit-languages">
-            <Button>Edit</Button>
+            <Button>
+              <AiOutlineEdit />
+            </Button>
           </LinkToEditPage>
         </EditDiv>
-
+        <BreakDiv />
         <EditDiv>
           <AddressDiv>
             <InformationP>City: {userProfile.city}</InformationP>
@@ -137,20 +139,52 @@ const LawyerProfile = () => {
             <InformationP>Country: {userProfile.country}</InformationP>
           </AddressDiv>
           <LinkToEditPage to="/edit-address">
-            <Button>Edit</Button>
+            <Button>
+              <AiOutlineEdit />
+            </Button>
           </LinkToEditPage>
         </EditDiv>
-
+        <BreakDiv />
         <EditDiv>
           <InformationP>Quote: {userProfile.quote}</InformationP>
           <LinkToEditPage to="/edit-quote">
-            <Button>Edit</Button>
+            <Button>
+              <AiOutlineEdit />
+            </Button>
           </LinkToEditPage>
         </EditDiv>
       </InformationDiv>
+      <Tools>
+        <AppointmentTools>
+          <LinkToAppointmentsPage to="/upcoming-appointments">
+            <ToolButton>Up coming appointments</ToolButton>
+          </LinkToAppointmentsPage>
+          <LinkToAppointmentsPage to="/not-confimed-upcoming-appointments">
+            <ToolButton>Not confirmed appointments</ToolButton>
+          </LinkToAppointmentsPage>
+          <LinkToAppointmentsPage to="/ongoing-appointments">
+            <ToolButton>Ongoing appointments</ToolButton>
+          </LinkToAppointmentsPage>
+          <LinkToAppointmentsPage to="/passed-appointments">
+            <ToolButton>Passed appointments</ToolButton>
+          </LinkToAppointmentsPage>
+        </AppointmentTools>
+
+        <ClientTools>
+          <ToolButton onClick={clickToSee}>Message senders list</ToolButton>
+          {toggleSenderList ? <MessageSenderList /> : null}
+        </ClientTools>
+      </Tools>
     </LawyerProfileDiv>
   );
 };
+const BreakDiv = styled.div`
+  height: 2px;
+  background-color: rgba(62, 140, 228, 0.8);
+`;
+const Tools = styled.div`
+  margin-left: 150px;
+`;
 const AddressDiv = styled.div``;
 const NameDiv = styled.div``;
 const LinkToEditPage = styled(Link)``;
@@ -160,28 +194,79 @@ const EditDiv = styled.div`
   justify-items: center;
   align-items: center;
   align-content: center;
-  border-bottom: dotted 1px green;
-  border-top: dotted 1px green;
+  /* border-bottom: dotted 1px green;
+  border-top: dotted 1px green; */
 `;
 const Picture = styled.img``;
 const InformationP = styled.p``;
 const ClientTools = styled.div`
-  margin-top: 20px;
+  margin-top: 40px;
 `;
 const AppointmentTools = styled.div`
   display: flex;
-  justify-content: space-between;
+
+  flex-direction: column;
 `;
 const Button = styled.button`
-  font-size: 1.2rem;
-  font-weight: bold;
+  margin-left: 20px;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  color: white;
+  background-color: #30b06b;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 60px;
+  height: 30px;
+  margin-top: 10px;
+  font-family: "Roboto", sans-serif;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  &:hover {
+    background-color: purple;
+    transition: 0.5s ease-in-out;
+  }
 `;
-const LinkToAppointmentsPage = styled(Link)``;
+const ToolButton = styled.button`
+  font-weight: 500;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+  background-color: #30b06b;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 405px;
+  height: 60px;
+  margin-top: 10px;
+  font-family: "Roboto", sans-serif;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  &:hover {
+    background-color: purple;
 
-const InformationDiv = styled.div``;
+    transition: 0.5s ease-in-out;
+  }
+`;
+
+const LinkToAppointmentsPage = styled(Link)`
+  text-decoration: none;
+`;
+
+const InformationDiv = styled.div`
+  h1 {
+    font-family: Georgia, serif;
+  }
+`;
 
 const LawyerProfileDiv = styled.div`
   min-height: 100vh;
+  display: flex;
 `;
 
 export default LawyerProfile;

@@ -46,9 +46,13 @@ const MessageSenderList = () => {
                   : message.firstName
               }`}
             >
-              {message.senderId !== "6d612474-7ff5-45b9-a29a-f107ec348118"
-                ? message.firstName + " " + message.lastName
-                : "Appointment confirmed notice (click to see from whom) "}
+              {message.senderId !== "6d612474-7ff5-45b9-a29a-f107ec348118" ? (
+                <List>{message.firstName + " " + message.lastName}</List>
+              ) : (
+                <List>
+                  Appointment confirmed notice (click to see from whom)
+                </List>
+              )}
             </LinkTo>
           </Message>
         );
@@ -57,7 +61,15 @@ const MessageSenderList = () => {
     </MessagesViewDiv>
   );
 };
-const LinkTo = styled(Link)``;
+const List = styled.p`
+  display: list-item;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  margin-left: 15px;
+`;
+const LinkTo = styled(Link)`
+  text-decoration: none;
+`;
 const Message = styled.div``;
 const InformationDiv = styled.div``;
 
