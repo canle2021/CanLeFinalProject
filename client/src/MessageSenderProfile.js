@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import { FcCheckmark } from "react-icons/fc";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
@@ -14,9 +14,6 @@ const MessageSenderProfile = () => {
     userProfile,
     sucessfullyVerification,
     userInDatabase,
-    setUserInDatabase,
-    allMessagesReveived,
-    setAllMessagesReveived,
     viewMessageSenderProfile,
     setViewMessageSenderProfile,
     viewMessageSenderPicture,
@@ -60,23 +57,51 @@ const MessageSenderProfile = () => {
 
   return (
     <ClientProfileDiv>
-      <h1>This is the Message Sender's Profile</h1>
-      <LawyerpictureDiv>
-        <Picture src={viewMessageSenderPicture.picture}></Picture>
-      </LawyerpictureDiv>
-      <InformationDiv>
-        <p>FirstName: {viewMessageSenderProfile.firstName}</p>
-        <p>LastName: {viewMessageSenderProfile.lastName}</p>
-        <p>Email: {viewMessageSenderProfile.email}</p>
-        <p>Status: {viewMessageSenderProfile.status}</p>
-        <p>Phone: {viewMessageSenderProfile.phone}</p>
-        <p>City: {viewMessageSenderProfile.city}</p>
-        <p>Province: {viewMessageSenderProfile.province}</p>
-        <p>Postal Code: {viewMessageSenderProfile.postalCode}</p>
-        <p>Country: {viewMessageSenderProfile.country}</p>
-      </InformationDiv>
+      <h1>
+        View your working history with {viewMessageSenderProfile.firstName}{" "}
+        {viewMessageSenderProfile.lastName}
+      </h1>
+      <InformationAndPicture>
+        {viewMessageSenderPicture.picture ? (
+          <LawyerpictureDiv>
+            <Picture src={viewMessageSenderPicture.picture}></Picture>
+          </LawyerpictureDiv>
+        ) : null}
+        <InformationDiv>
+          <p>
+            <FcCheckmark /> FirstName: {viewMessageSenderProfile.firstName}
+          </p>
+          <p>
+            <FcCheckmark /> LastName: {viewMessageSenderProfile.lastName}
+          </p>
+          <p>
+            <FcCheckmark /> Email: {viewMessageSenderProfile.email}
+          </p>
+          <p>
+            <FcCheckmark /> Status: {viewMessageSenderProfile.status}
+          </p>
+          <p>
+            <FcCheckmark /> Phone: {viewMessageSenderProfile.phone}
+          </p>
+          <p>
+            <FcCheckmark /> Street: {viewMessageSenderProfile.streetNumber}
+          </p>
+          <p>
+            <FcCheckmark /> City: {viewMessageSenderProfile.city}
+          </p>
+          <p>
+            <FcCheckmark /> Province: {viewMessageSenderProfile.province}
+          </p>
+          <p>
+            <FcCheckmark /> Postal Code: {viewMessageSenderProfile.postalCode}
+          </p>
+          <p>
+            <FcCheckmark /> Country: {viewMessageSenderProfile.country}
+          </p>
+        </InformationDiv>
+        <MessageReplyMessage />
+      </InformationAndPicture>
       {userProfile.status !== "client" ? <AppointmentCreate /> : null}
-      <MessageReplyMessage />
       <HistoryDiv>
         <ListDiv>
           <HistoryShowButton onClick={clickToShowAppointment}>
@@ -94,24 +119,76 @@ const MessageSenderProfile = () => {
     </ClientProfileDiv>
   );
 };
+
+const InformationAndPicture = styled.div`
+  display: flex;
+  align-items: center;
+  /* margin-left: 12%; */
+`;
 const HistoryDiv = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   margin-top: 50px;
   margin-bottom: 50px;
 `;
-const HistoryShowButton = styled.button``;
-const ListDiv = styled.div`
-  margin-left: 60px;
+const HistoryShowButton = styled.button`
+  font-weight: 500;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+  background-color: #30b06b;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 405px;
+  height: 60px;
+  margin-top: 10px;
+  font-family: "Roboto", sans-serif;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  &:hover {
+    background-color: purple;
+
+    transition: 0.5s ease-in-out;
+  }
 `;
-const Picture = styled.img``;
+const ListDiv = styled.div`
+  margin-left: 10.5%;
+`;
+const Picture = styled.img`
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  :hover& {
+    box-shadow: rgba(51, 2, 251, 0.8) 0px 4px 16px 10px;
+    transition: 0.5s ease-in-out;
+  }
+`;
 const LawyerpictureDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-right: 80px;
 `;
-const InformationDiv = styled.div``;
+const InformationDiv = styled.div`
+  margin-right: 80px;
+`;
 
-const ClientProfileDiv = styled.div``;
+const ClientProfileDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  min-height: 100vh;
+`;
 
 export default MessageSenderProfile;

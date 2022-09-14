@@ -36,7 +36,6 @@ const MessagesView = () => {
           </Message>
         );
       })}
-      <InformationDiv></InformationDiv>
     </MessagesViewDiv>
   );
 };

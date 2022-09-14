@@ -4,14 +4,10 @@ import styled from "styled-components";
 import { UserContext } from "./UserContext";
 const ConversationView = ({ senderId }) => {
   const {
-    emailToFetchUser,
     userProfile,
-    sucessfullyVerification,
-    userInDatabase,
-    setUserInDatabase,
-    allMessagesReveived,
+
     viewMessageSenderProfile,
-    setAllMessagesReveived,
+
     conversation,
     setConversation,
   } = useContext(UserContext);
@@ -50,7 +46,6 @@ const ConversationView = ({ senderId }) => {
             </Message>
           );
         })}
-      <InformationDiv></InformationDiv>
     </MessagesViewDiv>
   );
 };
@@ -62,6 +57,7 @@ const SubjectP = styled.p`
 `;
 const Message = styled.div`
   border-bottom: 2px solid blue;
+  max-width: 700px;
 `;
 const InformationDiv = styled.div``;
 
