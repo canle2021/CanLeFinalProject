@@ -11,17 +11,8 @@ const PassedAppointments = () => {
     emailToFetchUser,
     userProfile,
     sucessfullyVerification,
-    userInDatabase,
-    setUserInDatabase,
-    allMessagesReveived,
-    viewMessageSenderProfile,
-    setAllMessagesReveived,
-    conversation,
-    setConversation,
-    allAppointmentsReveiveIdSenderId,
-    SetAllAppointmentsReveiveIdSenderId,
+
     appointmentIdConfirmed,
-    setAppointmentIdConfirmed,
   } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -70,12 +61,12 @@ const PassedAppointments = () => {
 
   return (
     <UpComingAppointmentsDiv>
-      <h1>Passed appointments:</h1>
+      <h1>Past appointments:</h1>
       {appointmentsDetail.length < 1 ? (
-        <h2>You have no passed appointment!</h2>
+        <h2>You have no past appointment!</h2>
       ) : (
         <div>
-          {appointmentsDetail.map((appointment) => {
+          {appointmentsDetail.map((appointment, index) => {
             // to get the format Sat Sep 10 2022 16:16:00 GMT-0600 (Mountain Daylight Time)
             const timeStart = new Date(appointment.timeStartAppointment);
             const timeStartToNumber = timeStart.getTime();
@@ -84,8 +75,39 @@ const PassedAppointments = () => {
             const timeEnd = new Date(appointment.timeEndAppointment);
             const timeEndToNumber = timeEnd.getTime();
             const timeEndToString = new Date(timeEndToNumber).toString();
+
+            const objectToBeDeleted = {
+              userId: userProfile._id,
+              _id: appointment._id,
+            };
+
+            const deleteAppoinment = async () => {
+              try {
+                const deleting = await fetch(`/api/delete-appointment`, {
+                  method: "DELETE",
+                  body: JSON.stringify(objectToBeDeleted),
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                  },
+                });
+                const converToJson = await deleting.json();
+                if (converToJson.status === 200) {
+                  alert(
+                    `THANK YOU! You successfully deleted the appointment with id ${appointment._id}.`
+                  );
+                } else {
+                  alert(converToJson.message);
+                }
+              } catch (err) {
+                console.log(err);
+              }
+            };
+
             return (
-              <Appointment>
+              <Appointment key={index}>
+                <Button onClick={deleteAppoinment}>Delete</Button>
+
                 <SubjectP>Appointment ID: {appointment._id}</SubjectP>
                 <SubjectP>Subject: {appointment.subject}</SubjectP>
                 <SenderP>Lawyer: {appointment.lawyer}</SenderP>
@@ -117,6 +139,8 @@ const PassedAppointments = () => {
     </UpComingAppointmentsDiv>
   );
 };
+const Button = styled.button``;
+
 const UpComingAppointmentsDiv = styled.div`
   min-height: 100vh;
 `;

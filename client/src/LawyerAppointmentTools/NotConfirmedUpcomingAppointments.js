@@ -11,15 +11,6 @@ const NotConfirmedUpcomingAppointments = () => {
     emailToFetchUser,
     userProfile,
     sucessfullyVerification,
-    userInDatabase,
-    setUserInDatabase,
-    allMessagesReveived,
-    viewMessageSenderProfile,
-    setAllMessagesReveived,
-    conversation,
-    setConversation,
-    allAppointmentsReveiveIdSenderId,
-    SetAllAppointmentsReveiveIdSenderId,
     appointmentIdConfirmed,
     setAppointmentIdConfirmed,
   } = useContext(UserContext);
@@ -48,11 +39,14 @@ const NotConfirmedUpcomingAppointments = () => {
           })
       );
       Promise.all(appointmentDetailArray).then((data) => {
-        // setAppointmentsDetail(data[0]);
+        // not confirmed mean the ending time still is not passed yet
         const nextAppointmentsFilter = data[0].filter((element) => {
-          const newDateOfTime = new Date(element.timeStartAppointment);
-          const timeToNumber = newDateOfTime.getTime();
-          if (timeToNumber > Date.now() && element.isConfirmed === false) {
+          //
+          const newDateOfTimeEnd = new Date(element.timeEndAppointment);
+          const timeEndToNumber = newDateOfTimeEnd.getTime();
+          //
+
+          if (timeEndToNumber > Date.now() && element.isConfirmed === false) {
             return true;
           } else {
             return false;
@@ -74,7 +68,7 @@ const NotConfirmedUpcomingAppointments = () => {
         <h2>You have no not confirmed appointment!</h2>
       ) : (
         <div>
-          {appointmentsDetail.map((appointment) => {
+          {appointmentsDetail.map((appointment, index) => {
             // to get the format Sat Sep 10 2022 16:16:00 GMT-0600 (Mountain Daylight Time)
             const timeStart = new Date(appointment.timeStartAppointment);
             const timeStartToNumber = timeStart.getTime();
@@ -83,8 +77,38 @@ const NotConfirmedUpcomingAppointments = () => {
             const timeEnd = new Date(appointment.timeEndAppointment);
             const timeEndToNumber = timeEnd.getTime();
             const timeEndToString = new Date(timeEndToNumber).toString();
+
+            const objectToBeDeleted = {
+              userId: userProfile._id,
+              _id: appointment._id,
+            };
+
+            const deleteAppoinment = async () => {
+              try {
+                const deleting = await fetch(`/api/delete-appointment`, {
+                  method: "DELETE",
+                  body: JSON.stringify(objectToBeDeleted),
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                  },
+                });
+                const converToJson = await deleting.json();
+                if (converToJson.status === 200) {
+                  alert(
+                    `THANK YOU! You successfully deleted the appointment with id ${appointment._id}.`
+                  );
+                } else {
+                  alert(converToJson.message);
+                }
+              } catch (err) {
+                console.log(err);
+              }
+            };
+
             return (
-              <Appointment>
+              <Appointment key={index}>
+                <Button onClick={deleteAppoinment}>Delete</Button>
                 <SubjectP>Appointment ID: {appointment._id}</SubjectP>
                 <SubjectP>Subject: {appointment.subject}</SubjectP>
                 <SenderP>Lawyer: {appointment.lawyer}</SenderP>
@@ -116,6 +140,7 @@ const NotConfirmedUpcomingAppointments = () => {
     </UpComingAppointmentsDiv>
   );
 };
+const Button = styled.button``;
 const UpComingAppointmentsDiv = styled.div`
   min-height: 100vh;
 `;
