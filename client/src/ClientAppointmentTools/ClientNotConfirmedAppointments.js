@@ -42,11 +42,11 @@ const ClientNotConfirmedAppointments = () => {
           })
       );
       Promise.all(appointmentDetailArray).then((data) => {
-        // setAppointmentsDetail(data[0]);
+        // change here to the end time still not passed yet
         const nextAppointmentsFilter = data[0].filter((element) => {
-          const newDateOfTime = new Date(element.timeStartAppointment);
-          const timeToNumber = newDateOfTime.getTime();
-          if (timeToNumber > Date.now() && element.isConfirmed === false) {
+          const newDateOfTimeEnd = new Date(element.timeEndAppointment);
+          const timeEndToNumber = newDateOfTimeEnd.getTime();
+          if (timeEndToNumber > Date.now() && element.isConfirmed === false) {
             return true;
           } else {
             return false;

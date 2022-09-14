@@ -120,18 +120,26 @@ const Header = () => {
           const fetchAppoitment = await fetch(
             `/api/get-appointments-by-receiverId/${data}`
           );
-          console.log("res.json appointment ", data);
-          console.log("fetchAppoitment ", fetchAppoitment);
 
           const toJson = await fetchAppoitment.json();
           console.log("fetchAppoitment ", toJson.data);
 
           await SetAllAppointmentsReveived(toJson.data);
+          // to filt which appointmnet not confirm still in the future
+          // if it is in the past (ending time in the past) it will not show in here
+          const filterNewSender = await toJson.data.filter((apointment) => {
+            const newDateOfTimeEnd = new Date(apointment.timeEndAppointment);
+            const timeEndToNumber = newDateOfTimeEnd.getTime();
+            if (
+              timeEndToNumber > Date.now() &&
+              apointment.isConfirmed === false
+            ) {
+              return true;
+            } else {
+              return false;
+            }
+          });
 
-          const filterNewSender = await toJson.data.filter(
-            (apointment) => apointment.isConfirmed === false
-          );
-          console.log("filterNewSender", filterNewSender);
           let senderIdsRepeated = [];
           await filterNewSender.forEach((element) => {
             senderIdsRepeated.push({
