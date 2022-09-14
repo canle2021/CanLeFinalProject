@@ -4,8 +4,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import { useNavigate } from "react-router-dom";
+import MessageToLawyer from "../MessageToLawyer";
 
-const ClientUpComingAppointments = () => {
+const ClientOnGoingAppointments = () => {
   const {
     emailToFetchUser,
     userProfile,
@@ -26,7 +27,7 @@ const ClientUpComingAppointments = () => {
 
   let appointmentDetailArray = [];
   const [appointmentsDetail, setAppointmentsDetail] = useState([]);
-
+  const [timeEndStartappointment, setTimeEndStartappointment] = useState({});
   useEffect(() => {
     if (sucessfullyVerification && emailToFetchUser) {
       appointmentDetailArray.push(
@@ -44,17 +45,22 @@ const ClientUpComingAppointments = () => {
       Promise.all(appointmentDetailArray).then((data) => {
         // setAppointmentsDetail(data[0]);
         const nextAppointmentsFilter = data[0].filter((element) => {
-          const newDateOfTime = new Date(element.timeStartAppointment);
-          const timeToNumber = newDateOfTime.getTime();
-          if (timeToNumber > Date.now() && element.isConfirmed === true) {
+          const newDateOfTimeStart = new Date(element.timeStartAppointment);
+          const timeStartToNumber = newDateOfTimeStart.getTime();
+          const newDateOfTimeEnd = new Date(element.timeEndAppointment);
+          const timeEndToNumber = newDateOfTimeEnd.getTime();
+
+          if (
+            timeEndToNumber > Date.now() &&
+            timeStartToNumber < Date.now() &&
+            element.isConfirmed === true
+          ) {
             return true;
           } else {
             return false;
           }
         });
         setAppointmentsDetail(nextAppointmentsFilter);
-        console.log("nextAppointmentsFilter", nextAppointmentsFilter);
-        console.log("data[0]", data[0]);
       });
     } else {
       return navigate("/");
@@ -63,9 +69,9 @@ const ClientUpComingAppointments = () => {
 
   return (
     <UpComingAppointmentsDiv>
-      <h1>Client's upcoming appointments:</h1>
+      <h1>On going appointments:</h1>
       {appointmentsDetail.length < 1 ? (
-        <h2>You have no upcoming appointment!</h2>
+        <h2>You have no on going appointment!</h2>
       ) : (
         <div>
           {appointmentsDetail.map((appointment, index) => {
@@ -77,17 +83,16 @@ const ClientUpComingAppointments = () => {
             const timeEnd = new Date(appointment.timeEndAppointment);
             const timeEndToNumber = timeEnd.getTime();
             const timeEndToString = new Date(timeEndToNumber).toString();
+
             return (
               <Appointment key={index}>
                 <SubjectP>Appointment ID: {appointment._id}</SubjectP>
                 <SubjectP>Subject: {appointment.subject}</SubjectP>
-                <Link to={`/message-sender-profile/${appointment.senderId}`}>
-                  <SenderP>Lawyer: {appointment.lawyer}</SenderP>
-                </Link>
+                <SenderP>Lawyer: {appointment.lawyer}</SenderP>
                 <p>Lawyer's Email: {appointment.lawyerEmail}</p>
-
-                <SenderP>Client: {appointment.client}</SenderP>
-
+                <Link to={`/message-sender-profile/${appointment.receiverId}`}>
+                  <SenderP>Client: {appointment.client}</SenderP>
+                </Link>
                 <p>Client's Email: {appointment.clientEmail}</p>
                 <SenderP>Message: {appointment.message}</SenderP>
                 <p>Appointent will start at : {timeStartToString}</p>
@@ -112,6 +117,8 @@ const ClientUpComingAppointments = () => {
     </UpComingAppointmentsDiv>
   );
 };
+const Button = styled.button``;
+
 const UpComingAppointmentsDiv = styled.div`
   min-height: 100vh;
 `;
@@ -126,4 +133,4 @@ const Appointment = styled.div`
   border-bottom: 2px solid blue;
 `;
 
-export default ClientUpComingAppointments;
+export default ClientOnGoingAppointments;

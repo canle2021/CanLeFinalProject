@@ -31,7 +31,7 @@ import EditLanguages from "./ProfleUpdateTools/EditLanguages";
 import EditAddress from "./ProfleUpdateTools/EditAddress";
 import EditQuote from "./ProfleUpdateTools/EditQuote";
 import EditPicture from "./ProfleUpdateTools/EditPicture";
-
+import ClientOnGoingAppointments from "./ClientAppointmentTools/ClientOnGoingAppointments";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
@@ -89,6 +89,10 @@ function App() {
           <Route
             path="/client-passed-appointments"
             element={<ClientPassedAppointments />}
+          />
+          <Route
+            path="/client-ongoing-appointments"
+            element={<ClientOnGoingAppointments />}
           />
           <Route path="/edit-username" element={<EditUsername />} />
           <Route path="/edit-name" element={<EditName />} />

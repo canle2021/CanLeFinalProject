@@ -69,7 +69,7 @@ const ClientPassedAppointments = () => {
         <h2>You have no passed appointment!</h2>
       ) : (
         <div>
-          {appointmentsDetail.map((appointment) => {
+          {appointmentsDetail.map((appointment, index) => {
             // to get the format Sat Sep 10 2022 16:16:00 GMT-0600 (Mountain Daylight Time)
             const timeStart = new Date(appointment.timeStartAppointment);
             const timeStartToNumber = timeStart.getTime();
@@ -79,7 +79,7 @@ const ClientPassedAppointments = () => {
             const timeEndToNumber = timeEnd.getTime();
             const timeEndToString = new Date(timeEndToNumber).toString();
             return (
-              <Appointment>
+              <Appointment key={index}>
                 <SubjectP>Appointment ID: {appointment._id}</SubjectP>
                 <SubjectP>Subject: {appointment.subject}</SubjectP>
                 <Link to={`/message-sender-profile/${appointment.senderId}`}>
