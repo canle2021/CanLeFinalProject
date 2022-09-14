@@ -28,9 +28,21 @@ const ListOfSendersForNewAppointment = () => {
       .then((data) => {
         if (data.status === 200) {
           setListOfNewAppointmentSenders(data.data);
-          const filterNewSender = data.data.filter(
-            (apointment) => apointment.isConfirmed === false
-          );
+
+          // to filt which appointmnet not confirm still in the future
+          // if it is in the past (ending time in the past) it will not show in here
+          const filterNewSender = data.data.filter((apointment) => {
+            const newDateOfTimeEnd = new Date(apointment.timeEndAppointment);
+            const timeEndToNumber = newDateOfTimeEnd.getTime();
+            if (
+              timeEndToNumber > Date.now() &&
+              apointment.isConfirmed === false
+            ) {
+              return true;
+            } else {
+              return false;
+            }
+          });
           console.log("filterNewSender", filterNewSender);
           let senderIdsRepeated = [];
           filterNewSender.forEach((element) => {
