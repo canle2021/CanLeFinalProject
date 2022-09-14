@@ -113,29 +113,54 @@ const addAppointment = async (req, res) => {
 /*   delete appointment
 /**********************************************************/
 const deleteSpecificAppointments = async (req, res) => {
-  const { _id } = req.params;
+  const body = req.body;
+  // suppose we have a body of:
+  // {userId: "userProfile._id",
+  // "_id: "appointment for delete _id"}
+  // lawyer and admin only can delete, client can not
+
+  console.log("body", body);
   try {
     await client.connect();
+
+    const findSpecificUser = await db
+      .collection("users")
+      .findOne({ _id: body.userId });
+
+    if (!findSpecificUser) {
+      return res.status(400).json({
+        status: 404,
+        message: ` Sorry, we can not find all the user's information with id : ${body.userId}`,
+      });
+    }
+
     const findAppointment = await db
       .collection("appointments")
-      .findOne({ _id });
+      .findOne({ _id: body._id });
     if (!findAppointment) {
       return res.status(400).json({
         status: 400,
-        message: ` Sorry, we can not find the Appointment with id: ${_id} information`,
+        message: ` Sorry, we can not find the Appointment with id: ${body._id} information`,
       });
     } else {
       const deleteAppointment = await db
         .collection("appointments")
-        .deleteOne({ _id });
+        .deleteOne({ _id: body._id });
       console.log("delete", deleteAppointment);
       if (deleteAppointment.deletedCount > 0) {
-        const trackDeletedAppointment = await db
+        const appointmentDeleted = {
+          ...findAppointment,
+          personWhoDeleted: body.userId,
+          timeDeleted: Date(Date.now()).toString(),
+        };
+        console.log("appointmentDeleted", appointmentDeleted);
+        const trackingDeleted = await db
           .collection("deletedAppointments")
-          .insertOne(findAppointment);
+          .insertOne(appointmentDeleted);
         return res.status(200).json({
           status: 200,
-          message: ` We successfully deleted the Appointment with id: ${_id}`,
+          data: appointmentDeleted,
+          message: ` We successfully deleted the Appointment with id: ${body._id}`,
         });
       }
     }

@@ -115,7 +115,7 @@ express()
   .patch("/api/update-hour-rate", editHourRate)
   .post(`/api/add-message`, addMessage)
   .post(`/api/add-appointment`, addAppointment)
-  .delete(`/api/delete-appointment/:_id`, deleteSpecificAppointments)
+  .delete(`/api/delete-appointment`, deleteSpecificAppointments)
 
   .get("*", (req, res) => {
     res.status(404).json({
