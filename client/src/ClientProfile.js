@@ -108,7 +108,7 @@ const ClientProfile = () => {
             <ToolButton> Not confirmed appointments</ToolButton>
           </LinkTo>
           <LinkTo to="/client-passed-appointments">
-            <ToolButton> Passed appointments</ToolButton>
+            <ToolButton> Past appointments</ToolButton>
           </LinkTo>
         </AppointmentTools>
 

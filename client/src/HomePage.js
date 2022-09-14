@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const HomePage = () => {
@@ -77,10 +77,10 @@ const Box = styled.div`
   justify-content: space-between;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgba(39, 7, 214, 0.8) 0px 2px 8px 0px;
   :hover& {
     cursor: pointer;
-    box-shadow: rgba(51, 2, 251, 0.8) 0px 4px 16px 10px;
+    box-shadow: rgba(39, 7, 214, 0.8) 0px 4px 16px 10px;
     transition: 0.5s ease-in-out;
   }
 `;
@@ -93,18 +93,18 @@ const Name = styled.button`
   border: none;
   margin: 0;
   font-size: 18px;
+  color: white;
   text-transform: uppercase;
   font-weight: 600;
-  color: rgba(27, 15, 79, 0.8);
+
   background: linear-gradient(
     90deg,
     rgba(0, 54, 245, 0.8) 0%,
-    rgba(160, 54, 245, 0.8) 100%
+    rgba(39, 7, 214, 0.8) 100%
   );
   :hover& {
     cursor: pointer;
     transition: 0.5s ease-in-out;
-    color: white;
   }
 `;
 export default HomePage;
