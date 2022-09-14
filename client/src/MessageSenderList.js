@@ -66,6 +66,7 @@ const List = styled.p`
   font-family: Georgia, serif;
   font-size: 18px;
   margin-left: 15px;
+  color: blue;
 `;
 const LinkTo = styled(Link)`
   text-decoration: none;

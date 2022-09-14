@@ -142,7 +142,7 @@ const ToolButton = styled.button`
   border: none;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   &:hover {
-    background-color: purple;
+    background-color: blue;
 
     transition: 0.5s ease-in-out;
   }
@@ -172,7 +172,7 @@ const Button = styled.button`
   border: none;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   &:hover {
-    background-color: purple;
+    background-color: blue;
     transition: 0.5s ease-in-out;
   }
 `;
