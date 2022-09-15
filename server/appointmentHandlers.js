@@ -63,6 +63,25 @@ const addAppointment = async (req, res) => {
       message: "Sorry. You can not give a message to yourselve ",
     });
   }
+  const newDateOfTimeEnd = new Date(body.timeEndAppointment);
+  const timeEndToNumber = newDateOfTimeEnd.getTime();
+  //
+  const newDateOfTimeStart = new Date(body.timeStartAppointment);
+  const timeStartToNumber = newDateOfTimeStart.getTime();
+  if (timeEndToNumber < Date.now()) {
+    return res.status(400).json({
+      status: 400,
+      message: `Sorry. You can not book ending time before present time,${Date(
+        Date.now()
+      ).toString()} `,
+    });
+  }
+  if (timeEndToNumber <= timeStartToNumber) {
+    return res.status(400).json({
+      status: 400,
+      message: `Sorry. You can not book ending time before the start time.`,
+    });
+  }
 
   try {
     await client.connect();
@@ -119,7 +138,6 @@ const deleteSpecificAppointments = async (req, res) => {
   // "_id: "appointment for delete _id"}
   // lawyer and admin only can delete, client can not
 
-  console.log("body", body);
   try {
     await client.connect();
 
@@ -146,7 +164,7 @@ const deleteSpecificAppointments = async (req, res) => {
       const deleteAppointment = await db
         .collection("appointments")
         .deleteOne({ _id: body._id });
-      console.log("delete", deleteAppointment);
+
       if (deleteAppointment.deletedCount > 0) {
         const appointmentDeleted = {
           ...findAppointment,
