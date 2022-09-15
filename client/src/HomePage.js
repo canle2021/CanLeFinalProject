@@ -34,8 +34,8 @@ const HomePage = () => {
       <Team>
         {allLawyersPicture.map((picture, index) => {
           return (
-            <Box>
-              <LinkToProfile to={`/lawyer/${picture._id}`} key={index}>
+            <Box key={index}>
+              <LinkToProfile to={`/lawyer/${picture._id}`}>
                 <LawyerpictureDiv>
                   <Picture src={picture.picture}></Picture>
                   <Name>

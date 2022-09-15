@@ -6,6 +6,8 @@ const ErrorPage = () => {
   const navigate = useNavigate();
   const homepageButton = (e) => {
     navigate("/");
+    // go back to homepage and reload the page too
+    window.location.reload();
   };
   return (
     <ErrorPageDiv>
@@ -16,7 +18,7 @@ const ErrorPage = () => {
       <ErrorIcon>
         <BiError />
       </ErrorIcon>
-      <BackHomepage onClick={homepageButton}>Go to home page</BackHomepage>
+      <BackHomepage onClick={homepageButton}>Go to the home page</BackHomepage>
     </ErrorPageDiv>
   );
 };

@@ -5,7 +5,11 @@ import { UserContext } from "./UserContext";
 import { useAuth0 } from "@auth0/auth0-react";
 import NewMessagesAlert from "./NewMessagesAlert";
 import NewAppointmentAlert from "./NewAppointmentAlert";
+import Loading from "./Loading";
 const Header = () => {
+  const [loadingLogin, setLoadingLogin] = useState();
+  const [loadingMessages, setLoadingMessages] = useState();
+  const [loadingAppointments, setLoadingAppointments] = useState();
   const navigate = useNavigate();
   const {
     userProfile,
@@ -14,17 +18,14 @@ const Header = () => {
     setEmailToFetchUser,
     sucessfullyVerification,
     setSucessfullyVerification,
-    userInDatabase,
     setUserInDatabase,
-    allMessagesReveived,
     setAllMessagesReveived,
     listOfNewSenders,
     setListOfNewSenders,
-    allAppointmentsReveived,
     SetAllAppointmentsReveived,
     listOfNewAppointmentSenders,
     setListOfNewAppointmentSenders,
-    userProfilePicture,
+
     setUserProfilePicture,
   } = useContext(UserContext);
   let userId = [];
@@ -39,7 +40,11 @@ const Header = () => {
       userId.push(
         fetch(`/api/get-specific-user-by-email/${emailToFetchUser}`)
           .then((res) => {
-            console.log("res.json", res);
+            setLoadingLogin(true);
+
+            if (!res.ok) {
+              throw new Error("Loading data error");
+            }
             return res.json();
           })
           .then((data) => {
@@ -47,33 +52,37 @@ const Header = () => {
               setUserProfile(data.userData || []);
               setUserProfilePicture(data.userPicture || []);
               setUserInDatabase(true);
-              console.log("date", data);
-              console.log("data.userData._id", data.userData._id);
-              return data.userData._id;
+              return data.userData;
             } else {
               return navigate("/signUp");
             }
           })
           // a post method here to check if the email registered is existing
-          // show the alert if the email is already use
 
           .catch((err) => {
             console.log("err", err);
+            navigate("/*");
+          })
+          .finally(() => {
+            setLoadingLogin(false);
           })
       );
       // wait for fetching of user profile then fetch all the messages received by logged in user.
 
       Promise.all(userId).then((data) => {
         // Fetch new messages here to show notification new messages right after sign in successfully because this notification is in Header
-        fetch(`/api/get-all-messages-by-receiverId/${data}`)
+        fetch(`/api/get-all-messages-by-receiverId/${data[0]._id}`)
           .then((res) => {
-            console.log("res.json", res);
+            setLoadingMessages(true);
+
+            if (!res.ok) {
+              throw new Error("Loading messages error");
+            }
             return res.json();
           })
           .then((data) => {
             if (data.status === 200) {
               setAllMessagesReveived(data.data);
-              console.log("AllMessagesReveived", data);
               const filterNewSender = data.data.filter(
                 (message) => message.isRead === false
               );
@@ -105,80 +114,88 @@ const Header = () => {
             } else {
             }
           })
-          // a post method here to check if the email registered is existing
-          // show the alert if the email is already use
 
           .catch((err) => {
             console.log("err", err);
+            navigate("/*");
+          })
+          .finally(() => {
+            setLoadingMessages(false);
           });
       });
 
-      // fetch new appointment
+      // fetch new appointments
 
       Promise.all(userId).then(async (data) => {
-        try {
-          const fetchAppoitment = await fetch(
-            `/api/get-appointments-by-receiverId/${data}`
-          );
+        if (data[0].status !== "lawyer") {
+          //  we must put setLoadingAppointments in this if because only fetch new appoinments for client user (the only receiver). If put setLoadingAppointments out of this if, lawyer user will have loading forever because the next setLoadingAppointments in this Promise will never be touched)
+          setLoadingAppointments(true);
+          try {
+            const fetchAppoitment = await fetch(
+              `/api/get-appointments-by-receiverId/${data[0]._id}`
+            );
 
-          const toJson = await fetchAppoitment.json();
-          console.log("fetchAppoitment ", toJson.data);
-
-          await SetAllAppointmentsReveived(toJson.data);
-          // to filt which appointmnet not confirm still in the future
-          // if it is in the past (ending time in the past) it will not show in here
-          const filterNewSender = await toJson.data.filter((apointment) => {
-            const newDateOfTimeEnd = new Date(apointment.timeEndAppointment);
-            const timeEndToNumber = newDateOfTimeEnd.getTime();
-            if (
-              timeEndToNumber > Date.now() &&
-              apointment.isConfirmed === false
-            ) {
-              return true;
-            } else {
-              return false;
+            if (!fetchAppoitment.ok) {
+              throw new Error("Loading data error");
             }
-          });
+            const toJson = await fetchAppoitment.json();
+            console.log("fetchAppoitment ", toJson.data);
 
-          let senderIdsRepeated = [];
-          await filterNewSender.forEach((element) => {
-            senderIdsRepeated.push({
-              senderId: element.senderId,
-              receiverId: element.receiverId,
-              lawyer: element.lawyer,
-              client: element.client,
-              date: element.date,
+            await SetAllAppointmentsReveived(toJson.data);
+            // to filt which appointmnet not confirm still in the future
+            // if it is in the past (ending time in the past) it will not be shown  here
+            const filterNewSender = await toJson.data.filter((apointment) => {
+              const newDateOfTimeEnd = new Date(apointment.timeEndAppointment);
+              const timeEndToNumber = newDateOfTimeEnd.getTime();
+              if (
+                timeEndToNumber > Date.now() &&
+                apointment.isConfirmed === false
+              ) {
+                return true;
+              } else {
+                return false;
+              }
             });
-          });
-          const intermediateArray = [];
-          const senderIdsArray = senderIdsRepeated.filter((element, index) => {
-            const isDuplicate = intermediateArray.includes(element.senderId);
-            if (!isDuplicate) {
-              intermediateArray.push(element.senderId);
-              return true;
-            }
-            return false;
-          });
-          console.log("apointment sender", senderIdsArray);
-          setListOfNewAppointmentSenders(senderIdsArray);
-          console.log(
-            "listOfNewAppointmentSenders",
-            listOfNewAppointmentSenders.length
-          );
-        } catch (err) {
-          console.log("err", err);
+
+            let senderIdsRepeated = [];
+            await filterNewSender.forEach((element) => {
+              senderIdsRepeated.push({
+                senderId: element.senderId,
+                receiverId: element.receiverId,
+                lawyer: element.lawyer,
+                client: element.client,
+                date: element.date,
+              });
+            });
+            const intermediateArray = [];
+            const senderIdsArray = senderIdsRepeated.filter(
+              (element, index) => {
+                const isDuplicate = intermediateArray.includes(
+                  element.senderId
+                );
+                if (!isDuplicate) {
+                  intermediateArray.push(element.senderId);
+                  return true;
+                }
+                return false;
+              }
+            );
+            console.log("apointment sender", senderIdsArray);
+            setListOfNewAppointmentSenders(senderIdsArray);
+          } catch (err) {
+            console.log("err", err);
+            navigate("/*");
+          } finally {
+            setLoadingAppointments(false);
+          }
         }
       });
-      // a post method here to check if the email registered is existing
-      // show the alert if the email is already use
     }
   }, [user, sucessfullyVerification, emailToFetchUser]);
 
-  // Fetch new messages here to show notification new messages right after sign in successfully because this notification is in Header
-
   const logUserOut = async () => {
     await logout();
-    // reset() // an action on the context to set the staet back to initial state
+    // reset() // an action on the context to set the state back to initial state
     setEmailToFetchUser("");
     setSucessfullyVerification(false);
   };
@@ -188,7 +205,7 @@ const Header = () => {
     navigate("/signUp");
   };
 
-  return (
+  return !loadingLogin && !loadingAppointments && !loadingMessages ? (
     <HeaderDiv>
       <Link to="/">
         <h1>Header</h1>
@@ -227,8 +244,22 @@ const Header = () => {
         </LogoutDiv>
       )}
     </HeaderDiv>
+  ) : (
+    <LoadingDiv>
+      <Loading />
+    </LoadingDiv>
   );
 };
+
+const LoadingDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const Button = styled.button`
   width: 150px;
   height: 35px;
