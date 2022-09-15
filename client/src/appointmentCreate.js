@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useParams, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
@@ -15,7 +15,7 @@ const AppointmentCreate = ({}) => {
     setViewMessageSenderProfile,
   } = useContext(UserContext);
   // remember to delete all the white space begining and at the end of each input
-
+  const [disableSummitButton, setDisableSummitButton] = useState(true);
   const [values, setValues] = useState({
     senderId: userProfile._id,
     lawyer: `${userProfile.firstName} ${userProfile.lastName}`,
@@ -29,6 +29,42 @@ const AppointmentCreate = ({}) => {
     const value = event.target.value.trim();
     setValues((values) => ({ ...values, [name]: value }));
     // values is just a temperary variable which is holding an object contents inputs
+
+    const timeStartAppointmentString = `${values.date} ${values.start} GMT-0600 (Mountain Daylight Time)`;
+    const newDateOfTimeStart = new Date(timeStartAppointmentString);
+    const timeStartToNumber = newDateOfTimeStart.getTime();
+
+    if (
+      values.date !== undefined &&
+      values.start !== undefined &&
+      timeStartToNumber < Date.now()
+    ) {
+      // in some special cases, the start time can be before now time
+      alert(
+        " WARNING!!You are putting appointment's start time before present time"
+      );
+    }
+    const timeEndAppointmentString = `${values.date} ${values.end} GMT-0600 (Mountain Daylight Time)`;
+    const newDateOfTimeEnd = new Date(timeEndAppointmentString);
+    const timeEndToNumber = newDateOfTimeEnd.getTime();
+
+    if (
+      values.date !== undefined &&
+      values.end !== undefined &&
+      values.start !== undefined
+    ) {
+      if (
+        timeEndToNumber > Date.now() &&
+        timeEndToNumber >= timeStartToNumber
+      ) {
+        setDisableSummitButton(false);
+      } else {
+        setDisableSummitButton(true);
+        alert(
+          `WARNING!! You must put appointment's start time after present time OR The end time must be after the start time.`
+        );
+      }
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -42,8 +78,8 @@ const AppointmentCreate = ({}) => {
       timeEndAppointment: `${values.date} ${values.end} GMT-0600 (Mountain Daylight Time)`,
       timeOfCreateingAppointment: Date.now(),
       timeOfCreateingAppointmentToString: Date(Date.now()).toString(),
-      //  this is for both when a client click on a specific lawyer page or click on message to see who sent that message
     };
+
     try {
       const posting = await fetch(`/api/add-appointment`, {
         method: "POST",
@@ -151,6 +187,8 @@ const AppointmentCreate = ({}) => {
             type="submit"
             value="Send"
             name="confirmButton"
+            disabled={disableSummitButton}
+            className={disableSummitButton ? "disabled" : ""}
           ></SubmitButton>
         </Form>
       </FormDiv>
@@ -187,13 +225,17 @@ const SubmitButton = styled.input`
 
     transition: 0.5s ease-in-out;
   }
+  &.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
 `;
 
 const AppointmentCreateTitle = styled.h3`
   font-size: 35px;
   color: black;
   font-family: "IBM Plex Sans", sans-serif;
-  /* text-transform: uppercase; */
+
   font-weight: 800;
   margin-bottom: 40px;
   padding-bottom: 20px;
@@ -205,11 +247,12 @@ const Form = styled.form`
 `;
 const Message = styled.textarea`
   width: 390px;
-  height: 40px;
+  height: 200px;
   margin-bottom: 10px;
   padding-left: 10px;
   border: 1px solid lightgrey;
   border-radius: 5px;
+  resize: none;
 `;
 const Subject = styled.input`
   width: 390px;
