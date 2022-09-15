@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import Loading from "./Loading";
+import { useNavigate } from "react-router-dom";
 const HomePage = () => {
   const [allLawyersInformation, setAllLawyersInformation] = useState([]);
   const [allLawyersPicture, setAllLawyersPicture] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   useEffect(() => {
     fetch(`/api/get-lawyers`)
       .then((res) => {
+        if (!res.ok) {
+          throw new Error("Loading data error");
+        }
         return res.json();
       })
       .then((data) => {
@@ -16,9 +22,13 @@ const HomePage = () => {
       })
       .catch((err) => {
         console.log("err", err);
+        navigate("/*");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
-  return (
+  return !loading ? (
     <HomePageDiv>
       <h1>MEET OUR TEAM</h1>
       <Team>
@@ -46,8 +56,22 @@ const HomePage = () => {
         })}
       </Team>
     </HomePageDiv>
+  ) : (
+    <LoadingDiv>
+      <Loading />
+    </LoadingDiv>
   );
 };
+
+const LoadingDiv = styled.div`
+  width: 100vw;
+  height: 100vh;
+  font-size: 50px;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const LinkToProfile = styled(Link)`
   text-decoration: none;
