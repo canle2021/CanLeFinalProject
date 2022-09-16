@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 import Loading from "./Loading";
@@ -13,13 +13,6 @@ const AppointmentView = ({ senderId }) => {
     SetAllAppointmentsReveiveIdSenderId,
   } = useContext(UserContext);
   const [loading, setLoading] = useState();
-
-  const navigate = useNavigate();
-  console.log("userProfile", userProfile._id);
-  console.log(
-    "allAppointmentsReveiveIdSenderId",
-    allAppointmentsReveiveIdSenderId
-  );
 
   useEffect(() => {
     setLoading(true);

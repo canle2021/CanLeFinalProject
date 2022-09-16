@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useParams } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
+import Loading from "./Loading";
 const ConversationView = ({ senderId }) => {
   const {
     userProfile,
@@ -11,12 +12,17 @@ const ConversationView = ({ senderId }) => {
     conversation,
     setConversation,
   } = useContext(UserContext);
-  console.log("userProfile", userProfile._id);
-  console.log("senderId", senderId);
+
+  const [loading, setLoading] = useState();
 
   useEffect(() => {
+    setLoading(true);
+
     fetch(`/api/get-conversation/${userProfile._id}/${senderId}`)
       .then((res) => {
+        if (!res.ok) {
+          throw new Error("Loading data error");
+        }
         return res.json();
       })
       .then((data) => {
@@ -24,10 +30,16 @@ const ConversationView = ({ senderId }) => {
       })
       .catch((err) => {
         console.log("err", err);
+        alert(
+          `* ALERT ERROR IN SHOWING CONVERSATION HISTORY* Sorry, please reload the page.`
+        );
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
-  return (
+  return !loading ? (
     <MessagesViewDiv>
       <h1>
         Conversation with {viewMessageSenderProfile.firstName}{" "}
@@ -47,8 +59,22 @@ const ConversationView = ({ senderId }) => {
           );
         })}
     </MessagesViewDiv>
+  ) : (
+    <LoadingDiv>
+      <Loading />
+    </LoadingDiv>
   );
 };
+const LoadingDiv = styled.div`
+  width: 100%;
+  height: 100vh;
+  font-size: 50px;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const SenderP = styled.p`
   font-weight: bold;
 `;
@@ -59,7 +85,6 @@ const Message = styled.div`
   border-bottom: 2px solid blue;
   max-width: 700px;
 `;
-const InformationDiv = styled.div``;
 
 const MessagesViewDiv = styled.div``;
 
