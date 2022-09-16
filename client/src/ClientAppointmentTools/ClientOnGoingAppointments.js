@@ -16,7 +16,7 @@ const ClientOnGoingAppointments = () => {
   const [appointmentsDetail, setAppointmentsDetail] = useState([]);
   useEffect(() => {
     if (sucessfullyVerification && emailToFetchUser) {
-      const nextAppointmentsFilter = allAppointmentsReveived.filter(
+      const ongoingAppointmentsFilter = allAppointmentsReveived.filter(
         (element) => {
           const newDateOfTimeStart = new Date(element.timeStartAppointment);
           const timeStartToNumber = newDateOfTimeStart.getTime();
@@ -34,7 +34,7 @@ const ClientOnGoingAppointments = () => {
           }
         }
       );
-      setAppointmentsDetail(nextAppointmentsFilter);
+      setAppointmentsDetail(ongoingAppointmentsFilter);
     } else {
       return navigate("/");
     }
