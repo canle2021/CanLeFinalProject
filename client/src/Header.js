@@ -214,12 +214,26 @@ const Header = () => {
 
   return !loadingLogin && !loadingAppointments && !loadingMessages ? (
     <HeaderDiv>
-      <Link to="/">
-        <h1>Header</h1>
-      </Link>
-
+      <NameDiv>
+        <LinkToHome to="/">
+          <button>THE LEGAL BRIDGE</button>
+        </LinkToHome>
+      </NameDiv>
       {sucessfullyVerification && emailToFetchUser ? (
-        <div>
+        <AfterLoginDiv>
+          <AlertDiv>
+            {listOfNewSenders && listOfNewSenders.length > 0 ? (
+              <Link to={`new-message-senderIds-list`}>
+                <button> Check New Message</button>
+              </Link>
+            ) : null}
+            {listOfNewAppointmentSenders &&
+            listOfNewAppointmentSenders.length > 0 ? (
+              <Link to={`new-appointments-senderIds-list`}>
+                <button> Check New Appointment</button>
+              </Link>
+            ) : null}
+          </AlertDiv>
           <HelloDiv>
             <Link
               to={
@@ -232,18 +246,7 @@ const Header = () => {
             </Link>
             <Button onClick={logUserOut}>Logout</Button>
           </HelloDiv>
-          {listOfNewSenders && listOfNewSenders.length > 0 ? (
-            <Link to={`new-message-senderIds-list`}>
-              <NewMessagesAlert />
-            </Link>
-          ) : null}
-          {listOfNewAppointmentSenders &&
-          listOfNewAppointmentSenders.length > 0 ? (
-            <Link to={`new-appointments-senderIds-list`}>
-              <NewAppointmentAlert />
-            </Link>
-          ) : null}
-        </div>
+        </AfterLoginDiv>
       ) : (
         <LogoutDiv>
           <Button onClick={() => signUserUp()}>Sign Up</Button>
@@ -257,7 +260,6 @@ const Header = () => {
     </LoadingDiv>
   );
 };
-
 const LoadingDiv = styled.div`
   width: 100%;
   height: 100%;
@@ -268,7 +270,7 @@ const LoadingDiv = styled.div`
   align-items: center;
 `;
 const Button = styled.button`
-  width: 150px;
+  width: 210px;
   height: 35px;
   border-radius: 10px;
   border: none;
@@ -277,10 +279,11 @@ const Button = styled.button`
   font-family: "Roboto", sans-serif;
   background-color: #30b06b;
   color: #fff;
+  margin-right: 30px;
 
   &:hover {
-    background-color: #269157;
-    color: violet;
+    /* background-color: #269157; */
+    color: blue;
     transition: 0.5s ease-in-out;
   }
 `;
@@ -292,20 +295,77 @@ const LogoutDiv = styled.div`
   margin-right: 30px;
   margin-bottom: 20px;
 `;
+const AfterLoginDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 const HelloDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left: 80%;
+  /* margin-left: 80%; */
   margin-right: 30px;
   margin-bottom: 20px;
 `;
+const AlertDiv = styled.div`
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  margin-right: 80%;
+  margin-right: 30px;
+  margin-bottom: 20px;
+  button {
+    margin-right: 30px;
+    margin-left: 40px;
+    text-decoration: none;
+    width: 210px;
+    height: 35px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: "Roboto", sans-serif;
+    background-color: #30b06b;
+    color: #fff;
+
+    &:hover {
+      /* background-color: white; */
+      color: blue;
+      transition: 0.5s ease-in-out;
+    }
+  }
+`;
+
 const HeaderDiv = styled.div`
   color: #fff;
   background-color: black;
   height: auto;
   text-align: center;
   width: 100vw;
+`;
+const NameDiv = styled.div`
+  margin-top: 25px;
+`;
+const LinkToHome = styled(Link)`
+  button {
+    text-decoration: none;
+    width: 350px;
+    height: 80px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: "Roboto", sans-serif;
+    background-color: #30b06b;
+    color: #fff;
+
+    &:hover {
+      /* background-color: white; */
+      color: blue;
+      transition: 0.5s ease-in-out;
+    }
+  }
 `;
 
 export default Header;
