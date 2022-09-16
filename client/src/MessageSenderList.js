@@ -38,22 +38,20 @@ const MessageSenderList = () => {
       {senderIdsArray.map((message, index) => {
         return (
           <Message key={index}>
-            <LinkTo
-              // 6d612474-7ff5-45b9-a29a-f107ec348118 is the system user id
-              to={`/message-sender-profile/${
-                message.senderId !== "6d612474-7ff5-45b9-a29a-f107ec348118"
-                  ? message.senderId
-                  : message.firstName
-              }`}
-            >
-              {message.senderId !== "6d612474-7ff5-45b9-a29a-f107ec348118" ? (
-                <List>{message.firstName + " " + message.lastName}</List>
-              ) : (
-                <List>
-                  Appointment confirmed notice (click to see from whom)
-                </List>
-              )}
-            </LinkTo>
+            {message.senderId !== "6d612474-7ff5-45b9-a29a-f107ec348118" ? (
+              <LinkTo
+                // 6d612474-7ff5-45b9-a29a-f107ec348118 is the system user id
+                to={`/message-sender-profile/${message.senderId}`}
+              >
+                {message.senderId !== "6d612474-7ff5-45b9-a29a-f107ec348118" ? (
+                  <List>{message.firstName + " " + message.lastName}</List>
+                ) : (
+                  <List>
+                    Appointment confirmed notice (click to see from whom)
+                  </List>
+                )}
+              </LinkTo>
+            ) : null}
           </Message>
         );
       })}
