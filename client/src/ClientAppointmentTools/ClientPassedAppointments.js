@@ -10,40 +10,17 @@ const ClientPassedAppointments = () => {
     emailToFetchUser,
     userProfile,
     sucessfullyVerification,
-    userInDatabase,
-    setUserInDatabase,
-    allMessagesReveived,
-    viewMessageSenderProfile,
-    setAllMessagesReveived,
-    conversation,
-    setConversation,
-    allAppointmentsReveiveIdSenderId,
-    SetAllAppointmentsReveiveIdSenderId,
     appointmentIdConfirmed,
-    setAppointmentIdConfirmed,
+    allAppointmentsReveived,
   } = useContext(UserContext);
   const navigate = useNavigate();
 
-  let appointmentDetailArray = [];
   const [appointmentsDetail, setAppointmentsDetail] = useState([]);
 
   useEffect(() => {
     if (sucessfullyVerification && emailToFetchUser) {
-      appointmentDetailArray.push(
-        fetch(`/api/get-appointments-by-receiverId/${userProfile._id}`)
-          .then((res) => {
-            return res.json();
-          })
-          .then((data) => {
-            return data.data;
-          })
-          .catch((err) => {
-            console.log("err", err);
-          })
-      );
-      Promise.all(appointmentDetailArray).then((data) => {
-        // setAppointmentsDetail(data[0]);
-        const nextAppointmentsFilter = data[0].filter((element) => {
+      const pastAppointmentsFilter = allAppointmentsReveived.filter(
+        (element) => {
           const newDateOfTimeEnd = new Date(element.timeEndAppointment);
           const timeEndToNumber = newDateOfTimeEnd.getTime();
           // includes not confirmed and passed
@@ -52,11 +29,9 @@ const ClientPassedAppointments = () => {
           } else {
             return false;
           }
-        });
-        setAppointmentsDetail(nextAppointmentsFilter);
-        console.log("nextAppointmentsFilter", nextAppointmentsFilter);
-        console.log("data[0]", data[0]);
-      });
+        }
+      );
+      setAppointmentsDetail(pastAppointmentsFilter);
     } else {
       return navigate("/");
     }
@@ -116,7 +91,7 @@ const ClientPassedAppointments = () => {
 const UpComingAppointmentsDiv = styled.div`
   min-height: 100vh;
 `;
-const PastAppointment = styled.h2``;
+
 const SenderP = styled.p`
   font-weight: bold;
 `;
