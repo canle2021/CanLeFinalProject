@@ -7,11 +7,11 @@ import Slider from "./Slider";
 import Welcome from "./Asset/Welcome.jpg";
 import { FcCheckmark } from "react-icons/fc";
 import { SiWikiquote } from "react-icons/si";
-
+import Loading from "./Loading";
+import { useNavigate } from "react-router-dom";
 const SpecificLawyer = () => {
-  // if already created password but not in the database yet, redirect to signup page if the client click on book appointment/send message to the lawyer
-
   const { _id } = useParams();
+  const [loading, setLoading] = useState();
 
   const {
     userProfile,
@@ -21,10 +21,14 @@ const SpecificLawyer = () => {
     specificLawyerPicture,
     setSpecificLawyerPicture,
   } = useContext(UserContext);
-
+  const navigate = useNavigate();
   useEffect(() => {
+    setLoading(true);
     fetch(`/api/get-specific-user/${_id}`)
       .then((res) => {
+        if (!res.ok) {
+          throw new Error("Loading data error");
+        }
         return res.json();
       })
       .then((data) => {
@@ -33,11 +37,15 @@ const SpecificLawyer = () => {
       })
       .catch((err) => {
         console.log("err", err);
+        navigate("/*");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
-  return (
-    // should have a send a message component for only the logged in user
+  return !loading ? (
+    // sending message component for only the loggedin user
     <SpecificLawyerDiv>
       <Slider Welcome={Welcome} />
       <Box>
@@ -85,9 +93,22 @@ const SpecificLawyer = () => {
         ) : null}
       </MessageDiv>
     </SpecificLawyerDiv>
+  ) : (
     // Lawyer can not message to lawyer
+    <LoadingDiv>
+      <Loading />
+    </LoadingDiv>
   );
 };
+const LoadingDiv = styled.div`
+  width: 100vw;
+  height: 100vh;
+  font-size: 50px;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const QuoteDiv = styled.div`
   margin-left: 20%;
   margin-top: -150px;
@@ -113,7 +134,6 @@ const LawyerpictureDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* width: 100vw; */
 `;
 const SpecificLawyerDiv = styled.div`
   min-height: 100vh;
