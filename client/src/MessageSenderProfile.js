@@ -8,6 +8,7 @@ import MessageReplyMessage from "./MessageReplyMessage";
 import ConversationView from "./ConversationView";
 import AppointmentCreate from "./appointmentCreate";
 import AppointmentView from "./AppointmentView";
+import Loading from "./Loading";
 const MessageSenderProfile = () => {
   const navigate = useNavigate();
   const {
@@ -19,6 +20,8 @@ const MessageSenderProfile = () => {
     viewMessageSenderPicture,
     setViewMessageSenderPicture,
   } = useContext(UserContext);
+  const [loading, setLoading] = useState();
+
   const { _id } = useParams();
 
   const [toggleAppointment, setToggleAppointment] = useState(false);
@@ -31,8 +34,13 @@ const MessageSenderProfile = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
+
     fetch(`/api/get-specific-user/${_id}`)
       .then((res) => {
+        if (!res.ok) {
+          throw new Error("Loading data error");
+        }
         return res.json();
       })
       .then((data) => {
@@ -41,6 +49,10 @@ const MessageSenderProfile = () => {
       })
       .catch((err) => {
         console.log("err", err);
+        navigate("/*");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -55,8 +67,8 @@ const MessageSenderProfile = () => {
     }
   }, [sucessfullyVerification]);
 
-  return (
-    <ClientProfileDiv>
+  return !loading ? (
+    <ProfileDiv>
       <h1>
         View your working history with {viewMessageSenderProfile.firstName}{" "}
         {viewMessageSenderProfile.lastName}
@@ -116,10 +128,22 @@ const MessageSenderProfile = () => {
           {toggleMessage ? <ConversationView senderId={_id} /> : null}
         </ListDiv>
       </HistoryDiv>
-    </ClientProfileDiv>
+    </ProfileDiv>
+  ) : (
+    <LoadingDiv>
+      <Loading />
+    </LoadingDiv>
   );
 };
-
+const LoadingDiv = styled.div`
+  width: 100%;
+  height: 100vh;
+  font-size: 50px;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const InformationAndPicture = styled.div`
   display: flex;
   align-items: center;
@@ -181,7 +205,7 @@ const InformationDiv = styled.div`
   margin-right: 80px;
 `;
 
-const ClientProfileDiv = styled.div`
+const ProfileDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
