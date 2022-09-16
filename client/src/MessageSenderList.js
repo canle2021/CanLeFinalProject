@@ -1,17 +1,9 @@
-import React, { useContext, useEffect, useParams, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 const MessageSenderList = () => {
-  const {
-    emailToFetchUser,
-    userProfile,
-    sucessfullyVerification,
-    userInDatabase,
-    setUserInDatabase,
-    allMessagesReveived,
-    setAllMessagesReveived,
-  } = useContext(UserContext);
+  const { allMessagesReveived } = useContext(UserContext);
   let senderIdsRepeated = [];
 
   allMessagesReveived.forEach((element) => {
@@ -43,13 +35,7 @@ const MessageSenderList = () => {
                 // 6d612474-7ff5-45b9-a29a-f107ec348118 is the system user id
                 to={`/message-sender-profile/${message.senderId}`}
               >
-                {message.senderId !== "6d612474-7ff5-45b9-a29a-f107ec348118" ? (
-                  <List>{message.firstName + " " + message.lastName}</List>
-                ) : (
-                  <List>
-                    Appointment confirmed notice (click to see from whom)
-                  </List>
-                )}
+                <List>{message.firstName + " " + message.lastName}</List>
               </LinkTo>
             ) : null}
           </Message>

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useParams, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 import { AiOutlineForm } from "react-icons/ai";
@@ -7,12 +7,10 @@ import { AiOutlineForm } from "react-icons/ai";
 const MessageReplyMessage = ({}) => {
   const {
     userProfile,
-    sucessfullyVerification,
-    userInDatabase,
+
     specificLawyer,
-    setUserInDatabase,
+
     viewMessageSenderProfile,
-    setViewMessageSenderProfile,
   } = useContext(UserContext);
   // remember to delete all the white space begining and at the end of each input
   // show the alert if the email is already use
