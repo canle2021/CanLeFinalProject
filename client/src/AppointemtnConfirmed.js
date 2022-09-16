@@ -1,33 +1,24 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
-import MessageToLawyer from "./MessageToLawyer";
+import Loading from "./Loading";
 const AppointmentConfirmed = () => {
-  const {
-    emailToFetchUser,
-    userProfile,
-    sucessfullyVerification,
-    userInDatabase,
-    setUserInDatabase,
-    allMessagesReveived,
-    viewMessageSenderProfile,
-    setAllMessagesReveived,
-    conversation,
-    setConversation,
-    allAppointmentsReveiveIdSenderId,
-    SetAllAppointmentsReveiveIdSenderId,
-    appointmentIdConfirmed,
-    setAppointmentIdConfirmed,
-  } = useContext(UserContext);
+  const { appointmentIdConfirmed } = useContext(UserContext);
   let appointmentDetailArray = [];
   const [appointmentDetail, setAppointmentDetail] = useState([]);
   const [timeEndStartappointment, setTimeEndStartappointment] = useState({});
+  const [loading, setLoading] = useState();
+
   useEffect(() => {
+    setLoading(true);
+
     appointmentDetailArray.push(
       fetch(`/api/get-appointment/${appointmentIdConfirmed}`)
         .then((res) => {
-          console.log("appointmentIdConfirmed", appointmentIdConfirmed);
+          if (!res.ok) {
+            throw new Error("Loading data error");
+          }
           return res.json();
         })
         .then((data) => {
@@ -35,6 +26,10 @@ const AppointmentConfirmed = () => {
         })
         .catch((err) => {
           console.log("err", err);
+          alert(`* ALERT * ${err}`);
+        })
+        .finally(() => {
+          setLoading(false);
         })
     );
     Promise.all(appointmentDetailArray).then((data) => {
@@ -54,7 +49,7 @@ const AppointmentConfirmed = () => {
     });
   }, [appointmentIdConfirmed]);
 
-  return (
+  return !loading ? (
     <AppointmentConfirmedDiv>
       <h1>Appointment Confirmation:</h1>
       <Message>
@@ -75,13 +70,25 @@ const AppointmentConfirmed = () => {
         <p>Booked at: {appointmentDetail.timeOfCreateingAppointmentToString}</p>
       </Message>
     </AppointmentConfirmedDiv>
+  ) : (
+    <LoadingDiv>
+      <Loading />
+    </LoadingDiv>
   );
 };
-
+const LoadingDiv = styled.div`
+  width: 100vw;
+  height: 100vh;
+  font-size: 50px;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const AppointmentConfirmedDiv = styled.div`
   height: 100vh;
 `;
-const PastAppointment = styled.h2``;
+
 const SenderP = styled.p`
   font-weight: bold;
 `;
