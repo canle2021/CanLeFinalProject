@@ -1,37 +1,31 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import { useNavigate } from "react-router-dom";
-
+import Loading from "../Loading";
 const ClientNotConfirmedAppointments = () => {
   const {
     emailToFetchUser,
     userProfile,
     sucessfullyVerification,
-    userInDatabase,
-    setUserInDatabase,
-    allMessagesReveived,
-    viewMessageSenderProfile,
-    setAllMessagesReveived,
-    conversation,
-    setConversation,
-    allAppointmentsReveiveIdSenderId,
-    SetAllAppointmentsReveiveIdSenderId,
     appointmentIdConfirmed,
     setAppointmentIdConfirmed,
   } = useContext(UserContext);
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState();
   let appointmentDetailArray = [];
   const [appointmentsDetail, setAppointmentsDetail] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
     if (sucessfullyVerification && emailToFetchUser) {
       appointmentDetailArray.push(
         fetch(`/api/get-appointments-by-receiverId/${userProfile._id}`)
           .then((res) => {
+            if (!res.ok) {
+              throw new Error("Loading data error");
+            }
             return res.json();
           })
           .then((data) => {
@@ -39,6 +33,12 @@ const ClientNotConfirmedAppointments = () => {
           })
           .catch((err) => {
             console.log("err", err);
+            alert(
+              "WARNING! You don't have any appointment yst or we can not show all your appointments at this time."
+            );
+          })
+          .finally(() => {
+            setLoading(false);
           })
       );
       Promise.all(appointmentDetailArray).then((data) => {
@@ -61,7 +61,7 @@ const ClientNotConfirmedAppointments = () => {
     }
   }, [appointmentIdConfirmed]);
 
-  return (
+  return !loading ? (
     <UpComingAppointmentsDiv>
       <h1>Client's not confirmed appointments:</h1>
       {appointmentsDetail.length < 1 ? (
@@ -90,6 +90,9 @@ const ClientNotConfirmedAppointments = () => {
                 }),
               })
                 .then((res) => {
+                  if (!res.ok) {
+                    throw new Error("Confirm appointment error");
+                  }
                   return res.json();
                 })
                 .then((data) => {
@@ -102,6 +105,7 @@ const ClientNotConfirmedAppointments = () => {
                     //
 
                     let objectToBePosted = {
+                      appointmentId: appointment._id,
                       senderId: "6d612474-7ff5-45b9-a29a-f107ec348118",
                       firstName: appointment.receiverId,
                       lastName: "System",
@@ -124,6 +128,9 @@ const ClientNotConfirmedAppointments = () => {
                             "Content-Type": "application/json",
                           },
                         });
+                        if (!posting.ok) {
+                          throw new Error("Loading data error");
+                        }
                         const converToJson = await posting.json();
                         if (converToJson.status === 200) {
                           alert(
@@ -134,6 +141,9 @@ const ClientNotConfirmedAppointments = () => {
                         }
                       } catch (err) {
                         console.log(err);
+                        alert(
+                          "WARNING! ERROR IN SENDING APPOINTMENT CONFIRMATION. PLEASE CONTACT YOUR LAWYER TO CONFIRM AGAIN. "
+                        );
                       }
                     };
                     //
@@ -147,6 +157,10 @@ const ClientNotConfirmedAppointments = () => {
                 })
                 .catch((err) => {
                   console.error(err);
+                  alert(
+                    "WARNING! ERROR IN CONFIRMING APPOINTMENT . PLEASE CONTACT YOUR LAWYER TO CONFIRM AGAIN. "
+                  );
+                  navigate("/appointment-confirm-error");
                 });
             };
 
@@ -188,8 +202,21 @@ const ClientNotConfirmedAppointments = () => {
         </div>
       )}
     </UpComingAppointmentsDiv>
+  ) : (
+    <LoadingDiv>
+      <Loading />
+    </LoadingDiv>
   );
 };
+const LoadingDiv = styled.div`
+  width: 100vw;
+  height: 100vh;
+  font-size: 50px;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const ConfirmButton = styled.button``;
 const UpComingAppointmentsDiv = styled.div`
   min-height: 100vh;

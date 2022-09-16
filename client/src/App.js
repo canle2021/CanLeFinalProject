@@ -32,6 +32,7 @@ import EditAddress from "./ProfleUpdateTools/EditAddress";
 import EditQuote from "./ProfleUpdateTools/EditQuote";
 import EditPicture from "./ProfleUpdateTools/EditPicture";
 import ClientOnGoingAppointments from "./ClientAppointmentTools/ClientOnGoingAppointments";
+import AppointmentConfirmErrorPage from "./AppointmentConfirmErrorPage";
 import ErrorPage from "./ErrorPage";
 function App() {
   return (
@@ -106,6 +107,10 @@ function App() {
           <Route path="/edit-address" element={<EditAddress />} />
           <Route path="/edit-quote" element={<EditQuote />} />
           <Route path="/edit-picture" element={<EditPicture />} />
+          <Route
+            path="/appointment-confirm-error"
+            element={<AppointmentConfirmErrorPage />}
+          />
 
           <Route path="*" element={<ErrorPage />} />
         </Routes>
