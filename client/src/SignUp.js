@@ -7,17 +7,12 @@ import { AiOutlineForm } from "react-icons/ai";
 const SignUpPage = () => {
   const navigate = useNavigate();
 
-  const {
-    userProfile,
-    sucessfullyVerification,
-    userInDatabase,
-    setUserInDatabase,
-  } = useContext(UserContext);
+  const { sucessfullyVerification } = useContext(UserContext);
   // remember to delete all the white space begining and at the end of each input
   // show the alert if the email is already use
 
   const [values, setValues] = useState({ status: "client" });
-  let disabled = true;
+
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value.trim();
@@ -40,7 +35,7 @@ const SignUpPage = () => {
         },
       });
       const converToJson = await posting.json();
-      console.log("converToJson", converToJson);
+
       if (converToJson.status === 200) {
         alert(
           "THANK YOU! You finished adding all the user's information. IF YOU DID NOT SIGN UP FOR EMAIL AND PASSWORD, please click Login button (on the top this page), then <Don't have an account? Sign up> to register your password and the email address you just provided us."
@@ -241,6 +236,8 @@ const FormDiv = styled.div`
   border: solid 2px var(--color-alabama-crimson);
   height: fit-content;
 `;
-const SignUpPageDiv = styled.div``;
+const SignUpPageDiv = styled.div`
+  min-height: 100vh;
+`;
 
 export default SignUpPage;

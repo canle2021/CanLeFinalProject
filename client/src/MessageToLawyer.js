@@ -1,19 +1,10 @@
 import React, { useContext, useEffect, useParams, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 import { AiOutlineForm } from "react-icons/ai";
 // we have another Message sending component, but that is for reply message (MessageReplayMessage.js)
 const MessageToLawyer = ({}) => {
-  const {
-    userProfile,
-    sucessfullyVerification,
-    userInDatabase,
-    specificLawyer,
-    setUserInDatabase,
-    viewMessageSenderProfile,
-    setViewMessageSenderProfile,
-  } = useContext(UserContext);
+  const { userProfile, specificLawyer } = useContext(UserContext);
   // remember to delete all the white space begining and at the end of each input
   // show the alert if the email is already use
   console.log("specificLawyer", specificLawyer);
@@ -58,13 +49,11 @@ const MessageToLawyer = ({}) => {
               `
         );
       } else {
-        alert(converToJson.message);
+        alert(`Sending message error: ${converToJson.message}`);
       }
     } catch (err) {
       console.log(err);
     }
-
-    console.log("objectToBePosted", objectToBePosted);
   };
 
   console.log("values", values);

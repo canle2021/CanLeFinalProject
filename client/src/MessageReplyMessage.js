@@ -56,7 +56,7 @@ const MessageReplyMessage = ({}) => {
               `
         );
       } else {
-        alert(converToJson.message);
+        alert(`Sending message error: ${converToJson.message}`);
       }
     } catch (err) {
       console.log(err);
