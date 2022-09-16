@@ -41,7 +41,9 @@ const UpComingAppointments = () => {
           })
           .catch((err) => {
             console.log("err", err);
-            alert(`* ALERT * ${err}`);
+            alert(
+              `* ALERT * You don't have any upcoming appointments or we can not show all of them as this time.`
+            );
           })
           .finally(() => {
             setLoading(false);
@@ -182,7 +184,9 @@ const Button = styled.button`
   }
 `;
 
-const UpComingAppointmentsDiv = styled.div``;
+const UpComingAppointmentsDiv = styled.div`
+  min-height: 100vh;
+`;
 
 const SenderP = styled.p`
   font-weight: bold;

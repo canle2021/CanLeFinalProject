@@ -42,7 +42,9 @@ const PassedAppointments = () => {
           })
           .catch((err) => {
             console.log("err", err);
-            alert(`* ALERT * ${err}`);
+            alert(
+              `* ALERT * You don't have any past appointments or we can not show all of them as this time.`
+            );
           })
           .finally(() => {
             setLoading(false);

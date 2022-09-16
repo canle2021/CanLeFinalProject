@@ -34,7 +34,7 @@ const ClientNotConfirmedAppointments = () => {
           .catch((err) => {
             console.log("err", err);
             alert(
-              "WARNING! You don't have any appointment yst or we can not show all your appointments at this time."
+              `* ALERT * You don't have any not confirmed appointments or we can not show all of them as this time.`
             );
           })
           .finally(() => {
