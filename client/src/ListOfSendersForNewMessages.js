@@ -45,18 +45,39 @@ const ListOfSendersForNewMessages = () => {
               firstName: element.firstName,
               lastName: element.lastName,
               message: element.message,
+              time: element.time,
             });
           });
+          const appointmentConfirmMessages = senderIdsRepeated.filter(
+            (element) =>
+              element.senderId === "6d612474-7ff5-45b9-a29a-f107ec348118"
+          );
+          console.log("appointmentConfirmMessages", appointmentConfirmMessages);
+          // we need to seperate the messages from client and messages from system
+          // the messages from system have the same senderId, and we need to render all them out
           const intermediateArray = [];
-          const senderIdsArray = senderIdsRepeated.filter((element, index) => {
-            const isDuplicate = intermediateArray.includes(element.senderId);
-            if (!isDuplicate) {
-              intermediateArray.push(element.senderId);
-              return true;
+          const senderNotFromSystemArray = senderIdsRepeated.filter(
+            (element, index) => {
+              if (element.senderId !== "6d612474-7ff5-45b9-a29a-f107ec348118") {
+                const isDuplicate = intermediateArray.includes(
+                  element.senderId
+                );
+                if (!isDuplicate) {
+                  intermediateArray.push(element.senderId);
+                  return true;
+                }
+                return false;
+              }
+              return false;
             }
-            return false;
-          });
+          );
+          const senderIdsArray = [].concat(
+            appointmentConfirmMessages,
+            senderNotFromSystemArray
+          );
+
           setListOfNewSenders(senderIdsArray);
+          console.log("senderIdsArray", senderIdsArray);
         } else {
         }
       })
@@ -94,9 +115,29 @@ const ListOfSendersForNewMessages = () => {
             listOfNewSenders.map((sender, index) => {
               // fetch to update isRead => true
               const updateMessageToRead = () => {
-                fetch(
-                  "/api/update-all-messages-by-senderId-receiverId-to-read",
-                  {
+                if (
+                  sender.senderId !== "6d612474-7ff5-45b9-a29a-f107ec348118"
+                ) {
+                  fetch(
+                    "/api/update-all-messages-by-senderId-receiverId-to-read",
+                    {
+                      method: "PATCH",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        senderId: sender.senderId,
+                        receiverId: userProfile._id,
+                      }),
+                    }
+                  ).catch((err) => {
+                    console.error(err);
+                  });
+                }
+                // to update isRead => true for each appointment confirm message
+                // because the api above only update not come from system message
+                else {
+                  fetch("/api/update-all-messages-by-system-to-read", {
                     method: "PATCH",
                     headers: {
                       "Content-Type": "application/json",
@@ -104,11 +145,12 @@ const ListOfSendersForNewMessages = () => {
                     body: JSON.stringify({
                       senderId: sender.senderId,
                       receiverId: userProfile._id,
+                      time: sender.time,
                     }),
-                  }
-                ).catch((err) => {
-                  console.error(err);
-                });
+                  }).catch((err) => {
+                    console.error(err);
+                  });
+                }
               };
               return (
                 // the appointment confirmed also be announced here too (after client click appointment confirm button)

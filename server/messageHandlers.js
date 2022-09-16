@@ -216,6 +216,67 @@ const changeMessageToRead = async (req, res) => {
   client.close();
 };
 /**********************************************************/
+/*  Change isRead from false to true after click on Confirmation messages from system
+/**********************************************************/
+const changeSystemMessageToRead = async (req, res) => {
+  const body = req.body;
+
+  // supposed the posting method wil have a req.body with this format:
+  //{
+  // "senderId": "from the logged in user"
+  // "receiverId": "from the current viewed page of lawyer profile"
+  // "time": timestamp of the message"
+  // }
+  // remember to copy all this to F.E
+
+  if (!body.senderId || !body.receiverId) {
+    return res.status(400).json({
+      status: 400,
+      message: "Sorry. Please provide all the required information ",
+    });
+  }
+  try {
+    await client.connect();
+    const findAllMessages = await db
+      .collection("messages")
+      .find({ receiverId: body.receiverId, senderId: body.senderId })
+      .toArray();
+    if (findAllMessages.length < 1) {
+      return res.status(400).json({
+        status: 404,
+        message: ` Sorry, we could not find all message with the sender Id : ${senderId}, and receiverId: ${receiverId}`,
+      });
+    }
+
+    const updateMessagesToRead = await db.collection("messages").updateMany(
+      {
+        receiverId: body.receiverId,
+        senderId: body.senderId,
+        time: body.time,
+      },
+      { $set: { isRead: true } }
+    );
+
+    console.log("updateMessagesToRead", updateMessagesToRead);
+    if (updateMessagesToRead.modifiedCount > 0) {
+      return res.status(200).json({
+        status: 200,
+        data: body._id,
+        message: ` The messges senderId : ${body.senderId}, and receiverId: ${body.receiverId} was successfully updated to read`,
+      });
+    } else {
+      return res.status(500).json({
+        status: 500,
+        message: ` Sorry! The messges sender Id : ${body.senderId}, and receiverId: ${body.receiverId}} was NOT successfully updated to read because of some reason or all these messages were read.`,
+      });
+    }
+  } catch (err) {
+    console.log("Update messages to read", err);
+    //
+  }
+  client.close();
+};
+/**********************************************************/
 /*  get Conversation
   /**********************************************************/
 
@@ -272,4 +333,5 @@ module.exports = {
   getAllMessagesBySenderId,
   changeMessageToRead,
   getConversation,
+  changeSystemMessageToRead,
 };
