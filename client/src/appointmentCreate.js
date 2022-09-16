@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 import { AiOutlineForm } from "react-icons/ai";
@@ -7,12 +7,8 @@ import { AiOutlineForm } from "react-icons/ai";
 const AppointmentCreate = ({}) => {
   const {
     userProfile,
-    sucessfullyVerification,
-    userInDatabase,
-    specificLawyer,
-    setUserInDatabase,
+
     viewMessageSenderProfile,
-    setViewMessageSenderProfile,
   } = useContext(UserContext);
   // remember to delete all the white space begining and at the end of each input
   const [disableSummitButton, setDisableSummitButton] = useState(true);
@@ -41,7 +37,7 @@ const AppointmentCreate = ({}) => {
     ) {
       // in some special cases, the start time can be before now time
       alert(
-        " WARNING!!You are putting appointment's start time before present time"
+        " WARNING!!You are putting appointment's start time before present time."
       );
     }
     const timeEndAppointmentString = `${values.date} ${values.end} GMT-0600 (Mountain Daylight Time)`;
@@ -90,7 +86,7 @@ const AppointmentCreate = ({}) => {
         },
       });
       const converToJson = await posting.json();
-      console.log("converToJson", converToJson);
+
       if (converToJson.status === 200) {
         alert(
           `THANK YOU! You successfully sent an appointment to
@@ -98,13 +94,13 @@ const AppointmentCreate = ({}) => {
               `
         );
       } else {
-        alert(converToJson.message);
+        alert(
+          `* APPOINTMENT CREATE ERROR ALERT * Sorry! For some reasons, you can not create appointment at this time.`
+        );
       }
     } catch (err) {
       console.log(err);
     }
-
-    console.log("objectToBePosted", objectToBePosted);
   };
 
   return (
