@@ -74,13 +74,14 @@ const Header = () => {
         fetch(`/api/get-all-messages-by-receiverId/${data[0]._id}`)
           .then((res) => {
             setLoadingMessages(true);
-
+            console.log("res", res);
             if (!res.ok) {
               throw new Error("Loading messages error");
             }
             return res.json();
           })
           .then((data) => {
+            console.log("dataMessage", data);
             if (data.status === 200) {
               setAllMessagesReveived(data.data);
               const filterNewSender = data.data.filter(
@@ -117,7 +118,10 @@ const Header = () => {
 
           .catch((err) => {
             console.log("err", err);
-            navigate("/*");
+            alert(
+              "WARNING! You don't have any recieved message or we can not show all your messages at this time."
+            );
+            // we can not use navigate("/*") because it will redirect to error page with no having message user.
           })
           .finally(() => {
             setLoadingMessages(false);
@@ -184,7 +188,10 @@ const Header = () => {
             setListOfNewAppointmentSenders(senderIdsArray);
           } catch (err) {
             console.log("err", err);
-            navigate("/*");
+            alert(
+              "WARNING! You don't have any recieved appointment or we can not show all your appointments at this time."
+            );
+            // we can not use navigate("/*") because it will redirect to error page with no having appointment user.
           } finally {
             setLoadingAppointments(false);
           }
