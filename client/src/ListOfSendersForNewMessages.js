@@ -169,8 +169,9 @@ const ListOfSendersForNewMessages = () => {
                         System Appointment Confirmed: {sender.message}
                       </span>
                     ) : (
-                      `${sender.firstName} 
-                    ${sender.lastName}`
+                      <span>
+                        {sender.firstName} {sender.lastName}
+                      </span>
                     )}
                   </LinktoSenderProfile>
                 </EachSenderDiv>
@@ -183,13 +184,17 @@ const ListOfSendersForNewMessages = () => {
     </ListOfSendersForNewMessagesDiv>
   );
 };
-const LinktoSenderProfile = styled(Link)``;
-const Picture = styled.img``;
-const LawyerpictureDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const LinktoSenderProfile = styled(Link)`
+  text-decoration: none;
+  span {
+    display: list-item;
+    font-family: Georgia, serif;
+    font-size: 18px;
+    margin-left: 15px;
+    color: blue;
+  }
 `;
+
 const EachSenderDiv = styled.div`
   margin: 24px 24px 24px 24px;
 `;
