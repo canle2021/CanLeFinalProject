@@ -187,7 +187,7 @@ const Button = styled.button`
 const PastAppointmentsDiv = styled.div`
   min-height: 100vh;
 `;
-const PastAppointment = styled.h2``;
+
 const SenderP = styled.p`
   font-weight: bold;
 `;

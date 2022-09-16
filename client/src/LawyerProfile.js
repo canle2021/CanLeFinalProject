@@ -157,7 +157,7 @@ const LawyerProfile = () => {
       <Tools>
         <AppointmentTools>
           <LinkToAppointmentsPage to="/upcoming-appointments">
-            <ToolButton>Up coming appointments</ToolButton>
+            <ToolButton>Upcoming appointments</ToolButton>
           </LinkToAppointmentsPage>
           <LinkToAppointmentsPage to="/not-confimed-upcoming-appointments">
             <ToolButton>Not confirmed appointments</ToolButton>
