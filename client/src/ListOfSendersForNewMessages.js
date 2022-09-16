@@ -1,32 +1,32 @@
-import React, { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { UserContext } from "./UserContext";
-
+import Loading from "./Loading";
 const ListOfSendersForNewMessages = () => {
   const navigate = useNavigate();
   const {
     userProfile,
     sucessfullyVerification,
     userInDatabase,
-    setUserInDatabase,
     allMessagesReveived,
     setAllMessagesReveived,
-    viewMessageSenderProfile,
-    setViewMessageSenderProfile,
-    viewMessageSenderPicture,
-    setViewMessageSenderPicture,
     listOfNewSenders,
     setListOfNewSenders,
   } = useContext(UserContext);
+  const [loading, setLoading] = useState();
 
   // Fetch new messages here agatin to update the list of new message senders after click on it to read (will be eleminated after click to view)
   useEffect(() => {
+    setLoading(true);
+
     fetch(`/api/get-all-messages-by-receiverId/${userProfile._id}`)
       .then((res) => {
-        console.log("res.json", res);
+        if (!res.ok) {
+          throw new Error("Loading data error");
+        }
         return res.json();
       })
       .then((data) => {
@@ -86,6 +86,10 @@ const ListOfSendersForNewMessages = () => {
 
       .catch((err) => {
         console.log("err", err);
+        navigate("/*");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -105,7 +109,7 @@ const ListOfSendersForNewMessages = () => {
   }, [sucessfullyVerification]);
 
   console.log("allMessagesReveived", allMessagesReveived);
-  return (
+  return !loading ? (
     <ListOfSendersForNewMessagesDiv>
       {listOfNewSenders && listOfNewSenders.length > 0 ? (
         <NewMessagesDiv>
@@ -182,8 +186,21 @@ const ListOfSendersForNewMessages = () => {
         <h1>Thank you, you have checked all the new message(s)!</h1>
       )}
     </ListOfSendersForNewMessagesDiv>
+  ) : (
+    <LoadingDiv>
+      <Loading />
+    </LoadingDiv>
   );
 };
+const LoadingDiv = styled.div`
+  width: 100vw;
+  height: 100vh;
+  font-size: 50px;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const LinktoSenderProfile = styled(Link)`
   text-decoration: none;
   span {

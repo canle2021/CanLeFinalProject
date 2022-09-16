@@ -46,7 +46,7 @@ const ListOfSendersForNewAppointment = () => {
               return false;
             }
           });
-          console.log("filterNewSender", filterNewSender);
+
           let senderIdsRepeated = [];
           filterNewSender.forEach((element) => {
             senderIdsRepeated.push({
@@ -97,7 +97,6 @@ const ListOfSendersForNewAppointment = () => {
     }
   }, [sucessfullyVerification]);
 
-  console.log("listOfNewAppointmentSenders", listOfNewAppointmentSenders);
   return !loading ? (
     <ListOfSendersForNewMessagesDiv>
       {listOfNewAppointmentSenders && listOfNewAppointmentSenders.length > 0 ? (
