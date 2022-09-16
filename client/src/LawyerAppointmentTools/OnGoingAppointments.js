@@ -1,43 +1,39 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import { useNavigate } from "react-router-dom";
-import MessageToLawyer from "../MessageToLawyer";
+import Loading from "../Loading";
 
 const OnGoingAppointments = () => {
   const {
     emailToFetchUser,
     userProfile,
     sucessfullyVerification,
-    userInDatabase,
-    setUserInDatabase,
-    allMessagesReveived,
-    viewMessageSenderProfile,
-    setAllMessagesReveived,
-    conversation,
-    setConversation,
-    allAppointmentsReveiveIdSenderId,
-    SetAllAppointmentsReveiveIdSenderId,
+
     appointmentIdConfirmed,
-    setAppointmentIdConfirmed,
   } = useContext(UserContext);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState();
 
   let appointmentDetailArray = [];
   const [appointmentsDetail, setAppointmentsDetail] = useState([]);
-  const [timeEndStartappointment, setTimeEndStartappointment] = useState({});
+
   useEffect(() => {
     if (
       sucessfullyVerification &&
       emailToFetchUser &&
       userProfile.status === "lawyer"
     ) {
+      setLoading(true);
+
       appointmentDetailArray.push(
         fetch(`/api/get-appointments-by-senderId/${userProfile._id}`)
           .then((res) => {
-            console.log("appointmentIdConfirmed", appointmentIdConfirmed);
+            if (!res.ok) {
+              throw new Error("Loading data error");
+            }
             return res.json();
           })
           .then((data) => {
@@ -45,10 +41,13 @@ const OnGoingAppointments = () => {
           })
           .catch((err) => {
             console.log("err", err);
+            alert(`* ALERT * ${err}`);
+          })
+          .finally(() => {
+            setLoading(false);
           })
       );
       Promise.all(appointmentDetailArray).then((data) => {
-        // setAppointmentsDetail(data[0]);
         const nextAppointmentsFilter = data[0].filter((element) => {
           const newDateOfTimeStart = new Date(element.timeStartAppointment);
           const timeStartToNumber = newDateOfTimeStart.getTime();
@@ -66,16 +65,14 @@ const OnGoingAppointments = () => {
           }
         });
         setAppointmentsDetail(nextAppointmentsFilter);
-        console.log("nextAppointmentsFilter", nextAppointmentsFilter);
-        console.log("data[0]", data[0]);
       });
     } else {
       return navigate("/");
     }
   }, [appointmentIdConfirmed]);
 
-  return (
-    <UpComingAppointmentsDiv>
+  return !loading ? (
+    <OngoingAppointmentsDiv>
       <h1>On going appointments:</h1>
       {appointmentsDetail.length < 1 ? (
         <h2>You have no on going appointment!</h2>
@@ -112,10 +109,11 @@ const OnGoingAppointments = () => {
                     `THANK YOU! You successfully deleted the appointment with id ${appointment._id}.`
                   );
                 } else {
-                  alert(converToJson.message);
+                  alert(`* ERROR ALERT *${converToJson.message}`);
                 }
               } catch (err) {
                 console.log(err);
+                alert(`* ERROR ALERT * ${err}`);
               }
             };
 
@@ -150,15 +148,50 @@ const OnGoingAppointments = () => {
           })}
         </div>
       )}
-    </UpComingAppointmentsDiv>
+    </OngoingAppointmentsDiv>
+  ) : (
+    <LoadingDiv>
+      <Loading />
+    </LoadingDiv>
   );
 };
-const Button = styled.button``;
+const LoadingDiv = styled.div`
+  width: 100vw;
+  height: 100vh;
+  font-size: 50px;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const Button = styled.button`
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  color: white;
+  background-color: blue;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 60px;
+  height: 35px;
+  margin-top: 10px;
+  font-family: "Roboto", sans-serif;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  &:hover {
+    background-color: red;
 
-const UpComingAppointmentsDiv = styled.div`
+    transition: 0.5s ease-in-out;
+  }
+`;
+
+const OngoingAppointmentsDiv = styled.div`
   min-height: 100vh;
 `;
-const PastAppointment = styled.h2``;
+
 const SenderP = styled.p`
   font-weight: bold;
 `;

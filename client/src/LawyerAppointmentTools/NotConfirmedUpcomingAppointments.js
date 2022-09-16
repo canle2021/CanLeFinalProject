@@ -67,7 +67,7 @@ const NotConfirmedUpcomingAppointments = () => {
   }, [appointmentIdConfirmed]);
 
   return !loading ? (
-    <UpComingAppointmentsDiv>
+    <NotConfirmedAppointmentsDiv>
       <h1>Appointment not confirmed by client:</h1>
       {appointmentsDetail.length < 1 ? (
         <h2>You have no not confirmed appointment!</h2>
@@ -143,7 +143,7 @@ const NotConfirmedUpcomingAppointments = () => {
           })}
         </div>
       )}
-    </UpComingAppointmentsDiv>
+    </NotConfirmedAppointmentsDiv>
   ) : (
     <LoadingDiv>
       <Loading />
@@ -183,7 +183,7 @@ const Button = styled.button`
     transition: 0.5s ease-in-out;
   }
 `;
-const UpComingAppointmentsDiv = styled.div`
+const NotConfirmedAppointmentsDiv = styled.div`
   min-height: 100vh;
 `;
 
