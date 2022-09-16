@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useParams, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
@@ -8,12 +8,8 @@ import { Link } from "react-router-dom";
 import MessageSenderList from "./MessageSenderList";
 const ClientProfile = () => {
   const navigate = useNavigate();
-  const {
-    userProfile,
-    sucessfullyVerification,
-    userInDatabase,
-    setUserInDatabase,
-  } = useContext(UserContext);
+  const { userProfile, sucessfullyVerification, userInDatabase } =
+    useContext(UserContext);
   const [toggleSenderList, setToggleSenderList] = useState(false);
   const clickToSee = () => {
     setToggleSenderList(!toggleSenderList);
@@ -203,10 +199,6 @@ const InformationP = styled.p``;
 const AppointmentTools = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const LawyerProfileDiv = styled.div`
-  min-height: 100vh;
 `;
 
 export default ClientProfile;
