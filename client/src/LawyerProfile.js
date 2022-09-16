@@ -194,8 +194,6 @@ const EditDiv = styled.div`
   justify-items: center;
   align-items: center;
   align-content: center;
-  /* border-bottom: dotted 1px green;
-  border-top: dotted 1px green; */
 `;
 const Picture = styled.img``;
 const InformationP = styled.p``;

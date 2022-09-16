@@ -7,7 +7,7 @@ import SignUpPage from "./SignUp";
 import SpecificLawyer from "./SpecificLawyer";
 import ClientProfile from "./ClientProfile";
 import LawyerProfile from "./LawyerProfile";
-import LawyerWorkingPage from "./LawyerWrokingPage";
+
 import AppointmentConfirmed from "./AppointemtnConfirmed";
 import MessageSenderProfile from "./MessageSenderProfile";
 import ListOfSendersForNewMessages from "./ListOfSendersForNewMessages";
@@ -58,10 +58,7 @@ function App() {
             path="/new-appointments-senderIds-list"
             element={<ListOfSendersForNewAppointment />}
           />
-          <Route
-            path="/LawyerWorkingPage/:id"
-            element={<LawyerWorkingPage />}
-          />
+
           <Route
             path="/upcoming-appointments"
             element={<UpComingAppointments />}

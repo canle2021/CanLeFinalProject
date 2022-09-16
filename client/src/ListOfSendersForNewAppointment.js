@@ -1,28 +1,31 @@
-import React, { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { UserContext } from "./UserContext";
-
+import Loading from "./Loading";
 const ListOfSendersForNewAppointment = () => {
   const navigate = useNavigate();
   const {
     userProfile,
     sucessfullyVerification,
     userInDatabase,
-    allMessagesReveived,
     listOfNewAppointmentSenders,
-    allAppointmentsReveived,
-    SetAllAppointmentsReveived,
     setListOfNewAppointmentSenders,
   } = useContext(UserContext);
+  const [loading, setLoading] = useState();
 
   // Fetch new messages here agatin to update the list of new message senders after click on it to read (will be eleminated after click to view)
   useEffect(() => {
+    setLoading(true);
+
     fetch(`/api/get-appointments-by-receiverId/${userProfile._id}`)
       .then((res) => {
-        console.log("res.json", res);
+        if (!res.ok) {
+          throw new Error("Loading data error");
+        }
+
         return res.json();
       })
       .then((data) => {
@@ -72,6 +75,10 @@ const ListOfSendersForNewAppointment = () => {
 
       .catch((err) => {
         console.log("err", err);
+        navigate("/*");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -91,7 +98,7 @@ const ListOfSendersForNewAppointment = () => {
   }, [sucessfullyVerification]);
 
   console.log("listOfNewAppointmentSenders", listOfNewAppointmentSenders);
-  return (
+  return !loading ? (
     <ListOfSendersForNewMessagesDiv>
       {listOfNewAppointmentSenders && listOfNewAppointmentSenders.length > 0 ? (
         <NewMessagesDiv>
@@ -105,8 +112,7 @@ const ListOfSendersForNewAppointment = () => {
                     to={`/client-not-confirmed-appointments`}
                     // onClick={updateMessageToRead}
                   >
-                    Lawyer: {apointment.lawyer}/ Appointment Date:{" "}
-                    {apointment.date}
+                    <span>Lawyer: {apointment.lawyer}</span>
                   </LinktoSenderProfile>
                 </EachSenderDiv>
               );
@@ -116,15 +122,32 @@ const ListOfSendersForNewAppointment = () => {
         <h1>Thank you, you have checked all the new appoitment(s)!</h1>
       )}
     </ListOfSendersForNewMessagesDiv>
+  ) : (
+    <LoadingDiv>
+      <Loading />
+    </LoadingDiv>
   );
 };
-const LinktoSenderProfile = styled(Link)``;
-const Picture = styled.img``;
-const LawyerpictureDiv = styled.div`
+const LoadingDiv = styled.div`
+  width: 100vw;
+  height: 100vh;
+  font-size: 50px;
+  color: grey;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
+const LinktoSenderProfile = styled(Link)`
+  text-decoration: none;
+  span {
+    display: list-item;
+    font-family: Georgia, serif;
+    font-size: 18px;
+    margin-left: 15px;
+    color: blue;
+  }
+`;
+
 const EachSenderDiv = styled.div``;
 const NewMessagesDiv = styled.div``;
 const ListOfSendersForNewMessagesDiv = styled.div`
