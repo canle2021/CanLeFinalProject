@@ -8,15 +8,12 @@ import { useNavigate } from "react-router-dom";
 const ClientUpComingAppointments = () => {
   const {
     emailToFetchUser,
-    userProfile,
     sucessfullyVerification,
     appointmentIdConfirmed,
     allAppointmentsReveived,
   } = useContext(UserContext);
   const navigate = useNavigate();
-
   const [appointmentsDetail, setAppointmentsDetail] = useState([]);
-
   useEffect(() => {
     if (sucessfullyVerification && emailToFetchUser) {
       const nextAppointmentsFilter = allAppointmentsReveived.filter(

@@ -1,50 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import { useNavigate } from "react-router-dom";
-import MessageToLawyer from "../MessageToLawyer";
 
 const ClientOnGoingAppointments = () => {
   const {
     emailToFetchUser,
-    userProfile,
     sucessfullyVerification,
-    userInDatabase,
-    setUserInDatabase,
-    allMessagesReveived,
-    viewMessageSenderProfile,
-    setAllMessagesReveived,
-    conversation,
-    setConversation,
-    allAppointmentsReveiveIdSenderId,
-    SetAllAppointmentsReveiveIdSenderId,
     appointmentIdConfirmed,
-    setAppointmentIdConfirmed,
+    allAppointmentsReveived,
   } = useContext(UserContext);
   const navigate = useNavigate();
-
-  let appointmentDetailArray = [];
   const [appointmentsDetail, setAppointmentsDetail] = useState([]);
-  const [timeEndStartappointment, setTimeEndStartappointment] = useState({});
   useEffect(() => {
     if (sucessfullyVerification && emailToFetchUser) {
-      appointmentDetailArray.push(
-        fetch(`/api/get-appointments-by-receiverId/${userProfile._id}`)
-          .then((res) => {
-            return res.json();
-          })
-          .then((data) => {
-            return data.data;
-          })
-          .catch((err) => {
-            console.log("err", err);
-          })
-      );
-      Promise.all(appointmentDetailArray).then((data) => {
-        // setAppointmentsDetail(data[0]);
-        const nextAppointmentsFilter = data[0].filter((element) => {
+      const nextAppointmentsFilter = allAppointmentsReveived.filter(
+        (element) => {
           const newDateOfTimeStart = new Date(element.timeStartAppointment);
           const timeStartToNumber = newDateOfTimeStart.getTime();
           const newDateOfTimeEnd = new Date(element.timeEndAppointment);
@@ -59,9 +32,9 @@ const ClientOnGoingAppointments = () => {
           } else {
             return false;
           }
-        });
-        setAppointmentsDetail(nextAppointmentsFilter);
-      });
+        }
+      );
+      setAppointmentsDetail(nextAppointmentsFilter);
     } else {
       return navigate("/");
     }
@@ -117,12 +90,11 @@ const ClientOnGoingAppointments = () => {
     </UpComingAppointmentsDiv>
   );
 };
-const Button = styled.button``;
 
 const UpComingAppointmentsDiv = styled.div`
   min-height: 100vh;
 `;
-const PastAppointment = styled.h2``;
+
 const SenderP = styled.p`
   font-weight: bold;
 `;
