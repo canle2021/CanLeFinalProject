@@ -91,6 +91,7 @@ const Team = styled.div`
   width: 1280px;
   display: flex;
   justify-content: center;
+  margin-bottom: 50px;
 `;
 const HomePageDiv = styled.div``;
 const Box = styled.div`

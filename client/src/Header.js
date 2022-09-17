@@ -332,7 +332,7 @@ const slidein = keyframes`
 const AlertDiv = styled.div`
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
+
   margin-right: 80%;
   margin-right: 30px;
   margin-bottom: 20px;
