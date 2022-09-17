@@ -3,9 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "./UserContext";
 import { useAuth0 } from "@auth0/auth0-react";
-import NewMessagesAlert from "./NewMessagesAlert";
-import NewAppointmentAlert from "./NewAppointmentAlert";
 import Loading from "./Loading";
+import { MdOutlineNotificationsActive } from "react-icons/md";
+
+import { keyframes } from "styled-components";
 const Header = () => {
   const [loadingLogin, setLoadingLogin] = useState();
   const [loadingMessages, setLoadingMessages] = useState();
@@ -223,19 +224,29 @@ const Header = () => {
         <AfterLoginDiv>
           <AlertDiv>
             {listOfNewSenders && listOfNewSenders.length > 0 ? (
-              <Link to={`new-message-senderIds-list`}>
-                <button> Check New Message</button>
-              </Link>
+              <LinkTo to={`new-message-senderIds-list`}>
+                <button>
+                  <span>
+                    <MdOutlineNotificationsActive />
+                  </span>{" "}
+                  Message
+                </button>
+              </LinkTo>
             ) : null}
             {listOfNewAppointmentSenders &&
             listOfNewAppointmentSenders.length > 0 ? (
-              <Link to={`new-appointments-senderIds-list`}>
-                <button> Check New Appointment</button>
-              </Link>
+              <LinkTo to={`new-appointments-senderIds-list`}>
+                <button>
+                  <span>
+                    <MdOutlineNotificationsActive />
+                  </span>{" "}
+                  Appointment
+                </button>
+              </LinkTo>
             ) : null}
           </AlertDiv>
           <HelloDiv>
-            <Link
+            <LinkTo
               to={
                 userProfile.status === "client"
                   ? "/ClientProfile"
@@ -243,7 +254,7 @@ const Header = () => {
               }
             >
               <Button>Hello {userProfile.firstName}</Button>
-            </Link>
+            </LinkTo>
             <Button onClick={logUserOut}>Logout</Button>
           </HelloDiv>
         </AfterLoginDiv>
@@ -260,6 +271,9 @@ const Header = () => {
     </LoadingDiv>
   );
 };
+const LinkTo = styled(Link)`
+  text-decoration: none;
+`;
 const LoadingDiv = styled.div`
   width: 100%;
   height: 100%;
@@ -270,7 +284,7 @@ const LoadingDiv = styled.div`
   align-items: center;
 `;
 const Button = styled.button`
-  width: 210px;
+  width: 200px;
   height: 35px;
   border-radius: 10px;
   border: none;
@@ -282,7 +296,6 @@ const Button = styled.button`
   margin-right: 30px;
 
   &:hover {
-    /* background-color: #269157; */
     color: blue;
     transition: 0.5s ease-in-out;
   }
@@ -308,6 +321,14 @@ const HelloDiv = styled.div`
   margin-right: 30px;
   margin-bottom: 20px;
 `;
+const slidein = keyframes`
+  from {
+    transform: rotate(-10deg);
+  }
+  to {
+    transform: rotate(10deg);
+  }
+`;
 const AlertDiv = styled.div`
   display: flex;
   align-items: center;
@@ -316,10 +337,14 @@ const AlertDiv = styled.div`
   margin-right: 30px;
   margin-bottom: 20px;
   button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
     margin-right: 30px;
     margin-left: 40px;
     text-decoration: none;
-    width: 210px;
+    width: 200px;
     height: 35px;
     border-radius: 10px;
     border: none;
@@ -328,7 +353,12 @@ const AlertDiv = styled.div`
     font-family: "Roboto", sans-serif;
     background-color: #30b06b;
     color: #fff;
-
+    span {
+      font-size: 1.8rem;
+      animation: ${slidein} 0.05s infinite alternate;
+      margin-right: 5px;
+      color: yellow;
+    }
     &:hover {
       /* background-color: white; */
       color: blue;
