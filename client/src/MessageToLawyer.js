@@ -41,7 +41,7 @@ const MessageToLawyer = ({}) => {
         },
       });
       const converToJson = await posting.json();
-      console.log("converToJson", converToJson);
+
       if (converToJson.status === 200) {
         alert(
           `THANK YOU! You successfully sent a message to

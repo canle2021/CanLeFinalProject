@@ -46,11 +46,7 @@ const SignUpPage = () => {
     } catch (err) {
       console.log(err);
     }
-
-    console.log("objectToBePosted", objectToBePosted);
   };
-
-  console.log("values", values);
 
   useEffect(() => {
     if (sucessfullyVerification) {
