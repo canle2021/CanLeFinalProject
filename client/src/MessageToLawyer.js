@@ -7,7 +7,7 @@ const MessageToLawyer = ({}) => {
   const { userProfile, specificLawyer } = useContext(UserContext);
   // remember to delete all the white space begining and at the end of each input
   // show the alert if the email is already use
-  console.log("specificLawyer", specificLawyer);
+
   const [values, setValues] = useState({
     senderId: userProfile._id,
     firstName: userProfile.firstName,
@@ -55,8 +55,6 @@ const MessageToLawyer = ({}) => {
       console.log(err);
     }
   };
-
-  console.log("values", values);
 
   return (
     <SignUpPageDiv>

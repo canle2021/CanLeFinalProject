@@ -31,7 +31,7 @@ const ConversationView = ({ senderId }) => {
       .catch((err) => {
         console.log("err", err);
         alert(
-          `* ALERT ERROR IN SHOWING CONVERSATION HISTORY* Sorry, please reload the page.`
+          `* * ALERT * Sorry, you do not have any conversation to show or we can not show it at this time.`
         );
       })
       .finally(() => {
@@ -45,19 +45,25 @@ const ConversationView = ({ senderId }) => {
         Conversation with {viewMessageSenderProfile.firstName}{" "}
         {viewMessageSenderProfile.lastName}:
       </h1>
-      {conversation &&
-        conversation.map((message, index) => {
-          return (
-            <Message key={index}>
-              <SenderP>
-                Sender: {message.firstName} {message.lastName}
-              </SenderP>
-              <SubjectP>Subject: {message.subject}</SubjectP>
-              <p>Message: {message.message}</p>
-              <p>Time: {message.timeToString}</p>
-            </Message>
-          );
-        })}
+      {conversation && conversation.length > 0 ? (
+        <div>
+          {conversation &&
+            conversation.map((message, index) => {
+              return (
+                <Message key={index}>
+                  <SenderP>
+                    Sender: {message.firstName} {message.lastName}
+                  </SenderP>
+                  <SubjectP>Subject: {message.subject}</SubjectP>
+                  <p>Message: {message.message}</p>
+                  <p>Time: {message.timeToString}</p>
+                </Message>
+              );
+            })}
+        </div>
+      ) : (
+        <h2>Sorry! You don't have any conversation here.</h2>
+      )}
     </MessagesViewDiv>
   ) : (
     <LoadingDiv>

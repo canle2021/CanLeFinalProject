@@ -14,7 +14,7 @@ const MessageReplyMessage = ({}) => {
   } = useContext(UserContext);
   // remember to delete all the white space begining and at the end of each input
   // show the alert if the email is already use
-  console.log("specificLawyer", specificLawyer);
+
   const [values, setValues] = useState({
     senderId: userProfile._id,
     firstName: userProfile.firstName,
@@ -48,7 +48,7 @@ const MessageReplyMessage = ({}) => {
         },
       });
       const converToJson = await posting.json();
-      console.log("converToJson", converToJson);
+
       if (converToJson.status === 200) {
         alert(
           `THANK YOU! You successfully sent a message to
@@ -61,11 +61,7 @@ const MessageReplyMessage = ({}) => {
     } catch (err) {
       console.log(err);
     }
-
-    console.log("objectToBePosted", objectToBePosted);
   };
-
-  console.log("values", values);
 
   return (
     <SignUpPageDiv>

@@ -53,8 +53,6 @@ const ClientNotConfirmedAppointments = () => {
           }
         });
         setAppointmentsDetail(nextAppointmentsFilter);
-        console.log("nextAppointmentsFilter", nextAppointmentsFilter);
-        console.log("data[0]", data[0]);
       });
     } else {
       return navigate("/");
@@ -217,7 +215,28 @@ const LoadingDiv = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const ConfirmButton = styled.button``;
+const ConfirmButton = styled.button`
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  color: white;
+  background-color: #30b06b;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 60px;
+  height: 30px;
+  margin-top: 10px;
+  font-family: "Roboto", sans-serif;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  &:hover {
+    background-color: blue;
+    transition: 0.5s ease-in-out;
+  }
+`;
 const UpComingAppointmentsDiv = styled.div`
   min-height: 100vh;
 `;

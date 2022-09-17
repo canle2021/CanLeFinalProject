@@ -184,7 +184,9 @@ const ClientProfileDiv = styled.div`
   min-height: 100vh;
   display: flex;
 `;
-const AddressDiv = styled.div``;
+const AddressDiv = styled.div`
+  margin-left: 10px;
+`;
 const NameDiv = styled.div``;
 const LinkToEditPage = styled(Link)``;
 const EditDiv = styled.div`

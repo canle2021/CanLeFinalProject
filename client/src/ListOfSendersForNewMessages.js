@@ -32,11 +32,11 @@ const ListOfSendersForNewMessages = () => {
       .then((data) => {
         if (data.status === 200) {
           setAllMessagesReveived(data.data);
-          console.log("AllMessagesReveived", data);
+
           const filterNewSender = data.data.filter(
             (message) => message.isRead === false
           );
-          console.log("filterNewSender", filterNewSender);
+
           let senderIdsRepeated = [];
           filterNewSender.forEach((element) => {
             senderIdsRepeated.push({
@@ -52,7 +52,7 @@ const ListOfSendersForNewMessages = () => {
             (element) =>
               element.senderId === "6d612474-7ff5-45b9-a29a-f107ec348118"
           );
-          console.log("appointmentConfirmMessages", appointmentConfirmMessages);
+
           // we need to seperate the messages from client and messages from system
           // the messages from system have the same senderId, and we need to render all them out
           const intermediateArray = [];
@@ -77,7 +77,6 @@ const ListOfSendersForNewMessages = () => {
           );
 
           setListOfNewSenders(senderIdsArray);
-          console.log("senderIdsArray", senderIdsArray);
         } else {
         }
       })
@@ -108,7 +107,6 @@ const ListOfSendersForNewMessages = () => {
     }
   }, [sucessfullyVerification]);
 
-  console.log("allMessagesReveived", allMessagesReveived);
   return !loading ? (
     <ListOfSendersForNewMessagesDiv>
       {listOfNewSenders && listOfNewSenders.length > 0 ? (

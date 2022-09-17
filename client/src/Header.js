@@ -75,20 +75,19 @@ const Header = () => {
         fetch(`/api/get-all-messages-by-receiverId/${data[0]._id}`)
           .then((res) => {
             setLoadingMessages(true);
-            console.log("res", res);
+
             if (!res.ok) {
               throw new Error("Loading messages error");
             }
             return res.json();
           })
           .then((data) => {
-            console.log("dataMessage", data);
             if (data.status === 200) {
               setAllMessagesReveived(data.data);
               const filterNewSender = data.data.filter(
                 (message) => message.isRead === false
               );
-              console.log("filterNewSender", filterNewSender);
+
               let senderIdsRepeated = [];
               filterNewSender.forEach((element) => {
                 senderIdsRepeated.push({
@@ -144,7 +143,6 @@ const Header = () => {
               throw new Error("Loading data error");
             }
             const toJson = await fetchAppoitment.json();
-            console.log("fetchAppoitment ", toJson.data);
 
             await SetAllAppointmentsReveived(toJson.data);
             // to filt which appointmnet not confirm still in the future
@@ -185,7 +183,7 @@ const Header = () => {
                 return false;
               }
             );
-            console.log("apointment sender", senderIdsArray);
+
             setListOfNewAppointmentSenders(senderIdsArray);
           } catch (err) {
             console.log("err", err);

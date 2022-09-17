@@ -35,7 +35,7 @@ const AppointmentView = ({ senderId }) => {
       .catch((err) => {
         console.log("err", err);
         alert(
-          `* ALERT ERROR IN SHOWING APPOINTMENT HISTORY* Sorry, please reload the page.`
+          `* ALERT* Sorry, you do not have any appointment to show or we can not show them all at this time.`
         );
       })
       .finally(() => {
@@ -49,37 +49,46 @@ const AppointmentView = ({ senderId }) => {
         Appointment with {viewMessageSenderProfile.firstName}{" "}
         {viewMessageSenderProfile.lastName}:
       </h1>
+
       {allAppointmentsReveiveIdSenderId &&
-        allAppointmentsReveiveIdSenderId.map((appointment, index) => {
-          return (
-            <Message key={index}>
-              <SubjectP>Appointment ID: {appointment._id}</SubjectP>
-              <SubjectP>Subject: {appointment.subject}</SubjectP>
-              <SenderP>Lawyer: {appointment.lawyer}</SenderP>
-              <SenderP>Client: {appointment.client}</SenderP>
-              <p>Confirmed: {appointment.isConfirmed ? `Yes` : "No"}</p>
+      allAppointmentsReveiveIdSenderId.length > 0 ? (
+        <div>
+          {allAppointmentsReveiveIdSenderId &&
+            allAppointmentsReveiveIdSenderId.map((appointment, index) => {
+              return (
+                <Message key={index}>
+                  <SubjectP>Appointment ID: {appointment._id}</SubjectP>
+                  <SubjectP>Subject: {appointment.subject}</SubjectP>
+                  <SenderP>Lawyer: {appointment.lawyer}</SenderP>
+                  <SenderP>Client: {appointment.client}</SenderP>
+                  <p>Confirmed: {appointment.isConfirmed ? `Yes` : "No"}</p>
 
-              <p>Message: {appointment.message}</p>
-              <p>
-                Starts at:{" "}
-                {new Date(
-                  new Date(appointment.timeStartAppointment).getTime()
-                ).toString()}
-              </p>
-              <p>
-                Ends at:{" "}
-                {new Date(
-                  new Date(appointment.timeEndAppointment).getTime()
-                ).toString()}
-              </p>
-              <p>Duration: {appointment.duration} minutes</p>
+                  <p>Message: {appointment.message}</p>
+                  <p>
+                    Starts at:{" "}
+                    {new Date(
+                      new Date(appointment.timeStartAppointment).getTime()
+                    ).toString()}
+                  </p>
+                  <p>
+                    Ends at:{" "}
+                    {new Date(
+                      new Date(appointment.timeEndAppointment).getTime()
+                    ).toString()}
+                  </p>
+                  <p>Duration: {appointment.duration} minutes</p>
 
-              <p>
-                Was booked at: {appointment.timeOfCreateingAppointmentToString}
-              </p>
-            </Message>
-          );
-        })}
+                  <p>
+                    Was booked at:{" "}
+                    {appointment.timeOfCreateingAppointmentToString}
+                  </p>
+                </Message>
+              );
+            })}
+        </div>
+      ) : (
+        <h2>Sorry! You do not have any appointment here.</h2>
+      )}
     </MessagesViewDiv>
   ) : (
     <LoadingDiv>

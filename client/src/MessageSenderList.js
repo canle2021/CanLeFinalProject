@@ -24,7 +24,7 @@ const MessageSenderList = () => {
     }
     return false;
   });
-  console.log("senderIdsArray", senderIdsArray);
+
   return (
     <MessagesViewDiv>
       {senderIdsArray.map((message, index) => {
