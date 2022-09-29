@@ -27,24 +27,34 @@ const MessageSenderList = () => {
 
   return (
     <MessagesViewDiv>
-      {senderIdsArray.map((message, index) => {
-        return (
-          <Message key={index}>
-            {message.senderId !== "6d612474-7ff5-45b9-a29a-f107ec348118" ? (
-              <LinkTo
-                // 6d612474-7ff5-45b9-a29a-f107ec348118 is the system user id
-                to={`/message-sender-profile/${message.senderId}`}
-              >
-                <List>{message.firstName + " " + message.lastName}</List>
-              </LinkTo>
-            ) : null}
-          </Message>
-        );
-      })}
+      {senderIdsArray.length < 1 ? (
+        <Sorry>Sorry, there is nothing to show for message sender list.</Sorry>
+      ) : (
+        <div>
+          {senderIdsArray.map((message, index) => {
+            return (
+              <Message key={index}>
+                {message.senderId !== "6d612474-7ff5-45b9-a29a-f107ec348118" ? (
+                  <LinkTo
+                    // 6d612474-7ff5-45b9-a29a-f107ec348118 is the system user id
+                    to={`/message-sender-profile/${message.senderId}`}
+                  >
+                    <List>{message.firstName + " " + message.lastName}</List>
+                  </LinkTo>
+                ) : null}
+              </Message>
+            );
+          })}
+        </div>
+      )}
       <InformationDiv></InformationDiv>
     </MessagesViewDiv>
   );
 };
+const Sorry = styled.p`
+  color: red;
+  font-weight: bold;
+`;
 const List = styled.p`
   display: list-item;
   font-family: Georgia, serif;
